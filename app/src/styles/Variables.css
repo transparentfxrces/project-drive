@@ -1,0 +1,159 @@
+/* =========================================================
+   PROJECT DRIVE DESIGN SYSTEM
+   Variables.css
+=========================================================*/
+
+:root{
+
+/* ===========================
+   COLORS
+===========================*/
+
+--bg-dark:#05070d;
+--bg-primary:#081223;
+--bg-secondary:#101b2d;
+--bg-card:rgba(8,18,35,.82);
+
+--text-white:#ffffff;
+--text-primary:#dcecff;
+--text-secondary:#9fcfff;
+--text-muted:#6f9bc5;
+
+/* ===========================
+   ACCENT COLORS
+===========================*/
+
+--blue-100:#8ce8ff;
+--blue-200:#7de7ff;
+--blue-300:#5fcfff;
+--blue-400:#46b7ff;
+--blue-500:#2fa7ff;
+--blue-600:#1d7cff;
+--blue-700:#1976d2;
+
+--green:#63ff9b;
+--green-dark:#39d96c;
+
+--gold:#ffd54d;
+--orange:#ff8a00;
+
+--red:#d84b4b;
+
+/* ===========================
+   GRADIENTS
+===========================*/
+
+--gradient-card:
+linear-gradient(
+160deg,
+rgba(10,20,36,.92),
+rgba(16,30,50,.88)
+);
+
+--gradient-blue:
+linear-gradient(
+90deg,
+#1976d2,
+#46b7ff,
+#8ce8ff
+);
+
+--gradient-green:
+linear-gradient(
+90deg,
+#39d96c,
+#75ff9f
+);
+
+--gradient-gold:
+linear-gradient(
+90deg,
+#d6a800,
+#ffd54d
+);
+
+/* ===========================
+   GLASS
+===========================*/
+
+--glass:
+rgba(8,18,35,.82);
+
+--glass-light:
+rgba(255,255,255,.03);
+
+/* ===========================
+   BORDERS
+===========================*/
+
+--border:
+1px solid rgba(70,150,255,.20);
+
+--border-hover:
+1px solid rgba(70,170,255,.40);
+
+--border-success:
+1px solid rgba(70,255,150,.40);
+
+/* ===========================
+   BORDER RADIUS
+===========================*/
+
+--radius-sm:12px;
+--radius-md:18px;
+--radius-lg:22px;
+--radius-xl:28px;
+--radius-round:999px;
+
+/* ===========================
+   SHADOWS
+===========================*/
+
+--shadow-small:
+0 0 12px rgba(30,120,255,.15);
+
+--shadow-card:
+0 0 20px rgba(30,120,255,.18);
+
+--shadow-hover:
+0 0 28px rgba(60,170,255,.30);
+
+--shadow-big:
+0 0 50px rgba(60,170,255,.28);
+
+/* ===========================
+   SPACING
+===========================*/
+
+--space-xs:8px;
+--space-sm:12px;
+--space-md:18px;
+--space-lg:24px;
+--space-xl:32px;
+--space-2xl:48px;
+
+/* ===========================
+   FONT WEIGHTS
+===========================*/
+
+--fw-normal:400;
+--fw-medium:500;
+--fw-semibold:600;
+--fw-bold:700;
+--fw-black:900;
+
+/* ===========================
+   TRANSITIONS
+===========================*/
+
+--transition-fast:.18s ease;
+--transition:.28s ease;
+--transition-slow:.45s ease;
+
+/* ===========================
+   BLUR
+===========================*/
+
+--blur:18px;
+
+}

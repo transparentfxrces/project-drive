@@ -1,0 +1,146 @@
+/* ==========================================================
+   PROJECT DRIVE - Profile.css
+   Solo Leveling Theme
+========================================================== */
+
+.profile-page{
+    display:flex;
+    flex-direction:column;
+    gap:32px;
+    animation:profileFade .4s ease;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    gap:24px;
+}
+
+.profile-card{
+    background:linear-gradient(145deg,#0b1728,#132741);
+    border:1px solid rgba(77,170,255,.15);
+    border-radius:22px;
+    padding:24px;
+    box-shadow:0 0 22px rgba(40,120,255,.08);
+    transition:.25s;
+}
+
+.profile-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(90,185,255,.35);
+    box-shadow:0 0 28px rgba(55,145,255,.16);
+}
+
+.profile-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:12px;
+}
+
+.profile-card h3{
+    margin:0;
+    color:#f6d46f;
+    font-size:1.35rem;
+    font-weight:800;
+    letter-spacing:.5px;
+}
+
+.profile-card p{
+    margin:10px 0;
+    color:#d6e6f6;
+    line-height:1.6;
+    border-bottom:1px solid rgba(255,255,255,.05);
+    padding-bottom:10px;
+}
+
+.profile-card p:last-child{
+    border-bottom:none;
+    padding-bottom:0;
+}
+
+.profile-card strong{
+    color:#82d8ff;
+}
+
+.profile-input{
+    width:100%;
+    padding:12px 14px;
+    margin-bottom:12px;
+    border-radius:12px;
+    border:1px solid rgba(78,170,255,.16);
+    background:#0f2137;
+    color:#fff;
+    font-size:.95rem;
+    outline:none;
+    transition:.2s;
+    box-sizing:border-box;
+}
+
+.profile-input:focus{
+    border-color:#57b8ff;
+    box-shadow:0 0 12px rgba(87,184,255,.25);
+}
+
+.edit-button,
+.save-button{
+    border:none;
+    border-radius:12px;
+    padding:10px 18px;
+    cursor:pointer;
+    font-weight:800;
+    color:#fff;
+    transition:.2s;
+}
+
+.edit-button{
+    background:linear-gradient(135deg,#2979ff,#45c7ff);
+}
+
+.save-button{
+    background:linear-gradient(135deg,#2dbd7f,#52e0aa);
+}
+
+.edit-button:hover,
+.save-button:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.06);
+}
+
+.version-footer{
+    text-align:center;
+    color:#6f8da8;
+    padding:18px;
+    font-size:.9rem;
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:12px;
+}
+
+@keyframes profileFade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+@media(max-width:768px){
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-card-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .edit-button,
+    .save-button{
+        width:100%;
+    }
+}

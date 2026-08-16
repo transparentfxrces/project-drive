@@ -1,0 +1,441 @@
+/* =========================================================
+   PROJECT DRIVE
+   Shared.css
+=========================================================*/
+
+/* ==========================================
+   GLASS CARD FOUNDATION
+========================================== */
+
+.dashboard-card,
+.stat-card,
+.profile-card,
+.progress-card,
+.exercise-card,
+.metric-card,
+.history-session,
+.summary-card,
+.football-program-card,
+.exercise-picker,
+.custom-exercise-card{
+
+    position:relative;
+    overflow:hidden;
+
+    background:var(--bg-card);
+
+    backdrop-filter:blur(var(--blur));
+    -webkit-backdrop-filter:blur(var(--blur));
+
+    border:var(--border);
+
+    border-radius:var(--radius-lg);
+
+    padding:28px;
+
+    margin-bottom:28px;
+
+    box-shadow:
+        var(--shadow-card),
+        inset 0 0 0 1px rgba(255,255,255,.02);
+
+    transition:var(--transition);
+
+}
+
+/* ==========================================
+   TOP GLOW LINE
+========================================== */
+
+.dashboard-card::before,
+.exercise-card::before,
+.progress-card::before,
+.profile-card::before,
+.metric-card::before,
+.history-session::before,
+.summary-card::before,
+.football-program-card::before,
+.exercise-picker::before,
+.custom-exercise-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue-500),
+            var(--blue-100),
+            transparent
+        );
+
+    opacity:.9;
+
+}
+
+/* ==========================================
+   RADIAL GLOW
+========================================== */
+
+.stat-card::after,
+.dashboard-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-70px;
+    right:-70px;
+
+    width:160px;
+    height:160px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(70,170,255,.16),
+            transparent 70%
+        );
+
+    pointer-events:none;
+
+}
+
+/* ==========================================
+   HOVER
+========================================== */
+
+.dashboard-card:hover,
+.stat-card:hover,
+.exercise-card:hover,
+.profile-card:hover,
+.progress-card:hover,
+.metric-card:hover,
+.history-session:hover,
+.summary-card:hover,
+.exercise-picker:hover,
+.custom-exercise-card:hover,
+.football-program-card:hover{
+
+    transform:translateY(-6px);
+
+    border:var(--border-hover);
+
+    box-shadow:
+
+        var(--shadow-hover),
+
+        0 0 50px rgba(30,120,255,.18),
+
+        inset 0 0 0 1px rgba(255,255,255,.03);
+
+}
+
+/* ==========================================
+   CARD HEADINGS
+========================================== */
+
+.dashboard-card h3,
+.profile-card h3,
+.progress-card h3,
+.metric-card h3,
+.exercise-picker h3,
+.custom-exercise-card h3,
+.history-session h3,
+.summary-card h3{
+
+    color:var(--blue-200);
+
+    font-size:1.15rem;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+
+}
+
+/* ==========================================
+   STAT GRID
+========================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:24px;
+
+    margin:34px 0;
+
+}
+
+/* ==========================================
+   STAT CARD
+========================================== */
+
+.stat-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    min-height:170px;
+
+}
+
+.stat-card h3{
+
+    font-size:.82rem;
+
+    color:var(--blue-300);
+
+    letter-spacing:2px;
+
+    margin-bottom:18px;
+
+}
+
+.stat-card p{
+
+    font-size:2.8rem;
+
+    font-weight:900;
+
+    color:white;
+
+    text-shadow:
+
+        0 0 15px rgba(80,180,255,.15);
+
+}
+
+/* ==========================================
+   PROGRESS BAR FOUNDATION
+========================================== */
+
+.progress-bar,
+.goal-progress-bar,
+.quest-progress,
+.xp-progress-bar,
+.week-progress-bar{
+
+    width:100%;
+
+    height:18px;
+
+    overflow:hidden;
+
+    border-radius:999px;
+
+    background:#10243d;
+
+    padding:3px;
+
+}
+
+/* ==========================================
+   PROGRESS FILLS
+========================================== */
+
+.progress-fill,
+.goal-progress-fill,
+.quest-progress-fill,
+.xp-progress-fill,
+.week-progress-fill{
+
+    height:100%;
+
+    border-radius:999px;
+
+    background:var(--gradient-blue);
+
+    transition:
+
+        width .7s ease,
+
+        background .25s ease;
+
+    box-shadow:
+
+        0 0 18px rgba(70,180,255,.45);
+
+}
+
+/* ==========================================
+   SUCCESS BARS
+========================================== */
+
+.quest-card.completed .quest-progress-fill{
+
+    background:var(--gradient-green);
+
+}
+
+.goal-complete,
+.weekly-goal-complete,
+.quest-complete{
+
+    color:var(--green);
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   BADGES
+========================================== */
+
+.percent-badge,
+.quest-xp,
+.rarity{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-weight:700;
+
+    font-size:.82rem;
+
+}
+
+.percent-badge{
+
+    background:#163862;
+
+    color:var(--blue-100);
+
+}
+
+.quest-xp{
+
+    background:#3a2d08;
+
+    color:var(--gold);
+
+}
+
+.target-weight{
+
+    color:var(--green);
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   COMMON FLEX HELPERS
+========================================== */
+
+.flex-between{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.flex-center{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.flex-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ==========================================
+   GRID HELPERS
+========================================== */
+
+.grid-2{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+.grid-3{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:18px;
+
+}
+
+/* ==========================================
+   SECTION SPACING
+========================================== */
+
+section{
+
+    margin-bottom:36px;
+
+}
+
+.dashboard-card>*+*,
+.profile-card>*+*,
+.progress-card>*+*,
+.metric-card>*+*,
+.history-session>*+*{
+
+    margin-top:18px;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:900px){
+
+    .grid-2,
+    .grid-3{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

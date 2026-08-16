@@ -1,0 +1,361 @@
+/* ==========================================================
+   PROJECT DRIVE
+   WorkoutSummary.css
+   Solo Leveling UI Theme
+========================================================== */
+
+.summary-page{
+    max-width:950px;
+    margin:0 auto;
+    padding:40px 24px 70px;
+    animation:fadeIn .45s ease;
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.summary-page .system-tag{
+    display:inline-block;
+    margin-bottom:18px;
+}
+
+.summary-page h1{
+    margin:0;
+    text-align:center;
+    font-size:3rem;
+    font-weight:900;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#f4d16b;
+    text-shadow:
+        0 0 12px rgba(244,209,107,.45),
+        0 0 35px rgba(82,196,255,.18);
+}
+
+.summary-subtitle{
+    margin:14px 0 42px;
+    text-align:center;
+    color:#9ecfff;
+    font-size:1rem;
+    letter-spacing:1px;
+}
+
+/* ===========================
+   SESSION CARD
+=========================== */
+
+.summary-card{
+    position:relative;
+    overflow:hidden;
+
+    padding:34px;
+
+    margin-bottom:36px;
+
+    background:rgba(10,18,34,.90);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(77,178,255,.18);
+
+    border-radius:24px;
+
+    box-shadow:
+        0 0 30px rgba(0,140,255,.12),
+        inset 0 0 0 1px rgba(255,255,255,.03);
+
+    transition:.3s;
+}
+
+.summary-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:2px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        #f4d16b,
+        #4db5ff,
+        transparent
+    );
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#4db5ff;
+
+    box-shadow:
+        0 0 40px rgba(40,170,255,.22);
+
+}
+
+.summary-card h2{
+
+    margin:0 0 26px;
+
+    color:#ffffff;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    font-size:1.3rem;
+
+}
+
+.summary-card p{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+    margin:0;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    color:#bddcff;
+
+    font-size:1rem;
+
+}
+
+.summary-card p:last-child{
+
+    border-bottom:none;
+
+}
+
+.summary-card strong{
+
+    color:#f4d16b;
+
+    font-size:1.1rem;
+
+    font-weight:800;
+
+}
+
+/* ===========================
+   SECTION TITLE
+=========================== */
+
+.summary-section-title{
+
+    margin:45px 0 22px;
+
+    color:#ffffff;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    font-size:1.45rem;
+
+}
+
+/* ===========================
+   EXERCISE CARDS
+=========================== */
+
+.summary-exercise{
+
+    position:relative;
+
+    overflow:hidden;
+
+    margin-bottom:22px;
+
+    padding:26px;
+
+    border-radius:22px;
+
+    background:rgba(12,22,40,.92);
+
+    backdrop-filter:blur(16px);
+
+    border:1px solid rgba(77,178,255,.15);
+
+    transition:.28s;
+
+}
+
+.summary-exercise::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:4px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #f4d16b,
+        #48bfff
+    );
+
+}
+
+.summary-exercise:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#4db5ff;
+
+    box-shadow:
+        0 0 28px rgba(0,170,255,.18);
+
+}
+
+.summary-exercise h3{
+
+    margin:0 0 18px;
+
+    color:#ffffff;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    font-size:1.15rem;
+
+}
+
+.summary-exercise p{
+
+    margin:10px 0;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.04);
+
+    color:#d8ecff;
+
+    transition:.25s;
+
+}
+
+.summary-exercise p:hover{
+
+    background:rgba(77,181,255,.08);
+
+    transform:translateX(6px);
+
+}
+
+/* ===========================
+   CONTINUE BUTTON
+=========================== */
+
+.summary-button{
+
+    width:100%;
+
+    margin-top:38px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    color:#081320;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f4d16b,
+        #ffe58a
+    );
+
+    transition:.28s;
+
+    box-shadow:
+        0 0 25px rgba(244,209,107,.35);
+
+}
+
+.summary-button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 40px rgba(244,209,107,.50);
+
+}
+
+.summary-button:active{
+
+    transform:scale(.98);
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+    .summary-page{
+
+        padding:30px 18px 50px;
+
+    }
+
+    .summary-page h1{
+
+        font-size:2.3rem;
+
+        letter-spacing:2px;
+
+    }
+
+    .summary-card{
+
+        padding:24px;
+
+    }
+
+    .summary-exercise{
+
+        padding:22px;
+
+    }
+
+}

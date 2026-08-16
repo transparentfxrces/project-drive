@@ -1,0 +1,138 @@
+/* =========================================================
+   PROJECT DRIVE
+   FootballProgram.css
+=========================================================*/
+
+.football-program-card{
+    position:relative;
+    overflow:hidden;
+
+    background:var(--bg-card);
+
+    border:var(--border);
+
+    border-radius:var(--radius-lg);
+
+    backdrop-filter:blur(var(--blur));
+    -webkit-backdrop-filter:blur(var(--blur));
+
+    padding:28px;
+
+    margin-bottom:32px;
+}
+
+.football-program-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:-60px;
+    right:-60px;
+
+    width:160px;
+    height:160px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(70,180,255,.18),
+            transparent 70%
+        );
+}
+
+.football-program-card h3{
+    color:white;
+    font-size:1.3rem;
+    margin-bottom:22px;
+}
+
+.football-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:24px;
+    flex-wrap:wrap;
+}
+
+.football-row label{
+    color:var(--blue-200);
+    font-weight:700;
+    letter-spacing:.5px;
+    min-width:80px;
+}
+
+.football-row select{
+    flex:1;
+}
+
+.football-days{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+}
+
+.football-days button{
+    flex:1;
+    min-width:120px;
+    background:#12284b;
+    border:1px solid rgba(70,150,255,.18);
+}
+
+.football-days button:hover{
+    background:#1b4f91;
+}
+
+.active-day{
+    background:
+        linear-gradient(
+            135deg,
+            #1976d2,
+            #43b9ff
+        ) !important;
+
+    color:white;
+
+    border-color:rgba(120,220,255,.55);
+
+    box-shadow:
+        0 0 18px rgba(60,180,255,.35);
+}
+
+.load-football-button{
+    width:100%;
+
+    padding:16px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1976d2,
+            #39b7ff
+        );
+}
+
+.load-football-button:hover{
+    transform:translateY(-2px);
+}
+
+@media(max-width:900px){
+
+    .football-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .football-days{
+        flex-direction:column;
+    }
+
+}

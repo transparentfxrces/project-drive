@@ -1,0 +1,546 @@
+/* =========================================================
+   PROJECT DRIVE — PR CELEBRATION
+   Solo-Leveling-inspired System Notification
+========================================================= */
+
+.pr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(19, 87, 150, 0.18),
+      rgba(2, 8, 18, 0.92) 65%
+    );
+
+  backdrop-filter: blur(8px);
+
+  animation: prOverlayIn 0.3s ease;
+}
+
+/* =========================
+   SYSTEM WINDOW
+========================= */
+
+.pr-system-card {
+  position: relative;
+
+  width: min(540px, 100%);
+
+  overflow: hidden;
+
+  padding: 42px 38px 34px;
+
+  text-align: center;
+
+  border:
+    1px solid rgba(91, 210, 255, 0.55);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(11, 26, 48, 0.98),
+      rgba(5, 15, 31, 0.99)
+    );
+
+  box-shadow:
+    0 0 18px rgba(60, 178, 255, 0.22),
+    0 0 60px rgba(36, 128, 255, 0.18),
+    inset 0 0 30px rgba(69, 177, 255, 0.05);
+
+  animation:
+    prCardEnter 0.55s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* glowing top system line */
+
+.pr-system-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 10%;
+  right: 10%;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #48baff,
+      #9cecff,
+      #48baff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 16px #55c9ff;
+}
+
+/* corner accents */
+
+.pr-system-card::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 9px;
+
+  pointer-events: none;
+
+  border:
+    1px solid rgba(90, 197, 255, 0.07);
+
+  border-radius: 18px;
+}
+
+/* =========================
+   SCAN
+========================= */
+
+.pr-scan-line {
+  position: absolute;
+
+  z-index: 0;
+
+  top: -15%;
+  left: 0;
+
+  width: 100%;
+  height: 80px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(89, 205, 255, 0.08),
+      transparent
+    );
+
+  animation:
+    prScan 2.8s linear infinite;
+}
+
+/* =========================
+   CLOSE
+========================= */
+
+.pr-close {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 15px;
+  right: 18px;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #7294b8;
+
+  font-size: 1.7rem;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.pr-close:hover {
+  color: #8ce8ff;
+
+  text-shadow:
+    0 0 10px rgba(85, 213, 255, 0.8);
+
+  transform: scale(1.1);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.pr-system-label {
+  position: relative;
+  z-index: 2;
+
+  color: #68ceff;
+
+  font-size: 0.72rem;
+
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+  text-shadow:
+    0 0 12px rgba(77, 198, 255, 0.55);
+}
+
+.pr-icon {
+  position: relative;
+  z-index: 2;
+
+  margin-top: 24px;
+
+  font-size: 3.4rem;
+
+  filter:
+    drop-shadow(
+      0 0 16px
+      rgba(83, 203, 255, 0.55)
+    );
+
+  animation:
+    prIconPulse 1.8s ease-in-out infinite;
+}
+
+.pr-unlocked {
+  position: relative;
+  z-index: 2;
+
+  margin: 12px 0 6px;
+
+  color: #78d7ff;
+
+  font-size: 0.8rem;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+.pr-system-card h2 {
+  position: relative;
+  z-index: 2;
+
+  margin: 8px 0 5px;
+
+  color: #f2f9ff;
+
+  font-size: 1.75rem;
+
+  letter-spacing: 0.5px;
+}
+
+/* =========================
+   RECORD
+========================= */
+
+.pr-record {
+  position: relative;
+  z-index: 2;
+
+  margin-top: 12px;
+
+  color: #ffffff;
+
+  font-size: clamp(
+    3.5rem,
+    11vw,
+    5.2rem
+  );
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  text-shadow:
+    0 0 10px rgba(89, 211, 255, 0.35),
+    0 0 30px rgba(62, 156, 255, 0.2);
+}
+
+.pr-record span {
+  color: #69ccff;
+
+  font-size: 1rem;
+
+  letter-spacing: 2px;
+}
+
+.pr-improvement {
+  position: relative;
+  z-index: 2;
+
+  display: inline-block;
+
+  margin-top: 14px;
+
+  padding: 7px 15px;
+
+  border:
+    1px solid rgba(78, 218, 255, 0.28);
+
+  border-radius: 999px;
+
+  background:
+    rgba(58, 188, 255, 0.08);
+
+  color: #70e2ff;
+
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 0 14px rgba(67, 196, 255, 0.08);
+}
+
+/* =========================
+   DIVIDERS
+========================= */
+
+.pr-divider {
+  position: relative;
+  z-index: 2;
+
+  height: 1px;
+
+  margin: 27px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(84, 206, 255, 0.65),
+      transparent
+    );
+}
+
+/* =========================
+   OLD → NEW
+========================= */
+
+.pr-comparison {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.pr-comparison div:not(
+  .pr-arrow
+) {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.pr-comparison span {
+  color: #6687a8;
+
+  font-size: 0.67rem;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.pr-comparison strong {
+  color: #eaf7ff;
+
+  font-size: 1.15rem;
+}
+
+.pr-comparison div:last-child strong {
+  color: #7edfff;
+
+  text-shadow:
+    0 0 12px rgba(73, 198, 255, 0.35);
+}
+
+.pr-arrow {
+  color: #53cfff;
+
+  font-size: 1.5rem;
+
+  text-shadow:
+    0 0 10px rgba(71, 202, 255, 0.5);
+}
+
+.pr-first-record {
+  position: relative;
+  z-index: 2;
+
+  color: #b9d9f4;
+
+  line-height: 1.6;
+}
+
+/* =========================
+   SYNC MESSAGE
+========================= */
+
+.pr-synced {
+  position: relative;
+  z-index: 2;
+
+  margin-bottom: 20px;
+
+  color: #6486a8;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+/* =========================
+   CONTINUE
+========================= */
+
+.pr-continue {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  padding: 14px 20px;
+
+  border:
+    1px solid rgba(83, 207, 255, 0.42);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(35, 126, 219, 0.22),
+      rgba(40, 174, 232, 0.17)
+    );
+
+  color: #9beaff;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.pr-continue:hover {
+  transform: translateY(-2px);
+
+  border-color: #79ddff;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(42, 141, 235, 0.35),
+      rgba(47, 193, 248, 0.25)
+    );
+
+  box-shadow:
+    0 0 24px rgba(57, 178, 255, 0.24);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes prOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes prCardEnter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(25px)
+      scale(0.94);
+
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+
+    filter: blur(0);
+  }
+}
+
+@keyframes prScan {
+  from {
+    top: -20%;
+  }
+
+  to {
+    top: 110%;
+  }
+}
+
+@keyframes prIconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 550px) {
+  .pr-system-card {
+    padding:
+      38px 22px
+      26px;
+  }
+
+  .pr-comparison {
+    gap: 10px;
+  }
+
+  .pr-record {
+    font-size: 3.8rem;
+  }
+
+  .pr-system-label {
+    letter-spacing: 2.5px;
+  }
+}

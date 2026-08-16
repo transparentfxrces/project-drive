@@ -1,0 +1,715 @@
+/* =========================================================
+   PROJECT DRIVE
+   Workout.css
+=========================================================*/
+
+/* ==========================================
+   SOLO LEVELING SESSION PANEL
+========================================== */
+
+.progress-banner{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    margin-bottom:34px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,18,35,.96),
+            rgba(18,35,60,.92)
+        );
+
+    border:1px solid rgba(70,170,255,.22);
+
+    box-shadow:
+        0 0 30px rgba(40,140,255,.18);
+
+}
+
+.progress-banner::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #5fd2ff,
+            #9cf3ff,
+            transparent
+        );
+
+}
+
+.progress-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+}
+
+.system-label{
+
+    display:block;
+
+    color:#72bfff;
+
+    font-size:.75rem;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    margin-bottom:8px;
+
+}
+
+.progress-top h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:1.8rem;
+
+    font-weight:800;
+
+}
+
+.session-clock{
+
+    font-size:2.5rem;
+
+    font-weight:900;
+
+    color:#83ebff;
+
+    letter-spacing:2px;
+
+    font-variant-numeric:tabular-nums;
+
+    text-shadow:
+        0 0 16px rgba(120,240,255,.35);
+
+}
+
+.progress-percent{
+
+    margin:28px 0 12px;
+
+    color:#8beeff;
+
+    font-size:2rem;
+
+    font-weight:900;
+
+}
+
+.progress-bar{
+
+    height:18px;
+
+    padding:3px;
+
+    border-radius:999px;
+
+    background:#0e223b;
+
+}
+
+.progress-fill{
+
+    height:100%;
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1d7cff,
+            #47c7ff,
+            #83f4ff
+        );
+
+    box-shadow:
+        0 0 18px rgba(80,210,255,.45);
+
+}
+
+.progress-bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:18px;
+
+    color:#d2ebff;
+
+    font-weight:700;
+
+}
+
+/* ===========================
+   FOOTBALL PROGRAM
+=========================== */
+
+.football-program-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(160deg,rgba(10,20,35,.92),rgba(15,32,58,.90));
+    border:1px solid rgba(70,150,255,.20);
+    border-radius:22px;
+    padding:28px;
+    margin-bottom:34px;
+}
+
+.football-program-card::before{
+    content:"";
+    position:absolute;
+    top:-60px;
+    right:-60px;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(70,180,255,.18),transparent 70%);
+}
+
+.football-program-card h3{
+    color:#fff;
+    margin-bottom:20px;
+}
+
+.football-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:24px;
+    flex-wrap:wrap;
+}
+
+.football-row label{
+    font-weight:700;
+    color:#79c6ff;
+    letter-spacing:1px;
+}
+
+.football-row select{
+    min-width:180px;
+}
+
+.football-days{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+}
+
+.football-days button{
+    flex:1;
+    min-width:120px;
+    background:#12284b;
+    border:1px solid #2e5f99;
+}
+
+.football-days button:hover{
+    background:#1b4f91;
+}
+
+.active-day{
+    background:linear-gradient(135deg,#1976d2,#43b9ff)!important;
+    box-shadow:0 0 18px rgba(60,180,255,.35);
+}
+
+.load-football-button{
+    width:100%;
+    padding:16px;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:1px;
+    background:linear-gradient(90deg,#1976d2,#39b7ff);
+}
+
+/* ===========================
+   TEMPLATE BUTTONS
+=========================== */
+
+.template-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:25px 0;
+}
+
+/* ===========================
+   EXERCISE PICKER
+=========================== */
+
+.exercise-picker{
+    background:linear-gradient(160deg,rgba(11,22,39,.92),rgba(16,29,49,.88));
+    border:1px solid rgba(70,150,255,.18);
+    border-radius:22px;
+    padding:26px;
+    margin-bottom:30px;
+}
+
+.exercise-picker h3{
+    margin-bottom:22px;
+    color:#fff;
+    font-size:1.2rem;
+}
+
+.exercise-picker input{
+    width:100%;
+    margin-bottom:18px;
+}
+
+.exercise-option-row{
+    display:flex;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.exercise-option{
+    flex:1;
+    text-align:left;
+    background:#122848;
+}
+
+.exercise-option:hover{
+    background:#1976d2;
+}
+
+.favorite-button{
+    width:54px;
+    height:54px;
+    font-size:22px;
+    border-radius:12px;
+    background:#10243f;
+}
+
+.favorite-button:hover{
+    background:#1976d2;
+}
+
+/* ===========================
+   EXERCISE CARD
+=========================== */
+
+.exercise-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(155deg,rgba(10,20,36,.92),rgba(15,29,49,.90));
+    border:1px solid rgba(70,150,255,.18);
+    border-radius:24px;
+    padding:28px;
+    margin-bottom:30px;
+    box-shadow:0 0 25px rgba(37,99,235,.18),inset 0 0 0 1px rgba(255,255,255,.03);
+    transition:var(--transition);
+}
+
+.exercise-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:2px;
+    background:linear-gradient(90deg,transparent,#46b7ff,#89f0ff,transparent);
+}
+
+.exercise-card:hover{
+    transform:translateY(-5px);
+    border-color:#47a8ff;
+    box-shadow:0 0 40px rgba(37,99,235,.30),inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+.exercise-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:18px;
+    margin-bottom:20px;
+}
+
+.exercise-title-input{
+    width:100%;
+    background:transparent;
+    border:none;
+    color:#fff;
+    font-size:1.45rem;
+    font-weight:800;
+    padding:0;
+}
+
+.exercise-title-input:focus{
+    outline:none;
+}
+
+.exercise-complete{
+    display:inline-block;
+    margin-top:8px;
+    padding:6px 14px;
+    border-radius:999px;
+    background:#1d4429;
+    color:#6dff9c;
+    font-weight:700;
+}
+
+.percent-badge{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:999px;
+    background:#163862;
+    color:#79d7ff;
+    font-weight:700;
+    box-shadow:0 0 12px rgba(80,170,255,.25);
+}
+
+.target-weight{
+    margin-left:10px;
+    color:#79ff9c;
+    font-weight:700;
+}
+
+/* ===========================
+   SET ROWS
+=========================== */
+
+.set-row{
+    display:grid;
+    grid-template-columns:90px auto auto 140px 140px 50px;
+    align-items:center;
+    gap:14px;
+    padding:16px;
+    margin:14px 0;
+    border-radius:16px;
+    background:rgba(255,255,255,.02);
+    border:1px solid rgba(255,255,255,.04);
+}
+
+.set-row:hover{
+    background:rgba(70,170,255,.05);
+}
+
+.set-label{
+    min-width:60px;
+    font-weight:700;
+    color:#79c6ff;
+}
+
+.set-percent{
+    padding:6px 10px;
+    border-radius:8px;
+    background:#303030;
+    color:#4da3ff;
+    font-weight:700;
+}
+
+.completed-check{
+    font-size:1.3rem;
+    color:#49ff7d;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.add-set-button{
+    width:100%;
+    margin-top:18px;
+    background:#174d8b;
+}
+
+.add-set-button:hover{
+    background:#248dff;
+}
+
+.delete-exercise-button{
+    width:100%;
+    margin-top:14px;
+    background:#661d2c;
+}
+
+.delete-exercise-button:hover{
+    background:#b62848;
+}
+
+/* ===========================
+   CUSTOM EXERCISE
+=========================== */
+
+.custom-exercise-card{
+    background:linear-gradient(160deg,rgba(10,20,35,.92),rgba(15,29,48,.90));
+    border:1px solid rgba(70,150,255,.18);
+    border-radius:22px;
+    padding:28px;
+    margin-top:36px;
+    box-shadow:0 0 25px rgba(37,99,235,.18);
+}
+
+.custom-exercise-card h3{
+    margin-bottom:18px;
+    color:#fff;
+}
+
+.custom-exercise-card input{
+    width:100%;
+    margin-bottom:18px;
+}
+
+/* ===========================
+   WORKOUT ACTIONS
+=========================== */
+
+.workout-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:36px;
+}
+
+.workout-actions button{
+    font-size:17px;
+    font-weight:800;
+}
+
+.workout-actions button:first-child{
+    background:linear-gradient(90deg,#1976d2,#4fc8ff);
+}
+
+.workout-actions button:last-child{
+    background:#5b2020;
+}
+
+.workout-actions button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 20px rgba(70,170,255,.25);
+}
+
+/* ===========================
+   SHARED WORKOUT INPUTS
+=========================== */
+
+.exercise-title-input,
+.custom-exercise-card input,
+.exercise-picker input,
+.set-row input,
+.set-row select{
+    color:#fff;
+}
+
+.exercise-picker input::placeholder,
+.custom-exercise-card input::placeholder,
+.exercise-title-input::placeholder{
+    color:#7ca8d9;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+    .football-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .football-days{
+        flex-direction:column;
+    }
+
+    .exercise-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .exercise-option-row{
+        flex-direction:column;
+    }
+
+    .set-row{
+        grid-template-columns:1fr;
+        padding:18px;
+    }
+
+    .workout-actions{
+        grid-template-columns:1fr;
+    }
+
+    .favorite-button{
+        width:100%;
+    }
+}
+
+@media(max-width:600px){
+
+    .progress-banner,
+    .football-program-card,
+    .exercise-picker,
+    .exercise-card,
+    .custom-exercise-card{
+        padding:20px;
+    }
+
+    .exercise-title-input{
+        font-size:1.2rem;
+    }
+
+    .progress-banner h3{
+        font-size:1.2rem;
+    }
+
+    .football-days button,
+    .workout-actions button{
+        width:100%;
+    }
+}
+
+/* ==========================================
+   SESSION TIMER
+========================================== */
+
+.workout-session-bar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:24px;
+
+    margin:24px 0 30px;
+
+    padding:20px 26px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,22,40,.95),
+            rgba(18,34,58,.92)
+        );
+
+    border:1px solid rgba(70,160,255,.22);
+
+    box-shadow:
+        0 0 22px rgba(40,120,255,.18);
+
+}
+
+.session-title{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.session-title span{
+
+    color:#6fb9ff;
+
+    font-size:.82rem;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+}
+
+.session-title h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:1.45rem;
+
+    font-weight:800;
+
+}
+
+.session-time{
+
+    font-size:2.2rem;
+
+    font-weight:900;
+
+    color:#84e7ff;
+
+    letter-spacing:2px;
+
+    text-shadow:
+        0 0 18px rgba(90,220,255,.35);
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+.session-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    background:
+        rgba(26,82,160,.28);
+
+    color:#7fd9ff;
+
+    font-weight:700;
+
+    font-size:.85rem;
+
+    letter-spacing:1px;
+
+}
+
+@media(max-width:768px){
+
+    .workout-session-bar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .session-time{
+
+        font-size:1.8rem;
+
+    }
+
+}

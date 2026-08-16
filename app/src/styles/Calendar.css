@@ -1,0 +1,1193 @@
+/* =========================================================
+   PROJECT DRIVE — TRAINING CALENDAR
+   System / Solo-Leveling-inspired activity interface
+========================================================= */
+
+.calendar-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 70px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.calendar-hero {
+  position: relative;
+  overflow: hidden;
+
+  margin-bottom: 22px;
+  padding: 30px 32px;
+
+  border: 1px solid rgba(76, 190, 255, 0.2);
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(51, 160, 255, 0.14),
+      transparent 40%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(12, 29, 52, 0.96),
+      rgba(5, 15, 29, 0.98)
+    );
+
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.22),
+    inset 0 0 35px rgba(72, 180, 255, 0.025);
+}
+
+.calendar-hero::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(86, 211, 255, 0.85),
+      transparent
+    );
+
+  box-shadow:
+    0 0 16px rgba(70, 198, 255, 0.55);
+}
+
+.calendar-system-label {
+  color: #65cfff;
+
+  font-size: 0.7rem;
+  font-weight: 900;
+
+  letter-spacing: 3.5px;
+
+  text-shadow:
+    0 0 12px rgba(75, 201, 255, 0.4);
+}
+
+.calendar-hero h2 {
+  margin: 8px 0 7px;
+
+  color: #f1f8ff;
+
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+
+  letter-spacing: -0.5px;
+}
+
+.calendar-hero p {
+  max-width: 620px;
+
+  margin: 0;
+
+  color: #819bb6;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   MONTHLY STAT CARDS
+========================================================= */
+
+.calendar-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 22px;
+}
+
+.calendar-stat-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 20px 22px;
+
+  border: 1px solid rgba(70, 166, 229, 0.15);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13, 29, 49, 0.9),
+      rgba(7, 18, 33, 0.94)
+    );
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.14);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.calendar-stat-card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(78, 199, 255, 0.32);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(51, 165, 255, 0.06);
+}
+
+.calendar-stat-card small {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #65809d;
+
+  font-size: 0.64rem;
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.calendar-stat-card strong {
+  color: #eaf7ff;
+
+  font-size: 1.65rem;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   MAIN CALENDAR WINDOW
+========================================================= */
+
+.calendar-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 26px;
+
+  border: 1px solid rgba(77, 187, 245, 0.18);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      150deg,
+      rgba(11, 27, 47, 0.97),
+      rgba(5, 15, 28, 0.98)
+    );
+
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.2),
+    inset 0 0 35px rgba(70, 176, 255, 0.02);
+}
+
+.calendar-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 18%;
+  right: 18%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #53c8ff,
+      transparent
+    );
+
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   MONTH HEADER
+========================================================= */
+
+.calendar-header {
+  display: grid;
+
+  grid-template-columns:
+    46px 1fr 46px;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-bottom: 26px;
+}
+
+.calendar-header > div {
+  text-align: center;
+}
+
+.calendar-header span {
+  color: #5985a8;
+
+  font-size: 0.63rem;
+  font-weight: 900;
+
+  letter-spacing: 2.8px;
+}
+
+.calendar-header h3 {
+  margin: 5px 0 0;
+
+  color: #f0f8ff;
+
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.calendar-header button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  border: 1px solid rgba(77, 184, 244, 0.2);
+  border-radius: 12px;
+
+  background:
+    rgba(24, 70, 106, 0.14);
+
+  color: #73d8ff;
+
+  font-size: 1.8rem;
+
+  cursor: pointer;
+
+  transition:
+    0.2s ease;
+}
+
+.calendar-header button:hover {
+  transform: scale(1.05);
+
+  border-color:
+    rgba(92, 211, 255, 0.6);
+
+  background:
+    rgba(47, 147, 209, 0.18);
+
+  box-shadow:
+    0 0 18px rgba(57, 184, 255, 0.12);
+}
+
+
+/* =========================================================
+   WEEKDAYS
+========================================================= */
+
+.calendar-weekdays {
+  display: grid;
+
+  grid-template-columns:
+    repeat(7, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-bottom: 8px;
+}
+
+.calendar-weekdays span {
+  padding: 7px 0;
+
+  color: #54718d;
+
+  text-align: center;
+
+  font-size: 0.63rem;
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   CALENDAR GRID
+========================================================= */
+
+.calendar-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(7, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+.calendar-day {
+  position: relative;
+
+  min-width: 0;
+  min-height: 96px;
+
+  padding: 12px;
+
+  border: 1px solid rgba(69, 115, 154, 0.13);
+  border-radius: 13px;
+
+  background:
+    rgba(9, 22, 38, 0.62);
+
+  color: #71879d;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.calendar-day:not(.empty):hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(72, 190, 246, 0.3);
+
+  background:
+    rgba(17, 46, 70, 0.75);
+}
+
+.calendar-day.empty {
+  border-color: transparent;
+
+  background: transparent;
+
+  cursor: default;
+}
+
+.calendar-number {
+  position: relative;
+  z-index: 2;
+
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   TRAINED DAY
+========================================================= */
+
+.calendar-day.trained {
+  border-color:
+    rgba(61, 190, 255, 0.34);
+
+  background:
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(39, 159, 255, 0.16),
+      transparent 65%
+    ),
+    rgba(10, 31, 50, 0.9);
+
+  color: #dff6ff;
+
+  box-shadow:
+    inset 0 0 18px rgba(54, 174, 255, 0.04);
+}
+
+.calendar-day.trained::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 0;
+  left: 18%;
+  right: 18%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #51d0ff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 9px rgba(75, 204, 255, 0.7);
+}
+
+.calendar-workout-marker {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform:
+    translate(-50%, -40%);
+
+  color: #58d3ff;
+
+  font-size: 1.45rem;
+
+  text-shadow:
+    0 0 12px rgba(73, 204, 255, 0.65);
+}
+
+.calendar-day.trained small {
+  position: absolute;
+
+  right: 9px;
+  bottom: 8px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 20px;
+  height: 20px;
+
+  padding: 0 5px;
+
+  border: 1px solid rgba(81, 205, 255, 0.25);
+  border-radius: 999px;
+
+  background:
+    rgba(38, 145, 209, 0.14);
+
+  color: #79dcff;
+
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+/* =========================================================
+   PERSONAL RECORD DAY
+========================================================= */
+
+.calendar-day.pr-day {
+  border-color:
+    rgba(255, 202, 76, 0.72);
+
+  background:
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255, 190, 47, 0.13),
+      transparent 65%
+    ),
+    rgba(18, 28, 39, 0.96);
+
+  box-shadow:
+    0 0 0 1px
+      rgba(255, 201, 74, 0.08),
+    0 0 20px
+      rgba(255, 187, 44, 0.11),
+    inset 0 0 18px
+      rgba(255, 199, 67, 0.04);
+}
+
+.calendar-day.pr-day::after {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ffd261,
+      transparent
+    );
+
+  box-shadow:
+    0 0 10px
+      rgba(255, 201, 72, 0.8);
+}
+
+.calendar-day.pr-day
+.calendar-workout-marker {
+  color: #ffd15b;
+
+  text-shadow:
+    0 0 12px
+      rgba(255, 195, 60, 0.65);
+}
+
+.calendar-pr-badge {
+  position: absolute;
+
+  left: 50%;
+  bottom: 8px;
+
+  transform:
+    translateX(-50%);
+
+  color: #ffd46b;
+
+  font-size: 0.52rem;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 0 9px
+      rgba(255, 194, 53, 0.55);
+}
+
+
+/* =========================================================
+   TODAY
+========================================================= */
+
+.calendar-day.today {
+  border-color:
+    rgba(112, 223, 255, 0.6);
+
+  box-shadow:
+    0 0 0 1px rgba(82, 194, 255, 0.08),
+    0 0 22px rgba(53, 171, 255, 0.12);
+}
+
+.calendar-day.today .calendar-number {
+  color: #8be7ff;
+}
+
+.calendar-day.today::before {
+  content: "TODAY";
+
+  position: absolute;
+
+  right: 8px;
+  top: 8px;
+
+  color: #57bfe9;
+
+  font-size: 0.48rem;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   SELECTED
+========================================================= */
+
+.calendar-day.selected {
+  transform: translateY(-2px);
+
+  border-color: #66d8ff;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(52, 178, 255, 0.18),
+      rgba(9, 30, 49, 0.96)
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(86, 212, 255, 0.1),
+    0 0 25px rgba(53, 182, 255, 0.17),
+    inset 0 0 20px rgba(66, 187, 255, 0.05);
+}
+
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.calendar-legend {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 28px;
+
+  margin-top: 20px;
+
+  color: #667e96;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.calendar-legend span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.calendar-legend i {
+  font-style: normal;
+}
+
+.legend-trained {
+  color: #5bd6ff;
+
+  text-shadow:
+    0 0 8px rgba(75, 203, 255, 0.5);
+}
+
+.legend-pr {
+  color: #ffd15b;
+
+  text-shadow:
+    0 0 8px
+      rgba(255, 195, 54, 0.55);
+}
+
+.legend-today {
+  color: #8be7ff;
+}
+
+
+/* =========================================================
+   DAILY DETAILS WINDOW
+========================================================= */
+
+.calendar-details {
+  position: relative;
+
+  overflow: hidden;
+
+  margin-top: 22px;
+
+  padding: 26px;
+
+  border: 1px solid rgba(75, 188, 247, 0.18);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(11, 28, 48, 0.96),
+      rgba(6, 16, 29, 0.98)
+    );
+
+  box-shadow:
+    0 16px 45px rgba(0, 0, 0, 0.18);
+
+  animation:
+    calendarDetailsIn 0.3s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.calendar-details::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 8%;
+  right: 8%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(79, 206, 255, 0.8),
+      transparent
+    );
+}
+
+.calendar-details-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+.calendar-details-header span {
+  color: #5ecbfa;
+
+  font-size: 0.62rem;
+  font-weight: 900;
+
+  letter-spacing: 2.5px;
+}
+
+.calendar-details-header h3 {
+  margin: 5px 0 0;
+
+  color: #edf8ff;
+
+  font-size: 1.35rem;
+}
+
+.calendar-details-header button {
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid rgba(75, 181, 238, 0.18);
+  border-radius: 10px;
+
+  background:
+    rgba(26, 76, 111, 0.12);
+
+  color: #6d9abb;
+
+  font-size: 1.4rem;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.calendar-details-header button:hover {
+  border-color:
+    rgba(92, 210, 255, 0.5);
+
+  color: #85e4ff;
+
+  box-shadow:
+    0 0 15px rgba(67, 190, 255, 0.1);
+}
+
+
+/* =========================================================
+   SESSION
+========================================================= */
+
+.calendar-session {
+  overflow: hidden;
+
+  margin-top: 14px;
+
+  border: 1px solid rgba(64, 142, 196, 0.14);
+  border-radius: 15px;
+
+  background:
+    rgba(7, 20, 35, 0.7);
+}
+
+.calendar-session-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 15px 18px;
+
+  border-bottom:
+    1px solid rgba(64, 130, 175, 0.1);
+}
+
+.calendar-session-top strong {
+  color: #68d2ff;
+
+  font-size: 0.68rem;
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.calendar-session-top span {
+  color: #718aa3;
+
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   EXERCISES
+========================================================= */
+
+.calendar-exercise {
+  padding: 16px 18px;
+
+  background:
+    rgba(7, 19, 33, 0.96);
+}
+
+.calendar-exercise-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 13px;
+}
+
+.calendar-exercise-header strong {
+  color: #dcecf7;
+
+  font-size: 0.92rem;
+}
+
+.calendar-exercise-header > span {
+  color: #63829d;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.calendar-set-list {
+  display: grid;
+
+  gap: 7px;
+}
+
+.calendar-set-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(58px, 1fr)
+    auto
+    18px
+    auto
+    minmax(45px, auto);
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 9px 11px;
+
+  border:
+    1px solid rgba(67, 139, 187, 0.1);
+
+  border-radius: 9px;
+
+  background:
+    rgba(14, 34, 52, 0.48);
+}
+
+.calendar-set-number {
+  color: #53738e;
+
+  font-size: 0.58rem;
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+}
+
+.calendar-set-row strong {
+  color: #dff5ff;
+
+  font-size: 0.82rem;
+}
+
+.calendar-set-x {
+  color: #4ebce9;
+
+  text-align: center;
+
+  font-size: 0.7rem;
+}
+
+.calendar-reps-label {
+  color: #58748c;
+
+  font-size: 0.55rem;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   REST / EMPTY DAY
+========================================================= */
+
+.calendar-rest-day {
+  padding: 36px 20px;
+
+  text-align: center;
+
+  border:
+    1px dashed rgba(69, 145, 194, 0.17);
+
+  border-radius: 15px;
+
+  background:
+    rgba(7, 19, 33, 0.42);
+}
+
+.calendar-rest-day > span {
+  color: #507d9d;
+
+  font-size: 2rem;
+}
+
+.calendar-rest-day h4 {
+  margin: 10px 0 5px;
+
+  color: #a9c2d6;
+}
+
+.calendar-rest-day p {
+  margin: 0;
+
+  color: #60778d;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes calendarDetailsIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .calendar-day {
+    min-height: 78px;
+
+    padding: 9px;
+  }
+
+  .calendar-workout-marker {
+    font-size: 1.15rem;
+  }
+
+  .calendar-day.today::before {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .calendar-page {
+    width:
+      min(
+        100% - 20px,
+        1180px
+      );
+
+    padding-top: 20px;
+  }
+
+  .calendar-hero {
+    padding: 24px 20px;
+  }
+
+  .calendar-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-card {
+    padding: 16px 10px;
+  }
+
+  .calendar-header {
+    grid-template-columns:
+      40px 1fr 40px;
+
+    gap: 8px;
+  }
+
+  .calendar-header button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .calendar-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .calendar-weekdays {
+    gap: 3px;
+  }
+
+  .calendar-weekdays span {
+    font-size: 0.52rem;
+
+    letter-spacing: 0;
+  }
+
+  .calendar-grid {
+    gap: 3px;
+  }
+
+  .calendar-day {
+    min-height: 58px;
+
+    padding: 6px;
+
+    border-radius: 8px;
+  }
+
+  .calendar-number {
+    font-size: 0.7rem;
+  }
+
+  .calendar-workout-marker {
+    font-size: 0.8rem;
+  }
+
+  .calendar-day.trained small {
+    display: none;
+  }
+
+  .calendar-legend {
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+  }
+
+  .calendar-details {
+    padding: 20px 15px;
+  }
+
+  .calendar-exercise {
+    padding: 13px 14px;
+  }
+
+}
+
+/* =========================================================
+   SESSION SUMMARY
+========================================================= */
+
+.calendar-session-summary {
+  padding: 20px 18px;
+
+  border-top:
+    1px solid rgba(74, 164, 216, 0.12);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 29, 47, 0.72),
+      rgba(7, 19, 33, 0.9)
+    );
+}
+
+.calendar-summary-label {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #5ecfff;
+
+  font-size: 0.62rem;
+  font-weight: 900;
+
+  letter-spacing: 2.2px;
+}
+
+.calendar-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+}
+
+.calendar-summary-grid > div {
+  padding: 13px 12px;
+
+  border:
+    1px solid rgba(69, 147, 197, 0.12);
+
+  border-radius: 10px;
+
+  background:
+    rgba(10, 25, 41, 0.68);
+}
+
+.calendar-summary-grid small {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #55738e;
+
+  font-size: 0.53rem;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+.calendar-summary-grid strong {
+  color: #dff5ff;
+
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+@media (max-width: 800px) {
+
+  .calendar-summary-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+}
+
+@media (max-width: 450px) {
+
+  .calendar-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

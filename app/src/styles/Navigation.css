@@ -1,0 +1,241 @@
+/* =========================================================
+   PROJECT DRIVE
+   Navigation.css
+=========================================================*/
+
+/* ==========================================
+   NAVIGATION BAR
+========================================== */
+
+.sl-nav{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:16px;
+
+    margin-bottom:42px;
+
+    padding:18px;
+
+    background:rgba(10,18,32,.88);
+
+    border:1px solid rgba(80,170,255,.12);
+
+    border-radius:24px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 0 26px rgba(40,120,255,.10);
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.sl-nav-btn{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    min-width:140px;
+
+    padding:15px 22px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:
+        rgba(22,36,60,.92);
+
+    color:#b8dfff;
+
+    font-weight:700;
+
+    font-size:.95rem;
+
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:
+        transform .25s,
+        background .25s,
+        box-shadow .25s;
+
+}
+
+/* glow strip */
+
+.sl-nav-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:linear-gradient(
+        180deg,
+        transparent,
+        #4cbcff,
+        transparent
+    );
+
+    opacity:0;
+
+    transition:.25s;
+
+}
+
+.sl-nav-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:
+        rgba(32,52,84,.95);
+
+    box-shadow:
+        0 0 24px rgba(70,180,255,.18);
+
+}
+
+.sl-nav-btn:hover::before{
+
+    opacity:1;
+
+}
+
+/* ==========================================
+   ACTIVE TAB
+========================================== */
+
+.sl-nav-btn.active{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #f6d46f,
+            #ffe58a
+        );
+
+    color:#08131f;
+
+    box-shadow:
+        0 0 26px rgba(246,212,111,.45);
+
+}
+
+.sl-nav-btn.active::before{
+
+    opacity:1;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #ffe58a,
+            #ffffff
+        );
+
+}
+
+/* ==========================================
+   ICONS
+========================================== */
+
+.nav-icon{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:1.2rem;
+
+    transition:.25s;
+
+}
+
+.sl-nav-btn:hover .nav-icon{
+
+    transform:scale(1.15);
+
+}
+
+.sl-nav-btn.active .nav-icon{
+
+    transform:scale(1.18);
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:900px){
+
+    .sl-nav{
+
+        gap:12px;
+
+        padding:14px;
+
+    }
+
+    .sl-nav-btn{
+
+        min-width:120px;
+
+        flex:1;
+
+    }
+
+}
+
+@media(max-width:650px){
+
+    .sl-nav{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .sl-nav-btn{
+
+        width:100%;
+
+        min-width:0;
+
+        justify-content:flex-start;
+
+    }
+
+}

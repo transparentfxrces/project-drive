@@ -1,0 +1,35 @@
+/* PROJECT DRIVE - Performance.css */
+
+.performance-page{display:flex;flex-direction:column;gap:32px;animation:performanceFade .4s ease}
+.performance-hero{padding:46px 34px;text-align:center;border-radius:26px;border:1px solid rgba(83,179,255,.18);background:radial-gradient(circle at top,rgba(66,170,255,.14),transparent 42%),linear-gradient(145deg,#081220,#11233b);box-shadow:0 0 28px rgba(42,125,255,.12)}
+.performance-system-tag{display:inline-block;color:#82d8ff;font-size:.75rem;font-weight:800;letter-spacing:3px;margin-bottom:12px}
+.performance-hero h1{margin:0 0 12px;color:#f6d46f;font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:3px}
+.performance-hero p{max-width:700px;margin:auto;color:#9ebad1;line-height:1.7}
+.performance-summary-grid,.performance-grid{display:grid;gap:22px}
+.performance-summary-grid{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.performance-grid{grid-template-columns:repeat(auto-fit,minmax(360px,1fr))}
+.profile-card{background:linear-gradient(145deg,#0b1728,#132741);border:1px solid rgba(78,170,255,.15);border-radius:22px;padding:24px;box-shadow:0 0 20px rgba(40,120,255,.08)}
+.profile-card>h3{margin:0 0 20px;color:#f6d46f;font-size:1.35rem}
+.pr-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pr-row:last-child{border-bottom:none}.pr-row span{color:#8fb4d1}.pr-row strong{color:#fff}
+.metric-card{margin-top:20px;padding:18px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(74,167,255,.12)}
+.metric-heading-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.metric-heading-row h4{margin:0;color:#fff}.metric-entry-count{color:#82d8ff;font-size:.8rem}
+.metric-input-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.metric-input-row input,.metric-card input[type=date]{width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(75,170,255,.15);background:#0f2137;color:#fff;outline:none}
+.metric-unit{color:#82d8ff;font-weight:700}
+.metric-save-button{width:100%;margin-top:12px;padding:12px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#2e8fff,#53d3ff);color:#fff;font-weight:800}
+.metric-save-button:hover{filter:brightness(1.08)}
+.metric-save-message{margin-top:10px;color:#6ee7a8;font-size:.85rem}
+.metric-latest-result{margin-top:14px;padding:14px;border-radius:12px;background:rgba(255,255,255,.03)}
+.metric-latest-result span,.metric-latest-result small{display:block;color:#8fb4d1}
+.metric-latest-result strong{color:#f6d46f;font-size:1.2rem}
+.metric-chart{margin-top:18px;padding:12px;border-radius:14px;background:#091827}
+.metric-chart-label{margin-top:8px;text-align:center;color:#82a3bf;font-size:.82rem}
+.metric-goal-section{margin-top:18px}.metric-goal-label{display:block;margin-bottom:8px;color:#82d8ff;font-weight:700}
+.goal-progress{width:100%;height:10px;margin-top:14px;overflow:hidden;border-radius:999px;background:#12263e}
+.goal-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#49b7ff,#f6d46f)}
+.goal-text,.goal-remaining,.goal-complete{margin-top:10px;text-align:center}
+.goal-text{color:#fff}.goal-remaining{color:#82d8ff}.goal-complete{color:#72ef9c;font-weight:800}
+@keyframes performanceFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:768px){.performance-grid,.performance-summary-grid{grid-template-columns:1fr}.metric-heading-row,.pr-row{flex-direction:column;align-items:flex-start;gap:6px}}

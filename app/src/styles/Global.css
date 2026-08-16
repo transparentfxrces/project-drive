@@ -1,0 +1,280 @@
+/* =========================================================
+   PROJECT DRIVE
+   Global.css
+=========================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap');
+
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg-dark);
+    color:var(--text-primary);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* ==========================================
+   APP
+========================================== */
+
+.app{
+    width:100%;
+    max-width:1280px;
+    margin:0 auto;
+    padding:32px;
+    min-height:100vh;
+}
+
+/* ==========================================
+   TYPOGRAPHY
+========================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navigation button{
+    font-family:'Orbitron',sans-serif;
+    letter-spacing:.04em;
+}
+
+h1{
+    font-size:2.4rem;
+    color:white;
+    margin-bottom:28px;
+    font-weight:800;
+}
+
+h2{
+    font-size:2rem;
+    color:white;
+    margin-bottom:24px;
+    font-weight:700;
+}
+
+h3{
+    font-size:1.25rem;
+    color:var(--blue-300);
+    margin-bottom:18px;
+    font-weight:700;
+}
+
+h4{
+    font-size:1rem;
+    color:var(--blue-300);
+    margin-bottom:14px;
+}
+
+p{
+    color:var(--text-primary);
+    line-height:1.7;
+}
+
+span{
+    color:inherit;
+}
+
+strong{
+    color:white;
+}
+
+/* ==========================================
+   LINKS
+========================================== */
+
+a{
+    color:var(--blue-400);
+    text-decoration:none;
+    transition:var(--transition-fast);
+}
+
+a:hover{
+    color:var(--blue-200);
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button{
+
+    font-family:'Inter',sans-serif;
+
+    background:var(--blue-700);
+
+    color:white;
+
+    border:none;
+
+    border-radius:var(--radius-sm);
+
+    padding:13px 20px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        transform var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:var(--blue-600);
+
+    box-shadow:var(--shadow-small);
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+input,
+select{
+
+    width:100%;
+
+    background:var(--bg-primary);
+
+    color:white;
+
+    border:var(--border);
+
+    border-radius:var(--radius-sm);
+
+    padding:13px;
+
+    font-size:15px;
+
+    transition:
+        border var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+
+}
+
+input::placeholder{
+    color:var(--text-muted);
+}
+
+input:focus,
+select:focus{
+
+    outline:none;
+
+    transform:scale(1.01);
+
+    border:1px solid var(--blue-400);
+
+    box-shadow:
+        0 0 10px rgba(70,170,255,.30);
+
+}
+
+/* ==========================================
+   LISTS
+========================================== */
+
+ul,
+ol{
+    padding-left:20px;
+}
+
+li{
+    color:var(--text-primary);
+}
+
+/* ==========================================
+   HR
+========================================== */
+
+hr{
+    border:none;
+    height:1px;
+    background:rgba(255,255,255,.08);
+    margin:24px 0;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#08111d;
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--blue-700);
+    border-radius:999px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue-400);
+}
+
+/* ==========================================
+   TEXT SELECTION
+========================================== */
+
+::selection{
+    background:var(--blue-700);
+    color:white;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:900px){
+
+    .app{
+        padding:20px;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+
+    h2{
+        font-size:1.7rem;
+    }
+
+}

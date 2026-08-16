@@ -1,0 +1,299 @@
+/* =========================================================
+   PROJECT DRIVE
+   Achievements.css
+=========================================================*/
+
+/* ==========================================
+   ACHIEVEMENTS PAGE
+========================================== */
+
+.achievements-page{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:28px;
+
+}
+
+/* ==========================================
+   ACHIEVEMENT GRID
+========================================== */
+
+.achievement-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(260px,1fr));
+
+    gap:22px;
+
+}
+
+/* ==========================================
+   ACHIEVEMENT CARD
+========================================== */
+
+.achievement-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    text-align:center;
+
+    gap:18px;
+
+    padding:30px 24px;
+
+    background:rgba(18,34,60,.92);
+
+    border:1px solid rgba(70,150,255,.15);
+
+    border-radius:22px;
+
+    transition:var(--transition);
+
+}
+
+.achievement-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:2px;
+
+    background:var(--gradient-blue);
+
+}
+
+.achievement-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:var(--blue-400);
+
+    box-shadow:
+        0 0 28px rgba(37,99,235,.25);
+
+}
+
+/* ==========================================
+   ICON
+========================================== */
+
+.achievement-icon{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:82px;
+
+    height:82px;
+
+    border-radius:50%;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(25,118,210,.18),
+            rgba(70,180,255,.12)
+        );
+
+    color:var(--gold);
+
+    font-size:2rem;
+
+    box-shadow:
+        0 0 18px rgba(255,215,0,.18);
+
+}
+
+/* ==========================================
+   TEXT
+========================================== */
+
+.achievement-card h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:1.2rem;
+
+}
+
+.achievement-card p{
+
+    margin:0;
+
+    color:var(--text-secondary);
+
+    line-height:1.6;
+
+}
+
+/* ==========================================
+   XP REWARD
+========================================== */
+
+.achievement-reward{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    background:#3a2d08;
+
+    color:var(--gold);
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.achievement-status{
+
+    width:100%;
+
+    margin-top:auto;
+
+}
+
+.achievement-status.completed{
+
+    color:var(--green);
+
+    font-weight:700;
+
+}
+
+.achievement-status.locked{
+
+    color:var(--text-secondary);
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   LOCKED CARD
+========================================== */
+
+.achievement-card.locked{
+
+    opacity:.65;
+
+    filter:grayscale(.35);
+
+}
+
+.achievement-card.locked:hover{
+
+    transform:none;
+
+    box-shadow:none;
+
+}
+
+/* ==========================================
+   COMPLETED CARD
+========================================== */
+
+.achievement-card.completed{
+
+    border-color:rgba(255,215,0,.28);
+
+}
+
+.achievement-card.completed::before{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #FFD700,
+            #FFE66D
+        );
+
+}
+
+.achievement-card.completed .achievement-icon{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,215,0,.15),
+            rgba(255,255,255,.08)
+        );
+
+}
+
+/* ==========================================
+   PROGRESS
+========================================== */
+
+.achievement-progress{
+
+    width:100%;
+
+    margin-top:10px;
+
+}
+
+.achievement-progress-text{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:8px;
+
+    color:var(--blue-300);
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .achievement-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

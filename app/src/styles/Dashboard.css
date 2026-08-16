@@ -1,0 +1,1225 @@
+/* =========================================================
+   PROJECT DRIVE
+   Dashboard.css
+=========================================================*/
+
+/* ===========================
+   DASHBOARD LAYOUT
+=========================== */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+    margin:38px 0;
+    align-items:stretch;
+}
+
+/* ===========================
+   STAT CARDS
+=========================== */
+
+.stat-card{
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:165px;
+    padding:28px;
+    text-align:center;
+    background:linear-gradient(160deg,#101b2d,#0b1321);
+    border:1px solid #295b9b;
+    border-radius:22px;
+    transition:var(--transition);
+}
+
+.stat-card::before{
+    content:"";
+    position:absolute;
+    top:-50px;
+    right:-50px;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(80,180,255,.18),transparent 70%);
+}
+
+.stat-card:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 0 30px rgba(60,160,255,.28);
+}
+
+.stat-card:nth-child(1){border-left:4px solid #ff8a00;}
+.stat-card:nth-child(2){border-left:4px solid #29b6f6;}
+.stat-card:nth-child(3){border-left:4px solid #66bb6a;}
+.stat-card:nth-child(4){border-left:4px solid #ffd54f;}
+
+.stat-card h3{
+    margin-bottom:18px;
+    font-size:.85rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#79beff;
+}
+
+.stat-card p{
+    margin:0;
+    font-size:2.7rem;
+    font-weight:900;
+    color:#fff;
+    text-shadow:0 0 15px rgba(80,180,255,.18);
+}
+
+/* ===========================
+   GENERIC DASHBOARD CARD
+=========================== */
+
+.dashboard-card{
+    position:relative;
+    overflow:hidden;
+    padding:26px;
+    margin-bottom:28px;
+    background:rgba(8,18,35,.82);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(70,150,255,.22);
+    border-radius:22px;
+    box-shadow:0 0 18px rgba(30,120,255,.12),inset 0 0 0 1px rgba(255,255,255,.02);
+    transition:var(--transition);
+}
+
+.dashboard-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:2px;
+    background:linear-gradient(90deg,transparent,#2fa7ff,#7fe3ff,transparent);
+}
+
+.dashboard-card:hover{
+    transform:translateY(-6px);
+    border-color:#3ca6ff;
+    box-shadow:0 0 26px rgba(60,170,255,.30),0 0 55px rgba(30,120,255,.18);
+}
+
+.dashboard-card h3{
+    margin-bottom:18px;
+    color:#78c8ff;
+    font-size:1.15rem;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.dashboard-card p{
+    line-height:1.7;
+    color:#d3e8ff;
+}
+
+.dashboard-card strong{
+    color:#fff;
+}
+
+/* ===========================
+   XP CARD
+=========================== */
+
+.xp-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(160deg,rgba(10,22,40,.92),rgba(18,34,58,.88));
+    border:1px solid rgba(70,150,255,.22);
+}
+
+.xp-card::before{
+    content:"";
+    position:absolute;
+    top:-80px;
+    right:-80px;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(90,180,255,.25),transparent 70%);
+}
+
+.xp-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.xp-header h3{
+    margin-bottom:4px;
+    font-size:1.7rem;
+    font-weight:800;
+    color:#fff;
+}
+
+.xp-header p{
+    margin:0;
+    color:#9ecfff;
+}
+
+.xp-percent{
+    font-size:2.1rem;
+    font-weight:900;
+    color:#7de7ff;
+    text-shadow:0 0 15px rgba(100,230,255,.35);
+}
+
+.xp-progress-bar{
+    height:22px;
+    padding:3px;
+    overflow:hidden;
+    background:#10253f;
+    border:1px solid rgba(90,170,255,.15);
+    border-radius:999px;
+}
+
+.xp-progress-fill{
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,#1c7cff,#43c6ff,#82f4ff);
+    box-shadow:0 0 22px rgba(70,200,255,.55);
+}
+
+/* ===========================
+   WEEKLY GOAL
+=========================== */
+
+.weekly-goal-card{
+    background:linear-gradient(145deg,rgba(12,28,48,.92),rgba(20,40,70,.88));
+}
+
+.weekly-goal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+}
+
+.weekly-goal-header h3{
+    margin-bottom:8px;
+    color:#fff;
+    font-size:1.3rem;
+}
+
+.weekly-goal-header p{
+    margin:0;
+    color:#a8ceff;
+}
+
+.weekly-goal-percent{
+    font-size:2rem;
+    font-weight:900;
+    color:#7be5ff;
+}
+
+.goal-progress-bar{
+    height:18px;
+    margin-top:16px;
+    padding:3px;
+    overflow:hidden;
+    background:#10253d;
+    border-radius:999px;
+}
+
+.goal-progress-fill{
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,#1976d2,#48c3ff,#7ff0ff);
+    box-shadow:0 0 18px rgba(80,200,255,.45);
+}
+
+.weekly-goal-footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    color:#cde8ff;
+    font-weight:600;
+}
+
+.weekly-goal-complete{
+    color:#63ff9b;
+    font-weight:800;
+}
+
+/* ===========================
+   QUESTS
+=========================== */
+
+.quest-reset{
+    margin-bottom:20px;
+    color:#79bfff;
+    font-size:.92rem;
+}
+
+.quest-card{
+    background:linear-gradient(160deg,rgba(16,29,49,.92),rgba(10,20,36,.88));
+    border:1px solid rgba(60,150,255,.16);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:18px;
+    transition:var(--transition);
+}
+
+.quest-card:hover{
+    transform:translateY(-4px);
+    border-color:#49a8ff;
+    box-shadow:0 0 18px rgba(70,170,255,.20);
+}
+
+.quest-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.quest-title{
+    margin:0;
+    color:#fff;
+    font-size:1.05rem;
+    font-weight:700;
+}
+
+.quest-description{
+    margin:0 0 16px;
+    color:#9fcfff;
+    line-height:1.45;
+}
+
+.quest-progress{
+    width:100%;
+    height:12px;
+    margin:14px 0 10px;
+    background:#12253f;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.quest-progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,#1976d2,#48c5ff);
+}
+
+.quest-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+}
+
+.quest-progress-text{
+    color:#bfe1ff;
+    font-weight:600;
+}
+
+.quest-xp{
+    padding:6px 12px;
+    border-radius:999px;
+    background:#2d2100;
+    color:#ffd64d;
+    font-weight:700;
+}
+
+.quest-card.completed{
+    border-color:#39d96c;
+    box-shadow:0 0 22px rgba(70,255,150,.18);
+}
+
+.quest-card.completed .quest-progress-fill{
+    background:linear-gradient(90deg,#33d96a,#75ff9f);
+}
+
+.quest-complete{
+    color:#6dffab;
+    font-weight:700;
+}
+
+/* ===========================
+   ACHIEVEMENTS
+=========================== */
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+    margin-top:20px;
+}
+
+.achievement-card{
+    background:linear-gradient(160deg,rgba(15,28,46,.92),rgba(10,20,35,.88));
+    border:1px solid rgba(60,150,255,.15);
+    border-radius:18px;
+    padding:18px;
+    transition:var(--transition);
+}
+
+.achievement-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 20px rgba(60,170,255,.18);
+}
+
+.achievement-info{
+    flex:1;
+}
+
+.achievement-info h4{
+    margin:0 0 6px;
+    color:#fff;
+}
+
+.achievement-info p{
+    margin:0;
+    color:#a7ceff;
+    line-height:1.45;
+}
+
+.rarity{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 12px;
+    border-radius:999px;
+    font-size:.75rem;
+    font-weight:700;
+}
+
+.locked{
+    opacity:.35;
+    filter:grayscale(100%);
+}
+
+.unlocked{
+    opacity:1;
+}
+
+.achievement-card.unlocked{
+    box-shadow:0 0 18px rgba(0,120,255,.15),0 0 35px rgba(0,120,255,.08);
+}
+
+/* ===========================
+   PERSONAL RECORDS
+=========================== */
+
+.goal-box{
+    background:#111827;
+    border:1px solid rgba(59,130,246,.25);
+    border-radius:12px;
+    padding:12px 16px;
+    margin-bottom:12px;
+    color:#dbeafe;
+    font-weight:500;
+    box-shadow:0 0 12px rgba(59,130,246,.18);
+}
+
+/* ===========================
+   CARD SPACING
+=========================== */
+
+.dashboard-card>*+*{
+    margin-top:18px;
+}
+
+/* ===========================
+   STAGGER ANIMATION
+=========================== */
+
+.dashboard-card:nth-child(1){animation-delay:.05s;}
+.dashboard-card:nth-child(2){animation-delay:.10s;}
+.dashboard-card:nth-child(3){animation-delay:.15s;}
+.dashboard-card:nth-child(4){animation-delay:.20s;}
+.dashboard-card:nth-child(5){animation-delay:.25s;}
+.dashboard-card:nth-child(6){animation-delay:.30s;}
+.dashboard-card:nth-child(7){animation-delay:.35s;}
+
+/* =========================================================
+   ATHLETE STATUS
+========================================================= */
+
+.athlete-status-card {
+  position: relative;
+  overflow: hidden;
+
+  margin-bottom: 20px;
+}
+
+.athlete-status-card::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(72, 202, 255, 0.85),
+      transparent
+    );
+
+  box-shadow:
+    0 0 14px
+      rgba(68, 194, 255, 0.4);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.athlete-status-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.athlete-status-header h3 {
+  margin: 6px 0 0;
+
+  color: #dff5ff;
+
+  font-size: 1rem;
+}
+
+
+/* =========================================================
+   READINESS BADGE
+========================================================= */
+
+.dashboard-readiness-badge {
+  padding: 7px 12px;
+
+  border-radius: 7px;
+
+  font-size: 0.6rem;
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+
+  white-space: nowrap;
+}
+
+
+/* READY */
+
+.dashboard-readiness-badge.ready {
+  border:
+    1px solid rgba(72, 221, 168, 0.3);
+
+  background:
+    rgba(47, 183, 135, 0.1);
+
+  color: #69dfb5;
+
+  box-shadow:
+    0 0 14px
+      rgba(54, 213, 158, 0.08);
+}
+
+
+/* LIGHT DAY */
+
+.dashboard-readiness-badge.light-day {
+  border:
+    1px solid rgba(255, 195, 84, 0.3);
+
+  background:
+    rgba(222, 156, 45, 0.1);
+
+  color: #ffd071;
+
+  box-shadow:
+    0 0 14px
+      rgba(241, 172, 59, 0.08);
+}
+
+
+/* RECOVERY */
+
+.dashboard-readiness-badge.recovery {
+  border:
+    1px solid rgba(255, 105, 105, 0.28);
+
+  background:
+    rgba(207, 69, 69, 0.1);
+
+  color: #ff8b8b;
+
+  box-shadow:
+    0 0 14px
+      rgba(234, 79, 79, 0.07);
+}
+
+
+/* =========================================================
+   STATUS GRID
+========================================================= */
+
+.athlete-status-grid {
+  display: grid;
+
+  grid-template-columns:
+    1.6fr
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   MAIN RECOVERY STATUS
+========================================================= */
+
+.athlete-status-main {
+  position: relative;
+
+  padding: 18px;
+
+  border:
+    1px solid rgba(65, 158, 211, 0.18);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 48, 73, 0.65),
+      rgba(7, 23, 39, 0.82)
+    );
+
+  overflow: hidden;
+}
+
+.athlete-status-main::after {
+  content: "";
+
+  position: absolute;
+
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(67, 188, 241, 0.28),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.athlete-status-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #577a94;
+
+  font-size: 0.53rem;
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+}
+
+
+/* =========================================================
+   RECOVERY SCORE
+========================================================= */
+
+.athlete-recovery-score {
+  margin-bottom: 8px;
+
+  color: #e4f7ff;
+
+  font-size: 2rem;
+  font-weight: 900;
+
+  line-height: 1;
+}
+
+.athlete-recovery-score span {
+  margin-left: 3px;
+
+  color: #57788f;
+
+  font-size: 0.72rem;
+}
+
+.athlete-status-main p {
+  max-width: 430px;
+
+  margin: 0;
+
+  color: #829eb1;
+
+  font-size: 0.74rem;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   STATUS DETAILS
+========================================================= */
+
+.athlete-status-detail {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+
+  min-height: 110px;
+
+  padding: 18px;
+
+  border:
+    1px solid rgba(63, 143, 194, 0.13);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(11, 32, 52, 0.76),
+      rgba(7, 20, 35, 0.86)
+    );
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.athlete-status-detail:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(72, 183, 235, 0.26);
+
+  box-shadow:
+    0 8px 24px
+      rgba(0, 0, 0, 0.13);
+}
+
+.athlete-status-detail strong {
+  margin-bottom: 5px;
+
+  color: #dceffa;
+
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.athlete-status-detail small {
+  color: #5d7d94;
+
+  font-size: 0.65rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .athlete-status-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+  .athlete-status-main {
+    grid-column:
+      1 / -1;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .athlete-status-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .athlete-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .athlete-status-main {
+    grid-column: auto;
+  }
+
+}
+
+/* =========================================================
+   LATEST WORKOUT — SESSION REPORT
+========================================================= */
+
+.latest-workout-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.latest-workout-card::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(72, 202, 255, 0.85),
+      transparent
+    );
+
+  box-shadow:
+    0 0 14px
+      rgba(68, 194, 255, 0.4);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.latest-workout-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 12px;
+}
+
+.latest-workout-header h3 {
+  margin: 6px 0 0;
+
+  color: #dff5ff;
+}
+
+.latest-workout-complete {
+  padding: 7px 11px;
+
+  border:
+    1px solid rgba(72, 221, 168, 0.3);
+
+  border-radius: 7px;
+
+  background:
+    rgba(47, 183, 135, 0.1);
+
+  color: #69dfb5;
+
+  font-size: 0.58rem;
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+
+  box-shadow:
+    0 0 14px
+      rgba(54, 213, 158, 0.08);
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.latest-workout-date {
+  margin-bottom: 18px;
+
+  color: #607f96;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SESSION STATS
+========================================================= */
+
+.latest-workout-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+
+  margin-bottom: 22px;
+}
+
+.latest-workout-stats > div {
+  position: relative;
+
+  padding: 15px;
+
+  border:
+    1px solid rgba(64, 145, 195, 0.14);
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(11, 34, 54, 0.76),
+      rgba(6, 20, 34, 0.86)
+    );
+
+  overflow: hidden;
+}
+
+.latest-workout-stats > div::after {
+  content: "";
+
+  position: absolute;
+
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(71, 184, 235, 0.22),
+      transparent
+    );
+}
+
+.latest-workout-stats span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #54758d;
+
+  font-size: 0.5rem;
+  font-weight: 900;
+
+  letter-spacing: 1.1px;
+}
+
+.latest-workout-stats strong {
+  color: #e1f5ff;
+
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.latest-workout-stats small {
+  margin-left: 4px;
+
+  color: #59788e;
+
+  font-size: 0.58rem;
+}
+
+
+/* =========================================================
+   EXERCISE BREAKDOWN
+========================================================= */
+
+.latest-workout-section-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #4caed8;
+
+  font-size: 0.53rem;
+  font-weight: 900;
+
+  letter-spacing: 1.4px;
+}
+
+.latest-workout-exercises {
+  margin-bottom: 14px;
+}
+
+.latest-exercise-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 12px 4px;
+
+  border-bottom:
+    1px solid rgba(77, 137, 172, 0.1);
+}
+
+.latest-exercise-row:last-child {
+  border-bottom: none;
+}
+
+.latest-exercise-row > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.latest-exercise-row strong {
+  color: #bcd7e7;
+
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.latest-exercise-row small {
+  color: #55758c;
+
+  font-size: 0.62rem;
+}
+
+.latest-exercise-row > span {
+  flex-shrink: 0;
+
+  padding: 5px 8px;
+
+  border:
+    1px solid rgba(73, 164, 210, 0.13);
+
+  border-radius: 6px;
+
+  background:
+    rgba(10, 31, 48, 0.7);
+
+  color: #8bd8f6;
+
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   HEAVIEST SET
+========================================================= */
+
+.latest-heaviest-set {
+  display: grid;
+
+  grid-template-columns:
+    auto 1fr auto;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  border:
+    1px solid rgba(240, 191, 78, 0.22);
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(78, 57, 15, 0.18),
+      rgba(19, 28, 37, 0.72)
+    );
+
+  box-shadow:
+    inset 0 0 20px
+      rgba(238, 185, 63, 0.025);
+}
+
+.latest-heaviest-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border:
+    1px solid rgba(241, 194, 82, 0.2);
+
+  border-radius: 8px;
+
+  background:
+    rgba(229, 173, 45, 0.08);
+
+  font-size: 0.9rem;
+}
+
+.latest-heaviest-set > div:nth-child(2) {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.latest-heaviest-set > div:nth-child(2) span {
+  color: #8e7442;
+
+  font-size: 0.48rem;
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+}
+
+.latest-heaviest-set > div:nth-child(2) strong {
+  color: #d9c28c;
+
+  font-size: 0.78rem;
+}
+
+.latest-heaviest-value {
+  color: #ffd778;
+
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.latest-heaviest-value small {
+  color: #a88b50;
+
+  font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.latest-workout-empty {
+  padding: 28px 20px;
+
+  border:
+    1px dashed rgba(68, 149, 198, 0.18);
+
+  border-radius: 10px;
+
+  background:
+    rgba(7, 21, 35, 0.4);
+
+  text-align: center;
+}
+
+.latest-workout-empty > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #4c89aa;
+
+  font-size: 1.4rem;
+}
+
+.latest-workout-empty p {
+  margin: 0;
+
+  color: #607f94;
+
+  font-size: 0.76rem;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+    .xp-header,
+    .weekly-goal-header,
+    .weekly-goal-footer,
+    .quest-header,
+    .quest-footer{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .achievement-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .dashboard-card,
+    .stat-card{
+        padding:20px;
+    }
+
+    .stat-card{
+        min-height:140px;
+    }
+
+    .stat-card p{
+        font-size:2.2rem;
+    }
+
+    .xp-percent,
+    .weekly-goal-percent{
+        font-size:1.6rem;
+    }
+
+    .xp-header h3,
+    .weekly-goal-header h3{
+        font-size:1.2rem;
+    }
+}
