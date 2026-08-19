@@ -32,6 +32,7 @@ import PerformancePage from "./pages/PerformancePage";
 import WorkoutSummaryPage from "./pages/WorkoutSummaryPage";
 import CoachingPage from "./pages/CoachingPage";
 import CalendarPage from "./pages/CalendarPage";
+import AuthPage from "./pages/AuthPage";
 
 import exerciseLibrary from "./data/exerciseLibrary";
 import footballProgram from "./data/footballProgram";
@@ -544,7 +545,8 @@ setPage("summary");
 
   }
 
-
+  // Temporary authentication screen test
+return <AuthPage />;
 
   return (
 
