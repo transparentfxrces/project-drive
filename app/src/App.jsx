@@ -34,6 +34,9 @@ import CoachingPage from "./pages/CoachingPage";
 import CalendarPage from "./pages/CalendarPage";
 import AuthPage from "./pages/AuthPage";
 
+import { supabase } from "./services/supabase";
+import { signOut } from "./services/auth";
+
 import exerciseLibrary from "./data/exerciseLibrary";
 import footballProgram from "./data/footballProgram";
 
@@ -146,7 +149,47 @@ function App(){
 const [page,setPage] =
 useState("dashboard");
 
+const [user, setUser] =
+  useState(null);
+
+const [authLoading, setAuthLoading] =
+  useState(true);
+
 const [timeNow, setTimeNow] = useState(Date.now());
+
+useEffect(() => {
+  async function checkSession() {
+    const {
+      data: { session },
+    } =
+      await supabase.auth.getSession();
+
+    setUser(
+      session?.user ?? null
+    );
+
+    setAuthLoading(false);
+  }
+
+  checkSession();
+
+  const {
+    data: { subscription },
+  } =
+    supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(
+          session?.user ?? null
+        );
+
+        setAuthLoading(false);
+      }
+    );
+
+  return () => {
+    subscription.unsubscribe();
+  };
+}, []);
 
 useEffect(() => {
 
@@ -545,8 +588,41 @@ setPage("summary");
 
   }
 
-  // Temporary authentication screen test
-return <AuthPage />;
+  async function handleSignOut() {
+  try {
+    await signOut();
+    setPage("dashboard");
+  } catch (error) {
+    console.error(
+      "Sign out failed:",
+      error
+    );
+  }
+}
+
+  if (authLoading) {
+  return (
+    <div className="auth-page">
+      <div className="auth-panel">
+        <div className="auth-eyebrow">
+          PROJECT DRIVE
+        </div>
+
+        <h1 className="auth-title">
+          CONNECTING...
+        </h1>
+
+        <p className="auth-subtitle">
+          Verifying athlete session.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+if (!user) {
+  return <AuthPage />;
+}
 
   return (
 
@@ -555,14 +631,18 @@ return <AuthPage />;
 
       <Header {...player}/>
 
+<button
+  type="button"
+  className="sign-out-button"
+  onClick={handleSignOut}
+>
+  SIGN OUT
+</button>
 
-      <Navigation
-
-        page={page}
-
-        setPage={setPage}
-
-      />
+<Navigation
+  page={page}
+  setPage={setPage}
+/>
 
 
 
