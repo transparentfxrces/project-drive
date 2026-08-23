@@ -240,23 +240,68 @@
 
 }
 
-.sign-out-button {
+.account-control {
   position: fixed;
-  top: 18px;
+  top: 16px;
   right: 22px;
   z-index: 1000;
 
-  padding: 9px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 8px;
+  padding: 9px 11px 9px 14px;
 
-  background: rgba(12, 16, 27, 0.9);
-  color: #9ba8c4;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+
+  background: rgba(10, 14, 24, 0.94);
+
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.account-info span {
+  color: #66738d;
+
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+}
+
+.account-info strong {
+  max-width: 180px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #c4cee1;
 
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
+  font-weight: 600;
+}
+
+.sign-out-button {
+  padding: 8px 12px;
+
+  border: 1px solid rgba(105, 135, 255, 0.35);
+  border-radius: 7px;
+
+  background: rgba(40, 55, 100, 0.45);
+  color: #9fb2ff;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
 
   cursor: pointer;
 
@@ -269,8 +314,10 @@
 
 .sign-out-button:hover {
   color: #ffffff;
-  border-color: rgba(105, 135, 255, 0.55);
-  background: rgba(40, 55, 100, 0.9);
+
+  border-color: rgba(105, 135, 255, 0.7);
+
+  background: rgba(55, 75, 140, 0.7);
 
   transform: translateY(-1px);
 }
@@ -280,12 +327,28 @@
 }
 
 @media (max-width: 700px) {
-  .sign-out-button {
-    top: 12px;
-    right: 12px;
+  .account-control {
+    top: 10px;
+    right: 10px;
 
-    padding: 7px 10px;
+    gap: 8px;
+
+    padding: 7px 8px 7px 10px;
+  }
+
+  .account-info strong {
+    max-width: 110px;
 
     font-size: 9px;
+  }
+
+  .account-info span {
+    font-size: 7px;
+  }
+
+  .sign-out-button {
+    padding: 7px 9px;
+
+    font-size: 8px;
   }
 }

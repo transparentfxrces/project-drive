@@ -631,13 +631,29 @@ if (!user) {
 
       <Header {...player}/>
 
-<button
-  type="button"
-  className="sign-out-button"
-  onClick={handleSignOut}
->
-  SIGN OUT
-</button>
+<div className="account-control">
+
+  <div className="account-info">
+
+    <span>
+      ATHLETE ACCOUNT
+    </span>
+
+    <strong>
+      {user.email}
+    </strong>
+
+  </div>
+
+  <button
+    type="button"
+    className="sign-out-button"
+    onClick={handleSignOut}
+  >
+    SIGN OUT
+  </button>
+
+</div>
 
 <Navigation
   page={page}
