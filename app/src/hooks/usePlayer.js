@@ -63,6 +63,7 @@ export default function usePlayer() {
         weight: data.weight ?? prev.weight,
         dominantHand: data.dominant_hand ?? prev.dominantHand,
         gpa: data.gpa ?? prev.gpa,
+        seasonGoals: data.season_goals ?? prev.seasonGoals,
       }));
 
       setLoading(false);
@@ -104,14 +105,35 @@ export default function usePlayer() {
     }
   }
 
-  function updateSeasonGoal(index, value) {
-    setPlayer((prev) => ({
-      ...prev,
-      seasonGoals: prev.seasonGoals.map((goal, i) =>
-        i === index ? value : goal
-      ),
-    }));
+  async function updateSeasonGoal(index, value) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const updatedGoals = player.seasonGoals.map((goal, i) =>
+    i === index ? value : goal
+  );
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({
+      season_goals: updatedGoals,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", user.id);
+
+  if (error) {
+    console.error("Error updating season goals:", error);
+    return;
   }
+
+  setPlayer((prev) => ({
+    ...prev,
+    seasonGoals: updatedGoals,
+  }));
+}
 
   return {
     player,
