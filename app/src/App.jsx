@@ -483,110 +483,100 @@ function toggleFavorite(exerciseName) {
 }
 
 
-  function finishWorkout(){
+function finishWorkout(){
 
+  if(currentWorkout.length===0){
 
-    if(currentWorkout.length===0){
+    alert("No workout yet.");
 
-      alert("No workout yet.");
-
-      return;
-
-    }
-
-
-
-    const workout = {
-
-  id: crypto.randomUUID(),
-
-  date: new Date().toISOString(),
-
-  duration: elapsedTime,
-
-  exercises: structuredClone(currentWorkout)
-
-};
-
-
-
-    const updatedHistory=[
-
-      workout,
-
-      ...workoutHistory
-
-    ];
-
-
-
-    setWorkoutHistory(updatedHistory);
-
-    syncPerformanceFromWorkout(
-  workout,
-  metrics,
-  setMetrics,
-  performanceHistory,
-  setPerformanceHistory,
-  
-  (pr) => {
-    setNewPR(pr);
+    return;
   }
 
-);
+  const workout = {
 
+    id: crypto.randomUUID(),
 
+    date: new Date().toISOString(),
 
-    unlockWorkout(
-  updatedHistory,
-  favoriteExercises
-);
+    duration: elapsedTime,
 
-const workoutLoad =
-  currentWorkout.reduce(
-    (total, exercise) =>
-      total + exercise.sets.length,
-    0
+    exercises: structuredClone(currentWorkout)
+
+  };
+
+  const updatedHistory=[
+
+    workout,
+
+    ...workoutHistory
+
+  ];
+
+  setWorkoutHistory(updatedHistory);
+
+  syncPerformanceFromWorkout(
+    workout,
+    metrics,
+    setMetrics,
+    performanceHistory,
+    setPerformanceHistory,
+
+    (pr) => {
+      setNewPR(pr);
+    }
   );
 
-let recoveryPenalty = 0;
+  unlockWorkout(
+    updatedHistory,
+    favoriteExercises
+  );
 
-if (workoutLoad >= 25)
-  recoveryPenalty = 12;
+  const workoutLoad =
+    currentWorkout.reduce(
+      (total, exercise) =>
+        total + exercise.sets.length,
+      0
+    );
 
-else if (workoutLoad >= 18)
-  recoveryPenalty = 8;
+  let recoveryPenalty = 0;
 
-else if (workoutLoad >= 10)
-  recoveryPenalty = 5;
+  if (workoutLoad >= 25)
+    recoveryPenalty = 12;
 
-else recoveryPenalty = 2;
+  else if (workoutLoad >= 18)
+    recoveryPenalty = 8;
 
-updateRecovery(
-  "energy",
-  Math.max(
-    1,
-    Number(recovery.energy) -
-      Math.ceil(recoveryPenalty / 3)
-  )
-);
+  else if (workoutLoad >= 10)
+    recoveryPenalty = 5;
 
-updateRecovery(
-  "soreness",
-  Math.min(
-    10,
-    Number(recovery.soreness) +
-      Math.ceil(recoveryPenalty / 4)
-  )
-);
+  else
+    recoveryPenalty = 2;
 
-    setWorkoutSummary(workout);
+  updateRecovery(
+    "energy",
+    Math.max(
+      1,
+      Number(recovery.energy) -
+        Math.ceil(recoveryPenalty / 3)
+    )
+  );
 
-clearWorkout();
+  updateRecovery(
+    "soreness",
+    Math.min(
+      10,
+      Number(recovery.soreness) +
+        Math.ceil(recoveryPenalty / 4)
+    )
+  );
 
-setPage("summary");
+  setWorkoutSummary(workout);
 
-  }
+  clearWorkout();
+
+  setPage("summary");
+
+}
 
   async function handleSignOut() {
   try {

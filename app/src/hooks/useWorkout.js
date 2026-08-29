@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "../services/supabase";
 
 export default function useWorkout(metrics, footballProgram) {
   const [currentWorkout, setCurrentWorkout] = useState(() => {
@@ -6,16 +7,7 @@ export default function useWorkout(metrics, footballProgram) {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [workoutHistory, setWorkoutHistory] = useState(() => {
-    const saved = localStorage.getItem("workoutHistory");
-
-    try {
-      const parsed = JSON.parse(saved);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  });
+  const [workoutHistory, setWorkoutHistory] = useState([]);
 
   const [exercise, setExercise] = useState("");
 
@@ -47,48 +39,70 @@ export default function useWorkout(metrics, footballProgram) {
 const [elapsedTime, setElapsedTime] =
   useState(0);
 
-  useEffect(() => {
+    useEffect(() => {
     localStorage.setItem(
       "currentWorkout",
       JSON.stringify(currentWorkout)
     );
   }, [currentWorkout]);
 
+  // Load workout history from Supabase
   useEffect(() => {
+    async function loadWorkoutHistory() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("workout_data")
+        .select("workout_history")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error(
+          "Error loading workout history:",
+          error
+        );
+        return;
+      }
+
+      if (data?.workout_history) {
+        setWorkoutHistory(data.workout_history);
+      }
+    }
+
+    loadWorkoutHistory();
+  }, []);
+
+  // Workout timer
+  useEffect(() => {
+    if (!workoutStartTime) return;
+
     localStorage.setItem(
-      "workoutHistory",
-      JSON.stringify(workoutHistory)
+      "workoutStartTime",
+      workoutStartTime
     );
-  }, [workoutHistory]);
 
-  useEffect(() => {
-  if (!workoutStartTime) return;
-
-  localStorage.setItem(
-    "workoutStartTime",
-    workoutStartTime
-  );
-
-  setElapsedTime(
-    Math.floor(
-      (Date.now() - workoutStartTime) / 1000
-    )
-  );
-
-  const interval = setInterval(() => {
     setElapsedTime(
       Math.floor(
-        (Date.now() -
-          workoutStartTime) /
-          1000
+        (Date.now() - workoutStartTime) / 1000
       )
     );
-  }, 1000);
 
-  return () =>
-    clearInterval(interval);
-}, [workoutStartTime]);
+    const interval = setInterval(() => {
+      setElapsedTime(
+        Math.floor(
+          (Date.now() - workoutStartTime) / 1000
+        )
+      );
+    }, 1000);
 
+    return () => clearInterval(interval);
+  }, [workoutStartTime]);
+  
   function updateSet(
     exerciseId,
     setId,
@@ -309,15 +323,33 @@ const [elapsedTime, setElapsedTime] =
   );
 }
 
-  function updateWorkout(updatedWorkout) {
-    setWorkoutHistory((prev) =>
-      prev.map((workout) =>
-        workout.id === updatedWorkout.id
-          ? updatedWorkout
-          : workout
-      )
-    );
+  async function updateWorkout(updatedWorkout) {
+  const updatedHistory = workoutHistory.map((workout) =>
+    workout.id === updatedWorkout.id
+      ? updatedWorkout
+      : workout
+  );
+
+  setWorkoutHistory(updatedHistory);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const { error } = await supabase
+    .from("workout_data")
+    .upsert({
+      id: user.id,
+      workout_history: updatedHistory,
+      updated_at: new Date().toISOString(),
+    });
+
+  if (error) {
+    console.error("Error saving workout history:", error);
   }
+}
 
   return {
     currentWorkout,
