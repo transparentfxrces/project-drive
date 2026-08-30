@@ -483,7 +483,7 @@ function toggleFavorite(exerciseName) {
 }
 
 
-function finishWorkout(){
+async function finishWorkout(){
 
   if(currentWorkout.length===0){
 
@@ -513,6 +513,27 @@ function finishWorkout(){
   ];
 
   setWorkoutHistory(updatedHistory);
+
+  const {
+  data: { user },
+} = await supabase.auth.getUser();
+
+if (user) {
+  const { error } = await supabase
+    .from("workout_data")
+    .upsert({
+      id: user.id,
+      workout_history: updatedHistory,
+      updated_at: new Date().toISOString(),
+    });
+
+  if (error) {
+    console.error(
+      "Error saving workout history:",
+      error
+    );
+  }
+}
 
   syncPerformanceFromWorkout(
     workout,

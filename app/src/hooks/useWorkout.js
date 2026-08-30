@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../services/supabase";
 
 export default function useWorkout(metrics, footballProgram) {
-  const [currentWorkout, setCurrentWorkout] = useState(() => {
-    const saved = localStorage.getItem("currentWorkout");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [currentWorkout, setCurrentWorkout] = useState([]);
 
   const [workoutHistory, setWorkoutHistory] = useState([]);
 
@@ -36,15 +33,10 @@ export default function useWorkout(metrics, footballProgram) {
       : null;
   });
 
+  const [workoutLoaded, setWorkoutLoaded] = useState(false);
+
 const [elapsedTime, setElapsedTime] =
   useState(0);
-
-    useEffect(() => {
-    localStorage.setItem(
-      "currentWorkout",
-      JSON.stringify(currentWorkout)
-    );
-  }, [currentWorkout]);
 
   // Load workout history from Supabase
   useEffect(() => {
@@ -53,29 +45,69 @@ const [elapsedTime, setElapsedTime] =
         data: { user },
       } = await supabase.auth.getUser();
 
-      if (!user) return;
+      if (!user) {
+  setWorkoutLoaded(true);
+  return;
+}
 
       const { data, error } = await supabase
         .from("workout_data")
-        .select("workout_history")
+        .select("workout_history, current_workout")
         .eq("id", user.id)
         .maybeSingle();
 
       if (error) {
-        console.error(
-          "Error loading workout history:",
-          error
-        );
-        return;
-      }
+  console.error(
+    "Error loading workout history:",
+    error
+  );
+
+  setWorkoutLoaded(true);
+  return;
+}
 
       if (data?.workout_history) {
-        setWorkoutHistory(data.workout_history);
-      }
+  setWorkoutHistory(data.workout_history);
+}
+
+if (data?.current_workout) {
+  setCurrentWorkout(data.current_workout);
+}
+
+setWorkoutLoaded(true);
     }
 
     loadWorkoutHistory();
   }, []);
+
+  useEffect(() => {
+  if (!workoutLoaded) return;
+
+  const timeout = setTimeout(async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return;
+
+    const { error } = await supabase
+      .from("workout_data")
+      .upsert({
+        id: user.id,
+        current_workout: currentWorkout,
+        updated_at: new Date().toISOString(),
+      });
+
+    if (error) {
+      console.error(
+        "Error saving current workout:",
+        error
+      );
+    }
+  }, 500);
+
+  return () => clearTimeout(timeout);
+}, [currentWorkout, workoutLoaded]);
 
   // Workout timer
   useEffect(() => {
@@ -343,6 +375,7 @@ const [elapsedTime, setElapsedTime] =
     .upsert({
       id: user.id,
       workout_history: updatedHistory,
+      current_workout: updatedWorkout,
       updated_at: new Date().toISOString(),
     });
 
