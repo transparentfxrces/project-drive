@@ -39,15 +39,18 @@ export default function AuthPage() {
       setMessage("");
 
       if (mode === "signup") {
-        await signUp(
-          email.trim(),
-          password
-        );
+  await signUp(
+    email.trim(),
+    password
+  );
 
-        setMessage(
-          "Account created. Check your email to confirm your account."
-        );
-      } else {
+  setMessage(
+    "Account created. Check your email, confirm your account, then sign in."
+  );
+
+  setMode("signin");
+  setPassword("");
+} else {
         await signIn(
           email.trim(),
           password
