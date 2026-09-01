@@ -27,6 +27,7 @@ import WorkoutPage from "./pages/WorkoutPage";
 import ProgressPage from "./pages/ProgressPage";
 import HistoryPage from "./pages/HistoryPage";
 import ProfilePage from "./pages/ProfilePage";
+import OnboardingPage from "./pages/OnboardingPage";
 import RecruitProfilePage from "./pages/RecruitProfilePage";
 import PerformancePage from "./pages/PerformancePage";
 import WorkoutSummaryPage from "./pages/WorkoutSummaryPage";
@@ -209,6 +210,8 @@ const {
   player,
   updatePlayer,
   updateSeasonGoal,
+  profileCompleted,
+  loading: profileLoading,
 } = usePlayer();
 
 const {
@@ -633,6 +636,35 @@ if (user) {
 
 if (!user) {
   return <AuthPage />;
+}
+
+if (profileLoading) {
+  return (
+    <div className="auth-page">
+      <div className="auth-panel">
+        <div className="auth-eyebrow">
+          PROJECT DRIVE
+        </div>
+
+        <h1 className="auth-title">
+          LOADING ATHLETE
+        </h1>
+
+        <p className="auth-subtitle">
+          Preparing your profile...
+        </p>
+      </div>
+    </div>
+  );
+}
+
+if (!profileCompleted) {
+  return (
+    <OnboardingPage
+      player={player}
+      updatePlayer={updatePlayer}
+    />
+  );
 }
 
   return (

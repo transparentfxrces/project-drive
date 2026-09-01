@@ -2,77 +2,83 @@ import { useState, useEffect } from "react";
 import { supabase } from "../services/supabase";
 
 export default function usePlayer() {
-  const defaultPlayer = {
-    name: "Jason",
-    grade: "Rising Junior",
-    graduationYear: "2027",
-    school: "BTHS",
-    team: "Varsity Football",
-    position: "Offensive Line",
-    jersey: "72",
-    height: `6'1"`,
-    weight: "245",
-    dominantHand: "Right",
-    gpa: "4.5",
-
-    seasonGoals: [
-      "Increase strength",
-      "Improve consistency",
-      "Stay injury free",
-      "Dominate this season 🏈",
-    ],
+  const blankPlayer = {
+    name: "",
+    grade: "",
+    graduationYear: "",
+    school: "",
+    team: "",
+    position: "",
+    jersey: "",
+    height: "",
+    weight: "",
+    dominantHand: "",
+    gpa: "",
+    seasonGoals: [],
   };
 
-  const [player, setPlayer] = useState(defaultPlayer);
+  const [player, setPlayer] = useState(blankPlayer);
+  const [profileCompleted, setProfileCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Load profile from Supabase
   useEffect(() => {
     async function loadProfile() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
 
-      if (!user) {
+        if (!user) {
+          setLoading(false);
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .maybeSingle();
+
+        if (error) {
+          console.error("Error loading profile:", error);
+          setLoading(false);
+          return;
+        }
+
+        // No profile yet = brand-new athlete.
+        if (!data) {
+          setPlayer(blankPlayer);
+          setProfileCompleted(false);
+          setLoading(false);
+          return;
+        }
+
+        setPlayer({
+          name: data.name ?? "",
+          grade: data.grade ?? "",
+          graduationYear: data.graduation_year ?? "",
+          school: data.school ?? "",
+          team: data.team ?? "",
+          position: data.position ?? "",
+          jersey: data.jersey ?? "",
+          height: data.height ?? "",
+          weight: data.weight ?? "",
+          dominantHand: data.dominant_hand ?? "",
+          gpa: data.gpa ?? "",
+          seasonGoals: data.season_goals ?? [],
+        });
+
+        setProfileCompleted(data.profile_completed ?? false);
+      } catch (error) {
+        console.error("Error loading athlete profile:", error);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.error("Error loading profile:", error);
-        setLoading(false);
-        return;
-      }
-
-      setPlayer((prev) => ({
-        ...prev,
-        name: data.name ?? prev.name,
-        grade: data.grade ?? prev.grade,
-        graduationYear: data.graduation_year ?? prev.graduationYear,
-        school: data.school ?? prev.school,
-        team: data.team ?? prev.team,
-        position: data.position ?? prev.position,
-        jersey: data.jersey ?? prev.jersey,
-        height: data.height ?? prev.height,
-        weight: data.weight ?? prev.weight,
-        dominantHand: data.dominant_hand ?? prev.dominantHand,
-        gpa: data.gpa ?? prev.gpa,
-        seasonGoals: data.season_goals ?? prev.seasonGoals,
-      }));
-
-      setLoading(false);
     }
 
     loadProfile();
   }, []);
 
-  // Save profile changes to Supabase
   async function updatePlayer(updatedPlayer) {
     setPlayer(updatedPlayer);
 
@@ -80,65 +86,85 @@ export default function usePlayer() {
       data: { user },
     } = await supabase.auth.getUser();
 
+    if (!user) {
+      throw new Error("No authenticated athlete found.");
+    }
+
+    const profileData = {
+      id: user.id,
+
+      name: updatedPlayer.name ?? "",
+      grade: updatedPlayer.grade ?? "",
+      graduation_year: updatedPlayer.graduationYear ?? "",
+
+      school: updatedPlayer.school ?? "",
+      team: updatedPlayer.team ?? "",
+      position: updatedPlayer.position ?? "",
+      jersey: updatedPlayer.jersey ?? "",
+
+      height: updatedPlayer.height ?? "",
+      weight: updatedPlayer.weight ?? "",
+
+      dominant_hand: updatedPlayer.dominantHand ?? "",
+
+      gpa: updatedPlayer.gpa ?? "",
+
+      season_goals: updatedPlayer.seasonGoals ?? [],
+
+      profile_completed: true,
+
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from("profiles")
+      .upsert(profileData, {
+        onConflict: "id",
+      });
+
+    if (error) {
+      console.error("Error updating profile:", error);
+      throw error;
+    }
+
+    setProfileCompleted(true);
+  }
+
+  async function updateSeasonGoal(index, value) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     if (!user) return;
+
+    const updatedGoals = player.seasonGoals.map((goal, i) =>
+      i === index ? value : goal
+    );
 
     const { error } = await supabase
       .from("profiles")
       .update({
-        name: updatedPlayer.name,
-        grade: updatedPlayer.grade,
-        graduation_year: updatedPlayer.graduationYear,
-        school: updatedPlayer.school,
-        team: updatedPlayer.team,
-        position: updatedPlayer.position,
-        jersey: updatedPlayer.jersey,
-        height: updatedPlayer.height,
-        weight: updatedPlayer.weight,
-        dominant_hand: updatedPlayer.dominantHand,
-        gpa: updatedPlayer.gpa,
+        season_goals: updatedGoals,
         updated_at: new Date().toISOString(),
       })
       .eq("id", user.id);
 
     if (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error updating season goals:", error);
+      return;
     }
+
+    setPlayer((prev) => ({
+      ...prev,
+      seasonGoals: updatedGoals,
+    }));
   }
-
-  async function updateSeasonGoal(index, value) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) return;
-
-  const updatedGoals = player.seasonGoals.map((goal, i) =>
-    i === index ? value : goal
-  );
-
-  const { error } = await supabase
-    .from("profiles")
-    .update({
-      season_goals: updatedGoals,
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", user.id);
-
-  if (error) {
-    console.error("Error updating season goals:", error);
-    return;
-  }
-
-  setPlayer((prev) => ({
-    ...prev,
-    seasonGoals: updatedGoals,
-  }));
-}
 
   return {
     player,
     updatePlayer,
     updateSeasonGoal,
+    profileCompleted,
     loading,
   };
 }
