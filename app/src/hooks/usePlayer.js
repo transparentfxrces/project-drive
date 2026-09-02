@@ -9,12 +9,14 @@ export default function usePlayer() {
     school: "",
     team: "",
     position: "",
+    positionGroup: "",
     jersey: "",
     height: "",
     weight: "",
     dominantHand: "",
     gpa: "",
     seasonGoals: [],
+    positionGoals: [],
   };
 
   const [player, setPlayer] = useState(blankPlayer);
@@ -45,7 +47,6 @@ export default function usePlayer() {
           return;
         }
 
-        // No profile yet = brand-new athlete.
         if (!data) {
           setPlayer(blankPlayer);
           setProfileCompleted(false);
@@ -60,12 +61,14 @@ export default function usePlayer() {
           school: data.school ?? "",
           team: data.team ?? "",
           position: data.position ?? "",
+          positionGroup: data.position_group ?? "",
           jersey: data.jersey ?? "",
           height: data.height ?? "",
           weight: data.weight ?? "",
           dominantHand: data.dominant_hand ?? "",
           gpa: data.gpa ?? "",
           seasonGoals: data.season_goals ?? [],
+          positionGoals: data.position_goals ?? [],
         });
 
         setProfileCompleted(data.profile_completed ?? false);
@@ -92,27 +95,21 @@ export default function usePlayer() {
 
     const profileData = {
       id: user.id,
-
       name: updatedPlayer.name ?? "",
       grade: updatedPlayer.grade ?? "",
       graduation_year: updatedPlayer.graduationYear ?? "",
-
       school: updatedPlayer.school ?? "",
       team: updatedPlayer.team ?? "",
       position: updatedPlayer.position ?? "",
+      position_group: updatedPlayer.positionGroup ?? "",
       jersey: updatedPlayer.jersey ?? "",
-
       height: updatedPlayer.height ?? "",
       weight: updatedPlayer.weight ?? "",
-
       dominant_hand: updatedPlayer.dominantHand ?? "",
-
       gpa: updatedPlayer.gpa ?? "",
-
       season_goals: updatedPlayer.seasonGoals ?? [],
-
+      position_goals: updatedPlayer.positionGoals ?? [],
       profile_completed: true,
-
       updated_at: new Date().toISOString(),
     };
 

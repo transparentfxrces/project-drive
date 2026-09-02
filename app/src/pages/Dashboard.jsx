@@ -1,4 +1,5 @@
 import achievementsData from "../data/achievements";
+import positionProfiles from "../data/positionProfiles";
 import {
   getStrongestLift,
   getMostFrequentExercise,
@@ -6,6 +7,7 @@ import {
 } from "../utils/workoutAnalytics";
 
 function Dashboard({
+  player,
   streak,
   workoutsLogged,
   weeklyWorkoutCount,
@@ -30,6 +32,44 @@ function Dashboard({
 
   const xpIntoLevel = xp;
   const xpNeeded = nextLevelXP;
+
+  const position = (player?.position || "").trim();
+  const positionGroup = player?.positionGroup || "";
+
+  const positionProfile =
+    positionProfiles[positionGroup]?.positions?.[position] ||
+    Object.values(positionProfiles)
+      .flatMap((group) => Object.entries(group.positions || {}))
+      .find(([key, profile]) => key === position)?.[1] ||
+    null;
+
+  const currentPositionFocus = positionProfile
+    ? [
+        `${positionProfile.code} Position Focus`,
+        positionProfile.goals.slice(0, 4).join(", ") + ".",
+      ]
+    : [
+        "Athlete Focus",
+        "Build consistent training habits, improve athletic readiness, and develop the skills that matter most to your position.",
+      ];
+
+  const seasonGoals = Array.isArray(player?.seasonGoals)
+    ? player.seasonGoals.filter(Boolean)
+    : [];
+
+  const goalSummary =
+    seasonGoals.length > 0
+      ? seasonGoals.slice(0, 3).join(" • ")
+      : "Set your mission goals in your profile.";
+
+  const athleteContext = [
+    player?.grade ? `Grade ${player.grade}` : null,
+    player?.graduationYear ? `Class of ${player.graduationYear}` : null,
+    player?.team ? player.team : null,
+  ]
+    .filter(Boolean)
+    .join(" • ");
+
   
   const officialStrengthRecords = {
   "Bench Press":
@@ -146,12 +186,16 @@ const strongestLift =
             PROJECT DRIVE SYSTEM
           </span>
 
-          <h2>Hunter Dashboard</h2>
+          <h2>
+            {player?.name
+              ? `${player.name}'s Dashboard`
+              : "Hunter Dashboard"}
+          </h2>
 
           <p>
-            Continue training.
-            Complete quests.
-            Become stronger.
+            {position
+              ? `${position}${athleteContext ? ` • ${athleteContext}` : ""}`
+              : "Complete your profile to unlock personalized training focus."}
           </p>
 
         </div>
@@ -267,7 +311,42 @@ const strongestLift =
 
 </div>
 
-      {/* XP */}
+      {/* PERSONALIZED FOCUS */
+
+       <div className="dashboard-card">
+
+         <span className="system-tag">
+           PERSONALIZED FOCUS
+         </span>
+
+         <h3>
+           {currentPositionFocus[0]}
+         </h3>
+
+         <p>
+           {currentPositionFocus[1]}
+         </p>
+
+         <div className="pr-row">
+           <span>POSITION</span>
+           <strong>{position || "--"}</strong>
+         </div>
+
+         <div className="pr-row">
+           <span>MISSION</span>
+           <strong>{goalSummary}</strong>
+         </div>
+
+         {athleteContext && (
+           <div className="pr-row">
+             <span>ATHLETE</span>
+             <strong>{athleteContext}</strong>
+           </div>
+         )}
+
+       </div>
+
+       /* XP */}
 
       <div className="dashboard-card xp-card">
 
@@ -427,6 +506,53 @@ const strongestLift =
         </div>
 
       </div>
+
+      {/* Position Quests */}
+      {positionProfile?.quests?.length > 0 && (
+        <div className="dashboard-card">
+          <div className="section-header">
+            <div>
+              <h3>Position Quests</h3>
+              <p>Starter objectives for {positionProfile.code}.</p>
+            </div>
+            <span>POSITION</span>
+          </div>
+
+          {positionProfile.quests.map((quest, index) => (
+            <div
+              key={`${positionProfile.code}-quest-${index}`}
+              className="quest-card"
+            >
+              <div className="quest-header">
+                <div>
+                  <h4 className="quest-title">{quest}</h4>
+                  <p className="quest-description">
+                    Position-focused starter objective.
+                  </p>
+                </div>
+
+                <div className="quest-xp">
+                  +50 XP
+                </div>
+              </div>
+
+              <div className="quest-progress">
+                <div
+                  className="quest-progress-fill"
+                  style={{
+                    width: "0%",
+                  }}
+                />
+              </div>
+
+              <div className="quest-footer">
+                <span>0/1</span>
+                <span>STARTER</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
             {/* Daily Quests */}
 

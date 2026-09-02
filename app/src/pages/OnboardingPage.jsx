@@ -7,12 +7,246 @@ const initialForm = {
   grade: "",
   graduationYear: "",
   position: "",
+  positionGroup: "",
   jersey: "",
   height: "",
   weight: "",
   dominantHand: "",
   gpa: "",
   seasonGoals: [],
+  positionGoals: [],
+};
+
+const positionGroups = {
+  OFFENSE: {
+    label: "OFFENSE",
+    positions: {
+      Quarterback: {
+        code: "QB",
+        goals: [
+          "Arm strength & throwing mechanics",
+          "Footwork & pocket movement",
+          "Decision-making & awareness",
+          "Mobility & athleticism",
+        ],
+      },
+      "Running Back": {
+        code: "RB",
+        goals: [
+          "Acceleration & change of direction",
+          "Lower-body strength",
+          "Ball security",
+          "Conditioning & durability",
+        ],
+      },
+      "Fullback": {
+        code: "FB",
+        goals: [
+          "Lower-body strength",
+          "Leverage & blocking technique",
+          "Short-area explosiveness",
+          "Conditioning",
+        ],
+      },
+      "Wide Receiver": {
+        code: "WR",
+        goals: [
+          "Route running & footwork",
+          "Acceleration & change of direction",
+          "Catching & ball tracking",
+          "Release technique",
+        ],
+      },
+      "Tight End": {
+        code: "TE",
+        goals: [
+          "Route running",
+          "Catching & ball tracking",
+          "Blocking technique & leverage",
+          "Strength & explosiveness",
+        ],
+      },
+      "Offensive Tackle": {
+        code: "OT",
+        goals: [
+          "Pass protection footwork",
+          "Lower-body strength",
+          "Leverage & hand placement",
+          "Core stability",
+        ],
+      },
+      "Offensive Guard": {
+        code: "OG",
+        goals: [
+          "Drive-blocking strength",
+          "Leverage & hand placement",
+          "Explosive first step",
+          "Core & lower-body stability",
+        ],
+      },
+      Center: {
+        code: "C",
+        goals: [
+          "Lower-body strength",
+          "Core & trunk stability",
+          "Explosive first step",
+          "Footwork & leverage",
+          "Hand placement & blocking technique",
+          "Consistency",
+        ],
+      },
+    },
+  },
+
+  DEFENSE: {
+    label: "DEFENSE",
+    positions: {
+      "Defensive End": {
+        code: "DE",
+        goals: [
+          "Pass-rush explosiveness",
+          "Hand technique",
+          "Leverage & edge setting",
+          "Strength & conditioning",
+        ],
+      },
+      "Defensive Tackle": {
+        code: "DT",
+        goals: [
+          "First-step explosiveness",
+          "Upper- & lower-body strength",
+          "Hand technique",
+          "Leverage & gap control",
+        ],
+      },
+      "Nose Tackle": {
+        code: "NT",
+        goals: [
+          "Lower-body strength",
+          "Upper-body strength",
+          "First-step explosiveness",
+          "Leverage",
+          "Hand placement",
+          "Gap control",
+          "Conditioning",
+        ],
+      },
+      EDGE: {
+        code: "EDGE",
+        goals: [
+          "First-step explosiveness",
+          "Pass-rush technique",
+          "Bend & change of direction",
+          "Strength & leverage",
+        ],
+      },
+      Linebacker: {
+        code: "LB",
+        goals: [
+          "Strength & tackling fundamentals",
+          "Reaction & pursuit",
+          "Change of direction",
+          "Coverage awareness",
+        ],
+      },
+      "Outside Linebacker": {
+        code: "OLB",
+        goals: [
+          "Pass-rush technique",
+          "Reaction & pursuit",
+          "Change of direction",
+          "Strength & leverage",
+        ],
+      },
+      "Inside Linebacker": {
+        code: "ILB",
+        goals: [
+          "Lower-body strength",
+          "Reaction & pursuit",
+          "Gap control",
+          "Coverage awareness",
+        ],
+      },
+      "Middle Linebacker": {
+        code: "MLB",
+        goals: [
+          "Strength & tackling fundamentals",
+          "Reaction & pursuit",
+          "Gap control",
+          "Communication & awareness",
+        ],
+      },
+      Cornerback: {
+        code: "CB",
+        goals: [
+          "Speed & acceleration",
+          "Reaction & change of direction",
+          "Coverage footwork",
+          "Ball tracking",
+        ],
+      },
+      Safety: {
+        code: "S",
+        goals: [
+          "Speed & acceleration",
+          "Reaction & pursuit",
+          "Coverage awareness",
+          "Tackling fundamentals",
+        ],
+      },
+      "Free Safety": {
+        code: "FS",
+        goals: [
+          "Range & acceleration",
+          "Reaction & pursuit",
+          "Coverage awareness",
+          "Ball tracking",
+        ],
+      },
+      "Strong Safety": {
+        code: "SS",
+        goals: [
+          "Strength & tackling fundamentals",
+          "Reaction & pursuit",
+          "Coverage awareness",
+          "Change of direction",
+        ],
+      },
+    },
+  },
+
+  "SPECIAL TEAMS": {
+    label: "SPECIAL TEAMS",
+    positions: {
+      Kicker: {
+        code: "K",
+        goals: [
+          "Kicking technique",
+          "Leg strength & power",
+          "Mobility & consistency",
+          "Approach mechanics",
+        ],
+      },
+      Punter: {
+        code: "P",
+        goals: [
+          "Punting technique",
+          "Leg strength & power",
+          "Consistency",
+          "Mobility & approach mechanics",
+        ],
+      },
+      "Long Snapper": {
+        code: "LS",
+        goals: [
+          "Snap accuracy & consistency",
+          "Core stability",
+          "Mobility",
+          "Strength & conditioning",
+        ],
+      },
+    },
+  },
 };
 
 const goalOptions = [
@@ -25,6 +259,10 @@ const goalOptions = [
   "Prepare for competition",
 ];
 
+function getPositionData(group, position) {
+  return positionGroups[group]?.positions?.[position] || null;
+}
+
 export default function OnboardingPage({
   player,
   updatePlayer,
@@ -34,6 +272,11 @@ export default function OnboardingPage({
   const [form, setForm] = useState({
     ...initialForm,
     ...player,
+    positionGroup: player?.positionGroup || "",
+    position: player?.position || "",
+    positionGoals: player?.positionGoals?.length
+      ? player.positionGoals
+      : [],
     seasonGoals:
       player?.seasonGoals?.length
         ? player.seasonGoals
@@ -47,6 +290,28 @@ export default function OnboardingPage({
     setForm((prev) => ({
       ...prev,
       [field]: value,
+    }));
+  }
+
+  function handlePositionGroupChange(group) {
+    setForm((prev) => ({
+      ...prev,
+      positionGroup: group,
+      position: "",
+      positionGoals: [],
+    }));
+  }
+
+  function handlePositionChange(position) {
+    const positionData = getPositionData(
+      form.positionGroup,
+      position
+    );
+
+    setForm((prev) => ({
+      ...prev,
+      position,
+      positionGoals: positionData?.goals || [],
     }));
   }
 
@@ -73,6 +338,7 @@ export default function OnboardingPage({
         form.school.trim() &&
         form.grade &&
         form.graduationYear &&
+        form.positionGroup &&
         form.position
       );
     }
@@ -143,6 +409,11 @@ export default function OnboardingPage({
       setSaving(false);
     }
   }
+
+  const selectedPositionData = getPositionData(
+    form.positionGroup,
+    form.position
+  );
 
   return (
     <div className="onboarding-page">
@@ -280,17 +551,65 @@ export default function OnboardingPage({
                 </label>
 
                 <label>
-                  Position
-                  <input
-                    value={form.position}
+                  Position Group
+                  <select
+                    value={form.positionGroup}
                     onChange={(e) =>
-                      handleChange(
-                        "position",
+                      handlePositionGroupChange(
                         e.target.value
                       )
                     }
-                    placeholder="e.g. WR, QB, LB"
-                  />
+                  >
+                    <option value="">
+                      Select offense or defense
+                    </option>
+
+                    {Object.entries(positionGroups).map(
+                      ([group, groupData]) => (
+                        <option
+                          key={group}
+                          value={group}
+                        >
+                          {groupData.label}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </label>
+
+                <label>
+                  Position
+                  <select
+                    value={form.position}
+                    onChange={(e) =>
+                      handlePositionChange(
+                        e.target.value
+                      )
+                    }
+                    disabled={!form.positionGroup}
+                  >
+                    <option value="">
+                      {form.positionGroup
+                        ? "Select position"
+                        : "Select position group first"}
+                    </option>
+
+                    {form.positionGroup &&
+                      Object.entries(
+                        positionGroups[
+                          form.positionGroup
+                        ].positions
+                      ).map(
+                        ([position, positionData]) => (
+                          <option
+                            key={position}
+                            value={position}
+                          >
+                            {positionData.code} — {position}
+                          </option>
+                        )
+                      )}
+                  </select>
                 </label>
 
                 <label>
@@ -309,6 +628,32 @@ export default function OnboardingPage({
                 </label>
 
               </div>
+
+              {selectedPositionData && (
+                <div className="onboarding-info-box">
+                  <strong>
+                    POSITION GOALS
+                  </strong>
+
+                  <p>
+                    Project Drive will use these as
+                    your starting position priorities.
+                  </p>
+
+                  <div className="position-goal-list">
+                    {selectedPositionData.goals.map(
+                      (goal) => (
+                        <span
+                          key={goal}
+                          className="position-goal-chip"
+                        >
+                          {goal}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
             </>
           )}
 
@@ -427,6 +772,34 @@ export default function OnboardingPage({
                   </p>
                 </div>
               </div>
+
+              {selectedPositionData && (
+                <div className="onboarding-info-box">
+                  <strong>
+                    YOUR POSITION PRIORITIES
+                  </strong>
+
+                  <p>
+                    These are generated from your
+                    selected position. Your mission
+                    choices below are your personal
+                    priorities.
+                  </p>
+
+                  <div className="position-goal-list">
+                    {selectedPositionData.goals.map(
+                      (goal) => (
+                        <span
+                          key={goal}
+                          className="position-goal-chip"
+                        >
+                          {goal}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div className="goal-grid">
                 {goalOptions.map((goal) => {
