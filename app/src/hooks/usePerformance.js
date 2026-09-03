@@ -3,6 +3,8 @@ import {
   useState,
 } from "react";
 
+import { supabase } from "../services/supabase";
+
 const metricKeys = [
   "bench",
   "squat",
@@ -143,14 +145,9 @@ function normalizeDate(dateValue) {
 }
 
 function buildInitialHistory(
-  savedMetrics
+  savedMetrics,
+  savedHistory
 ) {
-  const savedHistory =
-    safelyReadStorage(
-      "performanceHistory",
-      null
-    );
-
   if (savedHistory) {
     const emptyHistory =
       createEmptyHistory();
@@ -165,24 +162,32 @@ function buildInitialHistory(
             ? entries
                 .filter(
                   (entry) =>
-                    Number(entry?.value) >
-                      0 &&
+                    Number(
+                      entry?.value
+                    ) > 0 &&
                     normalizeDate(
                       entry?.date
                     )
                 )
-                .map((entry) => ({
-                  value: Number(
-                    entry.value
-                  ),
-                  date: normalizeDate(
-                    entry.date
-                  ),
-                }))
-                .sort((first, second) =>
-                  first.date.localeCompare(
-                    second.date
-                  )
+                .map(
+                  (entry) => ({
+                    value: Number(
+                      entry.value
+                    ),
+                    date:
+                      normalizeDate(
+                        entry.date
+                      ),
+                  })
+                )
+                .sort(
+                  (
+                    first,
+                    second
+                  ) =>
+                    first.date.localeCompare(
+                      second.date
+                    )
                 )
             : [];
       }
@@ -191,116 +196,269 @@ function buildInitialHistory(
     return emptyHistory;
   }
 
+  /*
+   * If an account has no saved history,
+   * build history from its own metrics.
+   */
   const migratedHistory =
     createEmptyHistory();
 
-  metricKeys.forEach((metricKey) => {
-    const value = Number(
-      savedMetrics[metricKey]
-    );
+  metricKeys.forEach(
+    (metricKey) => {
+      const value =
+        Number(
+          savedMetrics[
+            metricKey
+          ]
+        );
 
-    const date = normalizeDate(
-      savedMetrics[
-        `${metricKey}Date`
-      ]
-    );
+      const date =
+        normalizeDate(
+          savedMetrics[
+            `${metricKey}Date`
+          ]
+        );
 
-    if (value > 0 && date) {
-      migratedHistory[metricKey] = [
-        {
-          value,
-          date,
-        },
-      ];
+      if (
+        value > 0 &&
+        date
+      ) {
+        migratedHistory[
+          metricKey
+        ] = [
+          {
+            value,
+            date,
+          },
+        ];
+      }
     }
-  });
+  );
 
   return migratedHistory;
 }
 
 export default function usePerformance() {
-  const [metrics, setMetrics] =
-    useState(() => {
-      const savedMetrics =
-        safelyReadStorage(
-          "performanceMetrics",
-          {}
-        );
+  const [userId, setUserId] =
+    useState(null);
 
-      return {
-        ...defaultMetrics,
-        ...savedMetrics,
-      };
-    });
+  const [metrics, setMetrics] =
+    useState(defaultMetrics);
 
   const [goals, setGoals] =
-    useState(() => {
-      const savedGoals =
-        safelyReadStorage(
-          "performanceGoals",
-          {}
-        );
-
-      return {
-        ...defaultGoals,
-        ...savedGoals,
-      };
-    });
+    useState(defaultGoals);
 
   const [
     performanceHistory,
     setPerformanceHistory,
-  ] = useState(() =>
-    buildInitialHistory(
-      safelyReadStorage(
-        "performanceMetrics",
-        defaultMetrics
-      )
-    )
+  ] = useState(
+    createEmptyHistory()
   );
 
+  /*
+   * Track the authenticated athlete.
+   */
   useEffect(() => {
+    let mounted = true;
+
+    async function loadUser() {
+      const {
+        data: { user },
+      } =
+        await supabase.auth.getUser();
+
+      if (!mounted) return;
+
+      setUserId(
+        user?.id ?? null
+      );
+    }
+
+    loadUser();
+
+    const {
+      data: {
+        subscription,
+      },
+    } =
+      supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUserId(
+            session?.user?.id ?? null
+          );
+        }
+      );
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  /*
+   * Load performance data whenever
+   * the authenticated athlete changes.
+   */
+  useEffect(() => {
+    if (!userId) {
+      setMetrics(
+        defaultMetrics
+      );
+
+      setGoals(
+        defaultGoals
+      );
+
+      setPerformanceHistory(
+        createEmptyHistory()
+      );
+
+      return;
+    }
+
+    const metricsStorageKey =
+      `performanceMetrics_${userId}`;
+
+    const goalsStorageKey =
+      `performanceGoals_${userId}`;
+
+    const historyStorageKey =
+      `performanceHistory_${userId}`;
+
+    const savedMetrics =
+      safelyReadStorage(
+        metricsStorageKey,
+        {}
+      );
+
+    const savedGoals =
+      safelyReadStorage(
+        goalsStorageKey,
+        {}
+      );
+
+    const savedHistory =
+      safelyReadStorage(
+        historyStorageKey,
+        null
+      );
+
+    const safeMetrics = {
+      ...defaultMetrics,
+      ...(savedMetrics &&
+      typeof savedMetrics ===
+        "object"
+        ? savedMetrics
+        : {}),
+    };
+
+    const safeGoals = {
+      ...defaultGoals,
+      ...(savedGoals &&
+      typeof savedGoals ===
+        "object"
+        ? savedGoals
+        : {}),
+    };
+
+    const safeHistory =
+      buildInitialHistory(
+        safeMetrics,
+        savedHistory
+      );
+
+    setMetrics(
+      safeMetrics
+    );
+
+    setGoals(
+      safeGoals
+    );
+
+    setPerformanceHistory(
+      safeHistory
+    );
+  }, [userId]);
+
+  /*
+   * Persist metrics for this athlete.
+   */
+  useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "performanceMetrics",
+      `performanceMetrics_${userId}`,
       JSON.stringify(metrics)
     );
-  }, [metrics]);
+  }, [
+    metrics,
+    userId,
+  ]);
 
+  /*
+   * Persist goals for this athlete.
+   */
   useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "performanceGoals",
+      `performanceGoals_${userId}`,
       JSON.stringify(goals)
     );
-  }, [goals]);
+  }, [
+    goals,
+    userId,
+  ]);
 
+  /*
+   * Persist performance history
+   * for this athlete.
+   */
   useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "performanceHistory",
+      `performanceHistory_${userId}`,
       JSON.stringify(
         performanceHistory
       )
     );
-  }, [performanceHistory]);
+  }, [
+    performanceHistory,
+    userId,
+  ]);
 
-  function setMetric(field, value) {
-    setMetrics((previous) => ({
-      ...previous,
-      [field]: value,
-    }));
+  function setMetric(
+    field,
+    value
+  ) {
+    setMetrics(
+      (previous) => ({
+        ...previous,
+        [field]: value,
+      })
+    );
   }
 
-  function setGoal(field, value) {
-    setGoals((previous) => ({
-      ...previous,
-      [field]: value,
-    }));
+  function setGoal(
+    field,
+    value
+  ) {
+    setGoals(
+      (previous) => ({
+        ...previous,
+        [field]: value,
+      })
+    );
   }
 
   function saveMetricResult(
     metricKey
   ) {
     if (
-      !metricKeys.includes(metricKey)
+      !metricKeys.includes(
+        metricKey
+      )
     ) {
       return {
         success: false,
@@ -309,16 +467,22 @@ export default function usePerformance() {
       };
     }
 
-    const value = Number(
-      metrics[metricKey]
-    );
+    const value =
+      Number(
+        metrics[metricKey]
+      );
 
-    const date = normalizeDate(
-      metrics[`${metricKey}Date`]
-    );
+    const date =
+      normalizeDate(
+        metrics[
+          `${metricKey}Date`
+        ]
+      );
 
     if (
-      !Number.isFinite(value) ||
+      !Number.isFinite(
+        value
+      ) ||
       value <= 0
     ) {
       return {
@@ -339,7 +503,9 @@ export default function usePerformance() {
     setPerformanceHistory(
       (previous) => {
         const currentEntries =
-          previous[metricKey] || [];
+          previous[
+            metricKey
+          ] || [];
 
         const entry = {
           value,
@@ -349,14 +515,16 @@ export default function usePerformance() {
         const dateAlreadyExists =
           currentEntries.some(
             (result) =>
-              result.date === date
+              result.date ===
+              date
           );
 
         const updatedEntries =
           dateAlreadyExists
             ? currentEntries.map(
                 (result) =>
-                  result.date === date
+                  result.date ===
+                  date
                     ? entry
                     : result
               )
@@ -366,7 +534,10 @@ export default function usePerformance() {
               ];
 
         updatedEntries.sort(
-          (first, second) =>
+          (
+            first,
+            second
+          ) =>
             first.date.localeCompare(
               second.date
             )
@@ -407,7 +578,9 @@ export default function usePerformance() {
       (previous) => ({
         ...previous,
         [metricKey]: (
-          previous[metricKey] || []
+          previous[
+            metricKey
+          ] || []
         ).filter(
           (result) =>
             result.date !==
@@ -421,7 +594,9 @@ export default function usePerformance() {
     metricKey
   ) {
     if (
-      !metricKeys.includes(metricKey)
+      !metricKeys.includes(
+        metricKey
+      )
     ) {
       return;
     }

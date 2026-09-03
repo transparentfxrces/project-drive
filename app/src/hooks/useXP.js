@@ -9,6 +9,8 @@ import {
   getLevelData,
 } from "../utils/levelSystem";
 
+import { supabase } from "../services/supabase";
+
 function safelyReadStorage(
   storageKey,
   fallback
@@ -49,32 +51,14 @@ function createXPEvent({
 }
 
 export default function useXP() {
-  const [xp, setXP] = useState(() => {
-    const saved =
-      localStorage.getItem("xp");
+  const [userId, setUserId] = useState(null);
 
-    const parsed = Number(saved);
-
-    return Number.isFinite(parsed) &&
-      parsed >= 0
-      ? parsed
-      : 0;
-  });
+  const [xp, setXP] = useState(0);
 
   const [
     xpHistory,
     setXPHistory,
-  ] = useState(() => {
-    const savedHistory =
-      safelyReadStorage(
-        "xpHistory",
-        []
-      );
-
-    return Array.isArray(savedHistory)
-      ? savedHistory
-      : [];
-  });
+  ] = useState([]);
 
   const [
     lastXPEvent,
@@ -86,50 +70,169 @@ export default function useXP() {
     setLevelUpData,
   ] = useState(null);
 
+  // Keeps the latest XP value available
+  // immediately, even before React rerenders.
+  const xpRef = useRef(0);
+
+  // =========================
+  // Authentication
+  // =========================
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!mounted) return;
+
+      setUserId(
+        user?.id ?? null
+      );
+    }
+
+    loadUser();
+
+    const {
+      data: { subscription },
+    } =
+      supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUserId(
+            session?.user?.id ?? null
+          );
+        }
+      );
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  // =========================
+  // Load account-specific XP
+  // =========================
+
+  useEffect(() => {
+    if (!userId) {
+      xpRef.current = 0;
+
+      setXP(0);
+      setXPHistory([]);
+      setLastXPEvent(null);
+      setLevelUpData(null);
+
+      return;
+    }
+
+    const xpStorageKey =
+      `xp_${userId}`;
+
+    const xpHistoryStorageKey =
+      `xpHistory_${userId}`;
+
+    const savedXP =
+      localStorage.getItem(
+        xpStorageKey
+      );
+
+    const parsedXP =
+      Number(savedXP);
+
+    const safeXP =
+      Number.isFinite(parsedXP) &&
+      parsedXP >= 0
+        ? parsedXP
+        : 0;
+
+    const savedHistory =
+      safelyReadStorage(
+        xpHistoryStorageKey,
+        []
+      );
+
+    const safeHistory =
+      Array.isArray(savedHistory)
+        ? savedHistory
+        : [];
+
+    // IMPORTANT:
+    // Loading saved XP is initialization.
+    // It must NEVER count as a level-up.
+    xpRef.current = safeXP;
+
+    setXP(safeXP);
+    setXPHistory(safeHistory);
+
+    setLastXPEvent(null);
+    setLevelUpData(null);
+  }, [userId]);
+
+  // =========================
+  // Level Data
+  // =========================
+
   const levelData =
-    getLevelData(Number(xp) || 0) || {
+    getLevelData(
+      Number(xp) || 0
+    ) || {
       level: 1,
       currentXP: 0,
       nextLevelXP: 1000,
       totalXP: 0,
     };
 
-  const previousLevelRef =
-    useRef(levelData.level);
+  // =========================
+  // Keep XP Ref Updated
+  // =========================
 
   useEffect(() => {
-    localStorage.setItem(
-      "xp",
-      String(Math.max(0, xp))
-    );
+    xpRef.current =
+      Number(xp) || 0;
   }, [xp]);
 
+  // =========================
+  // Save XP
+  // =========================
+
   useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "xpHistory",
-      JSON.stringify(xpHistory)
+      `xp_${userId}`,
+      String(
+        Math.max(
+          0,
+          Number(xp) || 0
+        )
+      )
     );
-  }, [xpHistory]);
+  }, [xp, userId]);
+
+  // =========================
+  // Save XP History
+  // =========================
 
   useEffect(() => {
-    const previousLevel =
-      previousLevelRef.current;
+    if (!userId) return;
 
-    if (
-      levelData.level >
-      previousLevel
-    ) {
-      setLevelUpData({
-        previousLevel,
-        newLevel:
-          levelData.level,
-        date: new Date().toISOString(),
-      });
-    }
+    localStorage.setItem(
+      `xpHistory_${userId}`,
+      JSON.stringify(
+        xpHistory
+      )
+    );
+  }, [
+    xpHistory,
+    userId,
+  ]);
 
-    previousLevelRef.current =
-      levelData.level;
-  }, [levelData.level]);
+  // =========================
+  // Award XP
+  // =========================
 
   function awardXP(
     amount,
@@ -147,26 +250,81 @@ export default function useXP() {
       };
     }
 
-    const event = createXPEvent({
-      amount: earned,
-      reason,
-      source,
-    });
+    if (!userId) {
+      return {
+        success: false,
+        message:
+          "No authenticated athlete found.",
+      };
+    }
 
-    setXP((previous) => {
-      const current =
-        Number(previous) || 0;
-
-      return Math.max(
+    const currentXP =
+      Math.max(
         0,
-        current + earned
+        Number(
+          xpRef.current
+        ) || 0
       );
-    });
 
-    setXPHistory((previous) => [
-      event,
-      ...previous,
-    ].slice(0, 100));
+    const newXP =
+      currentXP + earned;
+
+    const previousLevelData =
+      getLevelData(
+        currentXP
+      ) || {
+        level: 1,
+      };
+
+    const newLevelData =
+      getLevelData(
+        newXP
+      ) || {
+        level:
+          previousLevelData.level,
+      };
+
+    const previousLevel =
+      previousLevelData.level;
+
+    const newLevel =
+      newLevelData.level;
+
+    // Update the ref immediately.
+    // This prevents rapid XP awards from
+    // using an outdated XP value.
+    xpRef.current = newXP;
+
+    setXP(newXP);
+
+    // Only show the level-up popup when
+    // XP was actually awarded and the
+    // award crossed a level threshold.
+    if (
+      newLevel >
+      previousLevel
+    ) {
+      setLevelUpData({
+        previousLevel,
+        newLevel,
+        date:
+          new Date().toISOString(),
+      });
+    }
+
+    const event =
+      createXPEvent({
+        amount: earned,
+        reason,
+        source,
+      });
+
+    setXPHistory(
+      (previous) => [
+        event,
+        ...previous,
+      ].slice(0, 100)
+    );
 
     setLastXPEvent(event);
 
@@ -176,30 +334,32 @@ export default function useXP() {
     };
   }
 
+  // =========================
+  // UI Controls
+  // =========================
+
   const dismissXPEvent =
-  useCallback(() => {
-    setLastXPEvent(null);
-  }, []);
+    useCallback(() => {
+      setLastXPEvent(null);
+    }, []);
 
-const dismissLevelUp =
-  useCallback(() => {
-    setLevelUpData(null);
-  }, []);
+  const dismissLevelUp =
+    useCallback(() => {
+      setLevelUpData(null);
+    }, []);
 
-const clearXPHistory =
-  useCallback(() => {
-    setXPHistory([]);
-  }, []);
+  const clearXPHistory =
+    useCallback(() => {
+      setXPHistory([]);
+    }, []);
 
   return {
     xp,
     setXP,
-
     levelData,
     xpHistory,
     lastXPEvent,
     levelUpData,
-
     awardXP,
     dismissXPEvent,
     dismissLevelUp,

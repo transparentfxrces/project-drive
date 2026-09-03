@@ -1,11 +1,17 @@
-import { useState, useEffect } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
 import checkAchievements from "../utils/checkAchievements";
 import checkQuests from "../utils/checkQuests";
+
 import {
   generateDailyQuests,
   generateWeeklyQuests,
 } from "../utils/generateQuests";
+
+import { supabase } from "../services/supabase";
 
 function getWeekKey() {
   const date = new Date();
@@ -21,9 +27,39 @@ function getWeekKey() {
     date.getDate() + diff
   );
 
-  date.setHours(0, 0, 0, 0);
+  date.setHours(
+    0,
+    0,
+    0,
+    0
+  );
 
   return date.toDateString();
+}
+
+function safelyReadStorage(
+  storageKey,
+  fallback
+) {
+  try {
+    const saved =
+      localStorage.getItem(
+        storageKey
+      );
+
+    if (!saved) {
+      return fallback;
+    }
+
+    return JSON.parse(saved);
+  } catch (error) {
+    console.error(
+      `Unable to read ${storageKey}:`,
+      error
+    );
+
+    return fallback;
+  }
 }
 
 export default function useProgression(
@@ -37,62 +73,91 @@ export default function useProgression(
   const weekKey =
     getWeekKey();
 
-  const [streak, setStreak] =
-    useState(() => {
-      const saved =
-        localStorage.getItem(
-          "streak"
-        );
-
-      return saved
-        ? Number(saved)
-        : 0;
-    });
-
-  const [achievements, setAchievements] =
-    useState(() => {
-      const saved =
-        localStorage.getItem(
-          "achievements"
-        );
-
-      return saved
-        ? JSON.parse(saved)
-        : {};
-    });
-
-  const [achievementPopup, setAchievementPopup] =
+  const [userId, setUserId] =
     useState(null);
 
+  const [streak, setStreak] =
+    useState(0);
+
+  const [
+    achievements,
+    setAchievements,
+  ] = useState({});
+
+  const [
+    achievementPopup,
+    setAchievementPopup,
+  ] = useState(null);
+
   const [quests, setQuests] =
-    useState(() => {
-      const saved =
-        localStorage.getItem(
-          "quests"
-        );
+    useState({
+      dailyDate:
+        todayKey,
 
-      if (saved) {
-        const parsed =
-          JSON.parse(saved);
+      weeklyDate:
+        weekKey,
 
-        return {
-          dailyDate:
-            parsed.dailyDate ||
-            todayKey,
+      daily: [],
 
-          weeklyDate:
-            parsed.weeklyDate ||
-            weekKey,
+      weekly: [],
+    });
 
-          daily:
-            parsed.daily || [],
+  /*
+   * Track the currently authenticated
+   * athlete so progression data is
+   * isolated per account.
+   */
+  useEffect(() => {
+    let mounted = true;
 
-          weekly:
-            parsed.weekly || [],
-        };
-      }
+    async function loadUser() {
+      const {
+        data: { user },
+      } =
+        await supabase.auth.getUser();
 
-      return {
+      if (!mounted) return;
+
+      setUserId(
+        user?.id ?? null
+      );
+    }
+
+    loadUser();
+
+    const {
+      data: {
+        subscription,
+      },
+    } =
+      supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUserId(
+            session?.user?.id ?? null
+          );
+        }
+      );
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  /*
+   * Load progression data whenever
+   * the authenticated athlete changes.
+   *
+   * Each account gets its own storage
+   * namespace.
+   */
+  useEffect(() => {
+    if (!userId) {
+      setStreak(0);
+      setAchievements({});
+      setAchievementPopup(null);
+
+      setQuests({
         dailyDate:
           todayKey,
 
@@ -102,35 +167,169 @@ export default function useProgression(
         daily: [],
 
         weekly: [],
+      });
+
+      return;
+    }
+
+    const streakStorageKey =
+      `streak_${userId}`;
+
+    const achievementsStorageKey =
+      `achievements_${userId}`;
+
+    const questsStorageKey =
+      `quests_${userId}`;
+
+    const savedStreak =
+      localStorage.getItem(
+        streakStorageKey
+      );
+
+    const parsedStreak =
+      Number(savedStreak);
+
+    const safeStreak =
+      Number.isFinite(
+        parsedStreak
+      ) &&
+      parsedStreak >= 0
+        ? parsedStreak
+        : 0;
+
+    const savedAchievements =
+      safelyReadStorage(
+        achievementsStorageKey,
+        {}
+      );
+
+    const safeAchievements =
+      savedAchievements &&
+      typeof savedAchievements ===
+        "object" &&
+      !Array.isArray(
+        savedAchievements
+      )
+        ? savedAchievements
+        : {};
+
+    const savedQuests =
+      safelyReadStorage(
+        questsStorageKey,
+        null
+      );
+
+    let safeQuests = {
+      dailyDate:
+        todayKey,
+
+      weeklyDate:
+        weekKey,
+
+      daily: [],
+
+      weekly: [],
+    };
+
+    if (
+      savedQuests &&
+      typeof savedQuests ===
+        "object"
+    ) {
+      safeQuests = {
+        dailyDate:
+          savedQuests.dailyDate ||
+          todayKey,
+
+        weeklyDate:
+          savedQuests.weeklyDate ||
+          weekKey,
+
+        daily:
+          Array.isArray(
+            savedQuests.daily
+          )
+            ? savedQuests.daily
+            : [],
+
+        weekly:
+          Array.isArray(
+            savedQuests.weekly
+          )
+            ? savedQuests.weekly
+            : [],
       };
-    });
+    }
 
-  useEffect(() => {
-    localStorage.setItem(
-      "streak",
-      streak
+    setStreak(safeStreak);
+    setAchievements(
+      safeAchievements
     );
-  }, [streak]);
+    setAchievementPopup(null);
+    setQuests(safeQuests);
+  }, [userId]);
 
+  /*
+   * Persist streak for this athlete.
+   */
   useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "achievements",
+      `streak_${userId}`,
+      String(
+        Math.max(
+          0,
+          Number(streak) || 0
+        )
+      )
+    );
+  }, [
+    streak,
+    userId,
+  ]);
+
+  /*
+   * Persist achievements for this athlete.
+   */
+  useEffect(() => {
+    if (!userId) return;
+
+    localStorage.setItem(
+      `achievements_${userId}`,
       JSON.stringify(
         achievements
       )
     );
-  }, [achievements]);
+  }, [
+    achievements,
+    userId,
+  ]);
 
+  /*
+   * Persist quests for this athlete.
+   */
   useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "quests",
+      `quests_${userId}`,
       JSON.stringify(
         quests
       )
     );
-  }, [quests]);
+  }, [
+    quests,
+    userId,
+  ]);
 
+  /*
+   * Generate new daily and weekly
+   * quests when appropriate.
+   */
   useEffect(() => {
+    if (!userId) return;
+
     setQuests((prev) => {
       const today =
         new Date().toDateString();
@@ -138,14 +337,34 @@ export default function useProgression(
       const week =
         getWeekKey();
 
+      const previousDaily =
+        Array.isArray(
+          prev.daily
+        )
+          ? prev.daily
+          : [];
+
+      const previousWeekly =
+        Array.isArray(
+          prev.weekly
+        )
+          ? prev.weekly
+          : [];
+
       const updated = {
         ...prev,
+        daily:
+          previousDaily,
+
+        weekly:
+          previousWeekly,
       };
 
       let changed = false;
 
       if (
-        prev.daily.length === 0 ||
+        previousDaily.length ===
+          0 ||
         prev.dailyDate !== today
       ) {
         updated.daily =
@@ -160,7 +379,8 @@ export default function useProgression(
       }
 
       if (
-        prev.weekly.length === 0 ||
+        previousWeekly.length ===
+          0 ||
         prev.weeklyDate !== week
       ) {
         updated.weekly =
@@ -179,16 +399,26 @@ export default function useProgression(
         ? updated
         : prev;
     });
-  }, []);
+  }, [
+    userId,
+    metrics,
+    workoutHistory,
+  ]);
 
   function unlockWorkout(
     updatedHistory,
     favoriteExercises
   ) {
+    if (!userId) {
+      return;
+    }
+
     const newStreak =
       streak + 1;
 
-    setStreak(newStreak);
+    setStreak(
+      newStreak
+    );
 
     checkAchievements({
       workoutHistory:
@@ -210,6 +440,7 @@ export default function useProgression(
 
     checkQuests({
       quests,
+
       setQuests,
 
       workoutHistory:

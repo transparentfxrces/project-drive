@@ -1,12 +1,25 @@
-import { useState, useEffect } from "react";
+import {
+  useState,
+  useEffect,
+} from "react";
+
 import { supabase } from "../services/supabase";
 
-export default function useWorkout(metrics, footballProgram) {
-  const [currentWorkout, setCurrentWorkout] = useState([]);
+export default function useWorkout(
+  metrics,
+  footballProgram
+) {
+  const [userId, setUserId] =
+    useState(null);
 
-  const [workoutHistory, setWorkoutHistory] = useState([]);
+  const [currentWorkout, setCurrentWorkout] =
+    useState([]);
 
-  const [exercise, setExercise] = useState("");
+  const [workoutHistory, setWorkoutHistory] =
+    useState([]);
+
+  const [exercise, setExercise] =
+    useState("");
 
   const [selectedCategory, setSelectedCategory] =
     useState(null);
@@ -24,146 +37,334 @@ export default function useWorkout(metrics, footballProgram) {
     useState(null);
 
   const [workoutStartTime, setWorkoutStartTime] =
-  useState(() => {
-    const saved =
-      localStorage.getItem("workoutStartTime");
+    useState(null);
 
-    return saved
-      ? Number(saved)
-      : null;
-  });
+  const [workoutLoaded, setWorkoutLoaded] =
+    useState(false);
 
-  const [workoutLoaded, setWorkoutLoaded] = useState(false);
+  const [elapsedTime, setElapsedTime] =
+    useState(0);
 
-const [elapsedTime, setElapsedTime] =
-  useState(0);
-
-  // Load workout history from Supabase
+  /*
+   * Track the authenticated athlete.
+   */
   useEffect(() => {
-    async function loadWorkoutHistory() {
+    let mounted = true;
+
+    async function loadUser() {
       const {
         data: { user },
-      } = await supabase.auth.getUser();
+      } =
+        await supabase.auth.getUser();
 
-      if (!user) {
-  setWorkoutLoaded(true);
-  return;
-}
+      if (!mounted) return;
 
-      const { data, error } = await supabase
-        .from("workout_data")
-        .select("workout_history, current_workout")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (error) {
-  console.error(
-    "Error loading workout history:",
-    error
-  );
-
-  setWorkoutLoaded(true);
-  return;
-}
-
-      if (data?.workout_history) {
-  setWorkoutHistory(data.workout_history);
-}
-
-if (data?.current_workout) {
-  setCurrentWorkout(data.current_workout);
-}
-
-setWorkoutLoaded(true);
-    }
-
-    loadWorkoutHistory();
-  }, []);
-
-  useEffect(() => {
-  if (!workoutLoaded) return;
-
-  const timeout = setTimeout(async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) return;
-
-    const { error } = await supabase
-      .from("workout_data")
-      .upsert({
-        id: user.id,
-        current_workout: currentWorkout,
-        updated_at: new Date().toISOString(),
-      });
-
-    if (error) {
-      console.error(
-        "Error saving current workout:",
-        error
+      setUserId(
+        user?.id ?? null
       );
     }
-  }, 500);
 
-  return () => clearTimeout(timeout);
-}, [currentWorkout, workoutLoaded]);
+    loadUser();
 
-  // Workout timer
+    const {
+      data: {
+        subscription,
+      },
+    } =
+      supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUserId(
+            session?.user?.id ?? null
+          );
+        }
+      );
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  /*
+   * Load workout data whenever the
+   * authenticated athlete changes.
+   *
+   * This is important when switching
+   * accounts without fully refreshing
+   * the browser.
+   */
   useEffect(() => {
-    if (!workoutStartTime) return;
+    let mounted = true;
+
+    async function loadWorkoutData() {
+      setWorkoutLoaded(false);
+
+      /*
+       * No authenticated athlete:
+       * completely clear workout state.
+       */
+      if (!userId) {
+        setCurrentWorkout([]);
+        setWorkoutHistory([]);
+        setWorkoutSummary(null);
+        setWorkoutStartTime(null);
+        setElapsedTime(0);
+        setWorkoutLoaded(true);
+        return;
+      }
+
+      /*
+       * Workout timer is account-specific.
+       */
+      const timerStorageKey =
+        `workoutStartTime_${userId}`;
+
+      const savedStartTime =
+        localStorage.getItem(
+          timerStorageKey
+        );
+
+      const parsedStartTime =
+        Number(savedStartTime);
+
+      if (
+        Number.isFinite(
+          parsedStartTime
+        ) &&
+        parsedStartTime > 0
+      ) {
+        setWorkoutStartTime(
+          parsedStartTime
+        );
+      } else {
+        setWorkoutStartTime(null);
+        localStorage.removeItem(
+          timerStorageKey
+        );
+      }
+
+      const {
+        data,
+        error,
+      } = await supabase
+        .from("workout_data")
+        .select(
+          "workout_history, current_workout"
+        )
+        .eq(
+          "id",
+          userId
+        )
+        .maybeSingle();
+
+      if (!mounted) return;
+
+      if (error) {
+        console.error(
+          "Error loading workout data:",
+          error
+        );
+
+        setCurrentWorkout([]);
+        setWorkoutHistory([]);
+        setWorkoutLoaded(true);
+        return;
+      }
+
+      const savedHistory =
+        Array.isArray(
+          data?.workout_history
+        )
+          ? data.workout_history
+          : [];
+
+      const savedCurrentWorkout =
+        Array.isArray(
+          data?.current_workout
+        )
+          ? data.current_workout
+          : [];
+
+      setWorkoutHistory(
+        savedHistory
+      );
+
+      setCurrentWorkout(
+        savedCurrentWorkout
+      );
+
+      setWorkoutSummary(null);
+      setWorkoutLoaded(true);
+    }
+
+    loadWorkoutData();
+
+    return () => {
+      mounted = false;
+    };
+  }, [userId]);
+
+  /*
+   * Persist the active workout to the
+   * currently authenticated athlete.
+   */
+  useEffect(() => {
+    if (
+      !workoutLoaded ||
+      !userId
+    ) {
+      return;
+    }
+
+    const timeout =
+      setTimeout(
+        async () => {
+          const {
+            data: {
+              user,
+            },
+          } =
+            await supabase.auth.getUser();
+
+          /*
+           * Make sure the same athlete is
+           * still authenticated before saving.
+           */
+          if (
+            !user ||
+            user.id !== userId
+          ) {
+            return;
+          }
+
+          const {
+            error,
+          } =
+            await supabase
+              .from("workout_data")
+              .upsert({
+                id: userId,
+
+                current_workout:
+                  currentWorkout,
+
+                updated_at:
+                  new Date().toISOString(),
+              });
+
+          if (error) {
+            console.error(
+              "Error saving current workout:",
+              error
+            );
+          }
+        },
+        500
+      );
+
+    return () =>
+      clearTimeout(timeout);
+  }, [
+    currentWorkout,
+    workoutLoaded,
+    userId,
+  ]);
+
+  /*
+   * Workout timer.
+   *
+   * The timer is now isolated by account
+   * instead of using one global browser key.
+   */
+  useEffect(() => {
+    if (
+      !userId ||
+      !workoutStartTime
+    ) {
+      setElapsedTime(0);
+      return;
+    }
+
+    const timerStorageKey =
+      `workoutStartTime_${userId}`;
 
     localStorage.setItem(
-      "workoutStartTime",
-      workoutStartTime
+      timerStorageKey,
+      String(
+        workoutStartTime
+      )
     );
 
     setElapsedTime(
       Math.floor(
-        (Date.now() - workoutStartTime) / 1000
+        (Date.now() -
+          workoutStartTime) /
+          1000
       )
     );
 
-    const interval = setInterval(() => {
-      setElapsedTime(
-        Math.floor(
-          (Date.now() - workoutStartTime) / 1000
-        )
-      );
-    }, 1000);
+    const interval =
+      setInterval(() => {
+        setElapsedTime(
+          Math.floor(
+            (Date.now() -
+              workoutStartTime) /
+              1000
+          )
+        );
+      }, 1000);
 
-    return () => clearInterval(interval);
-  }, [workoutStartTime]);
-  
+    return () =>
+      clearInterval(interval);
+  }, [
+    workoutStartTime,
+    userId,
+  ]);
+
   function updateSet(
     exerciseId,
     setId,
     field,
     value
   ) {
-    setCurrentWorkout((prev) =>
-      prev.map((exercise) =>
-        exercise.id === exerciseId
-          ? {
-              ...exercise,
+    setCurrentWorkout(
+      (prev) =>
+        prev.map(
+          (exercise) =>
+            exercise.id ===
+            exerciseId
+              ? {
+                  ...exercise,
 
-              sets: exercise.sets.map((set) => {
-                if (set.id !== setId) return set;
+                  sets:
+                    exercise.sets.map(
+                      (set) => {
+                        if (
+                          set.id !==
+                          setId
+                        ) {
+                          return set;
+                        }
 
-                const updated = {
-                  ...set,
-                  [field]: value,
-                };
+                        const updated =
+                          {
+                            ...set,
+                            [field]:
+                              value,
+                          };
 
-                updated.completed =
-                  updated.weight !== "" &&
-                  updated.reps !== "";
+                        updated.completed =
+                          updated.weight !==
+                            "" &&
+                          updated.reps !==
+                            "";
 
-                return updated;
-              }),
-            }
-          : exercise
-      )
+                        return updated;
+                      }
+                    ),
+                }
+              : exercise
+        )
     );
   }
 
@@ -171,218 +372,332 @@ setWorkoutLoaded(true);
     exerciseId,
     value
   ) {
-    setCurrentWorkout((prev) =>
-      prev.map((exercise) =>
-        exercise.id === exerciseId
-          ? {
-              ...exercise,
-              exercise: value,
-            }
-          : exercise
-      )
+    setCurrentWorkout(
+      (prev) =>
+        prev.map(
+          (exercise) =>
+            exercise.id ===
+            exerciseId
+              ? {
+                  ...exercise,
+                  exercise:
+                    value,
+                }
+              : exercise
+        )
     );
   }
 
-  function addSet(exerciseId) {
-    setCurrentWorkout((prev) =>
-      prev.map((exercise) =>
-        exercise.id === exerciseId
-          ? {
-              ...exercise,
+  function addSet(
+    exerciseId
+  ) {
+    setCurrentWorkout(
+      (prev) =>
+        prev.map(
+          (exercise) =>
+            exercise.id ===
+            exerciseId
+              ? {
+                  ...exercise,
 
-              sets: [
-                ...exercise.sets,
+                  sets: [
+                    ...exercise.sets,
 
-                {
-                  id: crypto.randomUUID(),
-                  weight: "",
-                  reps: "",
-                },
-              ],
-            }
-          : exercise
-      )
+                    {
+                      id: crypto.randomUUID(),
+                      weight: "",
+                      reps: "",
+                    },
+                  ],
+                }
+              : exercise
+        )
     );
   }
 
-  function removeExercise(id) {
-    setCurrentWorkout((prev) =>
-      prev.filter((e) => e.id !== id)
+  function removeExercise(
+    id
+  ) {
+    setCurrentWorkout(
+      (prev) =>
+        prev.filter(
+          (e) =>
+            e.id !== id
+        )
     );
   }
 
   function addExercise() {
-    if (!exercise.trim()) {
-      alert("Enter an exercise name.");
+    if (
+      !exercise.trim()
+    ) {
+      alert(
+        "Enter an exercise name."
+      );
       return;
     }
 
-    if (!workoutStartTime) {
-  setWorkoutStartTime(Date.now());
-}
+    if (
+      !workoutStartTime
+    ) {
+      setWorkoutStartTime(
+        Date.now()
+      );
+    }
 
-    setCurrentWorkout((prev) => [
-      ...prev,
+    setCurrentWorkout(
+      (prev) => [
+        ...prev,
 
-      {
-        id: crypto.randomUUID(),
+        {
+          id: crypto.randomUUID(),
 
-        exercise,
+          exercise,
 
-        sets: [
-          {
-            id: crypto.randomUUID(),
-            weight: "",
-            reps: "",
-          },
-        ],
-      },
-    ]);
+          sets: [
+            {
+              id: crypto.randomUUID(),
+              weight: "",
+              reps: "",
+            },
+          ],
+        },
+      ]
+    );
 
     setExercise("");
   }
 
-  function loadCategory(category) {
-    setSelectedCategory(category);
+  function loadCategory(
+    category
+  ) {
+    setSelectedCategory(
+      category
+    );
+
     setSearchTerm("");
   }
 
-  function addTemplateExercise(name) {
-    if (!workoutStartTime) {
-  setWorkoutStartTime(Date.now());
-}
-    setCurrentWorkout((prev) => [
-      ...prev,
+  function addTemplateExercise(
+    name
+  ) {
+    if (
+      !workoutStartTime
+    ) {
+      setWorkoutStartTime(
+        Date.now()
+      );
+    }
 
-      {
-        id: crypto.randomUUID(),
+    setCurrentWorkout(
+      (prev) => [
+        ...prev,
 
-        exercise: name,
+        {
+          id: crypto.randomUUID(),
 
-        sets: [
-          {
-            id: crypto.randomUUID(),
-            weight: "",
-            reps: "",
-          },
-        ],
-      },
-    ]);
+          exercise: name,
+
+          sets: [
+            {
+              id: crypto.randomUUID(),
+              weight: "",
+              reps: "",
+            },
+          ],
+        },
+      ]
+    );
   }
 
   function loadFootballWorkout() {
     const workout =
-      footballProgram[selectedWeek][selectedDay];
+      footballProgram[
+        selectedWeek
+      ][selectedDay];
 
     const convertedWorkout =
-      workout.map((exercise) => {
-        let max = 0;
+      workout.map(
+        (exercise) => {
+          let max = 0;
 
-        switch (exercise.maxLift) {
-          case "bench":
-            max = Number(metrics.bench || 0);
-            break;
+          switch (
+            exercise.maxLift
+          ) {
+            case "bench":
+              max =
+                Number(
+                  metrics.bench ||
+                    0
+                );
+              break;
 
-          case "squat":
-            max = Number(metrics.squat || 0);
-            break;
+            case "squat":
+              max =
+                Number(
+                  metrics.squat ||
+                    0
+                );
+              break;
 
-          case "deadlift":
-            max = Number(metrics.deadlift || 0);
-            break;
+            case "deadlift":
+              max =
+                Number(
+                  metrics.deadlift ||
+                    0
+                );
+              break;
 
-          case "powerClean":
-            max = Number(metrics.powerClean || 0);
-            break;
+            case "powerClean":
+              max =
+                Number(
+                  metrics.powerClean ||
+                    0
+                );
+              break;
 
-          default:
-            max = 0;
-        }
+            default:
+              max = 0;
+          }
 
-        const multiplier =
-          exercise.multiplier ?? 1;
+          const multiplier =
+            exercise.multiplier ??
+            1;
 
-        return {
-          id: crypto.randomUUID(),
-
-          exercise: exercise.exercise,
-
-          sets: exercise.sets.map((set) => ({
+          return {
             id: crypto.randomUUID(),
 
-            weight: "",
+            exercise:
+              exercise.exercise,
 
-            reps: set.reps,
+            sets:
+              exercise.sets.map(
+                (set) => ({
+                  id: crypto.randomUUID(),
 
-            percent: set.percent ?? null,
+                  weight: "",
 
-            targetWeight:
-              set.percent && max > 0
-                ? Math.round(
-                    max *
-                      multiplier *
-                      (set.percent / 100)
-                  )
-                : "",
+                  reps: set.reps,
 
-            completed: false,
-          })),
-        };
-      });
+                  percent:
+                    set.percent ??
+                    null,
 
-    if (!workoutStartTime) {
-  setWorkoutStartTime(Date.now());
-}
+                  targetWeight:
+                    set.percent &&
+                    max > 0
+                      ? Math.round(
+                          max *
+                            multiplier *
+                            (set.percent /
+                              100)
+                        )
+                      : "",
 
-    setCurrentWorkout(convertedWorkout);
+                  completed:
+                    false,
+                })
+              ),
+          };
+        }
+      );
+
+    if (
+      !workoutStartTime
+    ) {
+      setWorkoutStartTime(
+        Date.now()
+      );
+    }
+
+    setCurrentWorkout(
+      convertedWorkout
+    );
   }
 
   function clearWorkout() {
-  setCurrentWorkout([]);
+    setCurrentWorkout([]);
 
-  setExercise("");
+    setExercise("");
 
-  setSelectedCategory(null);
+    setSelectedCategory(
+      null
+    );
 
-  setSearchTerm("");
+    setSearchTerm("");
 
-  setWorkoutStartTime(null);
+    setWorkoutStartTime(
+      null
+    );
 
-  setElapsedTime(0);
+    setElapsedTime(0);
 
-  localStorage.removeItem(
-    "workoutStartTime"
-  );
-}
-
-  async function updateWorkout(updatedWorkout) {
-  const updatedHistory = workoutHistory.map((workout) =>
-    workout.id === updatedWorkout.id
-      ? updatedWorkout
-      : workout
-  );
-
-  setWorkoutHistory(updatedHistory);
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) return;
-
-  const { error } = await supabase
-    .from("workout_data")
-    .upsert({
-      id: user.id,
-      workout_history: updatedHistory,
-      current_workout: updatedWorkout,
-      updated_at: new Date().toISOString(),
-    });
-
-  if (error) {
-    console.error("Error saving workout history:", error);
+    if (userId) {
+      localStorage.removeItem(
+        `workoutStartTime_${userId}`
+      );
+    }
   }
-}
+
+  async function updateWorkout(
+    updatedWorkout
+  ) {
+    if (!userId) {
+      return;
+    }
+
+    const updatedHistory =
+      workoutHistory.map(
+        (workout) =>
+          workout.id ===
+          updatedWorkout.id
+            ? updatedWorkout
+            : workout
+      );
+
+    setWorkoutHistory(
+      updatedHistory
+    );
+
+    const {
+      data: {
+        user,
+      },
+    } =
+      await supabase.auth.getUser();
+
+    if (
+      !user ||
+      user.id !== userId
+    ) {
+      return;
+    }
+
+    const {
+      error,
+    } =
+      await supabase
+        .from("workout_data")
+        .upsert({
+          id: userId,
+
+          workout_history:
+            updatedHistory,
+
+          current_workout:
+            updatedWorkout,
+
+          updated_at:
+            new Date().toISOString(),
+        });
+
+    if (error) {
+      console.error(
+        "Error saving workout history:",
+        error
+      );
+    }
+  }
 
   return {
     currentWorkout,

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "../services/supabase";
 
 const defaultRecovery = {
   sleepHours: "",
@@ -9,219 +10,358 @@ const defaultRecovery = {
   hydration: 5,
 };
 
-export default function useRecovery() {
-  const [recovery, setRecovery] = useState(() => {
-    const saved = localStorage.getItem("recovery");
-
-    return saved
-      ? JSON.parse(saved)
-      : defaultRecovery;
-  });
-
-  const [recoveryHistory, setRecoveryHistory] =
-  useState(() => {
-
+function safelyReadStorage(
+  storageKey,
+  fallback
+) {
+  try {
     const saved =
-      localStorage.getItem(
-        "recoveryHistory"
-      );
+      localStorage.getItem(storageKey);
 
     if (!saved) {
-      return [];
+      return fallback;
     }
 
-    try {
+    const parsed = JSON.parse(saved);
 
-      const parsed =
-        JSON.parse(saved);
+    return parsed;
+  } catch (error) {
+    console.error(
+      `Unable to read ${storageKey}:`,
+      error
+    );
 
-      return Array.isArray(parsed)
-        ? parsed
-        : [];
+    return fallback;
+  }
+}
 
-    } catch {
+export default function useRecovery() {
+  const [userId, setUserId] =
+    useState(null);
 
-      return [];
+  const [recovery, setRecovery] =
+    useState(defaultRecovery);
 
-    }
+  const [recoveryHistory, setRecoveryHistory] =
+    useState([]);
 
-  });
-
+  /*
+   * Track the currently authenticated athlete.
+   */
   useEffect(() => {
+    let mounted = true;
+
+    async function loadUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!mounted) return;
+
+      setUserId(
+        user?.id ?? null
+      );
+    }
+
+    loadUser();
+
+    const {
+      data: {
+        subscription,
+      },
+    } =
+      supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUserId(
+            session?.user?.id ?? null
+          );
+        }
+      );
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  /*
+   * Load recovery data whenever
+   * the authenticated athlete changes.
+   */
+  useEffect(() => {
+    if (!userId) {
+      setRecovery(
+        defaultRecovery
+      );
+
+      setRecoveryHistory([]);
+
+      return;
+    }
+
+    const recoveryStorageKey =
+      `recovery_${userId}`;
+
+    const historyStorageKey =
+      `recoveryHistory_${userId}`;
+
+    const savedRecovery =
+      safelyReadStorage(
+        recoveryStorageKey,
+        defaultRecovery
+      );
+
+    const savedHistory =
+      safelyReadStorage(
+        historyStorageKey,
+        []
+      );
+
+    setRecovery({
+      ...defaultRecovery,
+      ...(savedRecovery &&
+      typeof savedRecovery ===
+        "object"
+        ? savedRecovery
+        : {}),
+    });
+
+    setRecoveryHistory(
+      Array.isArray(savedHistory)
+        ? savedHistory
+        : []
+    );
+  }, [userId]);
+
+  /*
+   * Persist current recovery data
+   * for this athlete only.
+   */
+  useEffect(() => {
+    if (!userId) return;
+
     localStorage.setItem(
-      "recovery",
+      `recovery_${userId}`,
       JSON.stringify(recovery)
     );
-  }, [recovery]);
+  }, [
+    recovery,
+    userId,
+  ]);
 
+  /*
+   * Persist recovery history
+   * for this athlete only.
+   */
   useEffect(() => {
-  localStorage.setItem(
-    "recoveryHistory",
-    JSON.stringify(
-      recoveryHistory
-    )
-  );
-}, [recoveryHistory]);
+    if (!userId) return;
 
-  function updateRecovery(field, value) {
-    setRecovery((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    localStorage.setItem(
+      `recoveryHistory_${userId}`,
+      JSON.stringify(
+        recoveryHistory
+      )
+    );
+  }, [
+    recoveryHistory,
+    userId,
+  ]);
+
+  function updateRecovery(
+    field,
+    value
+  ) {
+    setRecovery(
+      (previous) => ({
+        ...previous,
+        [field]: value,
+      })
+    );
   }
 
   function saveRecoveryCheckIn() {
+    const score =
+      calculateRecoveryScore();
 
-  const score =
-    calculateRecoveryScore();
+    const currentReadiness =
+      readiness(score);
 
-  const currentReadiness =
-    readiness(score);
+    const now =
+      new Date();
 
-  const now =
-    new Date();
+    const year =
+      now.getFullYear();
 
-  const year =
-    now.getFullYear();
+    const month =
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0");
 
-  const month =
-    String(
-      now.getMonth() + 1
-    ).padStart(2, "0");
+    const day =
+      String(
+        now.getDate()
+      ).padStart(2, "0");
 
-  const day =
-    String(
-      now.getDate()
-    ).padStart(2, "0");
+    const date =
+      `${year}-${month}-${day}`;
 
-  const date =
-    `${year}-${month}-${day}`;
+    const entry = {
+      id: crypto.randomUUID(),
 
-  const entry = {
+      date,
 
-    id: crypto.randomUUID(),
+      sleepHours:
+        Number(
+          recovery.sleepHours
+        ) || 0,
 
-    date,
+      sleepQuality:
+        Number(
+          recovery.sleepQuality
+        ),
 
-    sleepHours:
-      Number(recovery.sleepHours) || 0,
+      soreness:
+        Number(
+          recovery.soreness
+        ),
 
-    sleepQuality:
-      Number(recovery.sleepQuality),
+      energy:
+        Number(
+          recovery.energy
+        ),
 
-    soreness:
-      Number(recovery.soreness),
+      mood:
+        Number(
+          recovery.mood
+        ),
 
-    energy:
-      Number(recovery.energy),
+      hydration:
+        Number(
+          recovery.hydration
+        ),
 
-    mood:
-      Number(recovery.mood),
+      score,
 
-    hydration:
-      Number(recovery.hydration),
+      readiness:
+        currentReadiness,
+    };
 
-    score,
+    setRecoveryHistory(
+      (previous) => {
+        const existingIndex =
+          previous.findIndex(
+            (item) =>
+              item.date === date
+          );
 
-    readiness:
-      currentReadiness,
+        /*
+         * Already saved today?
+         * Update today's entry instead
+         * of creating a duplicate.
+         */
+        if (
+          existingIndex !== -1
+        ) {
+          return previous.map(
+            (
+              item,
+              index
+            ) =>
+              index ===
+              existingIndex
+                ? {
+                    ...entry,
+                    id: item.id,
+                  }
+                : item
+          );
+        }
 
-  };
-
-  setRecoveryHistory((previous) => {
-
-    const existingIndex =
-      previous.findIndex(
-        (item) =>
-          item.date === date
-      );
-
-    /*
-     * Already saved today?
-     * Update today's entry instead
-     * of creating a duplicate.
-     */
-    if (existingIndex !== -1) {
-
-      return previous.map(
-        (item, index) =>
-
-          index === existingIndex
-            ? {
-                ...entry,
-                id: item.id,
-              }
-            : item
-
-      );
-
-    }
-
-    /*
-     * First check-in today:
-     * add it to the beginning.
-     */
-    return [
-      entry,
-      ...previous,
-    ];
-
-  });
-
-}
+        /*
+         * First check-in today:
+         * add it to the beginning.
+         */
+        return [
+          entry,
+          ...previous,
+        ];
+      }
+    );
+  }
 
   function calculateRecoveryScore() {
     let score = 100;
 
     const sleep =
-      Number(recovery.sleepHours);
+      Number(
+        recovery.sleepHours
+      );
 
-    if (sleep < 6) score -= 20;
-    else if (sleep < 8) score -= 10;
-
-    score -=
-      (10 - Number(recovery.energy)) * 3;
-
-    score -=
-      (10 - Number(recovery.mood)) * 2;
-
-    score -=
-      Number(recovery.soreness) * 2;
+    if (sleep < 6) {
+      score -= 20;
+    } else if (sleep < 8) {
+      score -= 10;
+    }
 
     score -=
-      (10 - Number(recovery.hydration)) * 2;
+      (10 -
+        Number(
+          recovery.energy
+        )) * 3;
+
+    score -=
+      (10 -
+        Number(
+          recovery.mood
+        )) * 2;
+
+    score -=
+      Number(
+        recovery.soreness
+      ) * 2;
+
+    score -=
+      (10 -
+        Number(
+          recovery.hydration
+        )) * 2;
 
     return Math.max(
       0,
-      Math.min(100, Math.round(score))
+      Math.min(
+        100,
+        Math.round(score)
+      )
     );
   }
 
   function readiness(score) {
-    if (score >= 85)
+    if (score >= 85) {
       return "READY";
+    }
 
-    if (score >= 65)
+    if (score >= 65) {
       return "LIGHT DAY";
+    }
 
     return "RECOVERY";
   }
 
   return {
-  recovery,
+    recovery,
 
-  updateRecovery,
+    updateRecovery,
 
-  recoveryHistory,
+    recoveryHistory,
 
-  saveRecoveryCheckIn,
+    saveRecoveryCheckIn,
 
-  recoveryScore:
-    calculateRecoveryScore(),
+    recoveryScore:
+      calculateRecoveryScore(),
 
-  readiness:
-    readiness(
-      calculateRecoveryScore()
-    ),
-};
+    readiness:
+      readiness(
+        calculateRecoveryScore()
+      ),
+  };
 }
