@@ -24,6 +24,7 @@ import PRCelebration from "./components/PRCelebration";
 
 import Dashboard from "./pages/Dashboard";
 import WorkoutPage from "./pages/WorkoutPage";
+import ExerciseLibraryPage from "./pages/ExerciseLibraryPage";
 import ProgressPage from "./pages/ProgressPage";
 import HistoryPage from "./pages/HistoryPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -38,7 +39,7 @@ import AuthPage from "./pages/AuthPage";
 import { supabase } from "./services/supabase";
 import { signOut } from "./services/auth";
 
-import exerciseLibrary from "./data/exerciseLibrary";
+import exerciseLibrary, { positionExercises } from "./data/exerciseLibrary";
 import footballProgram from "./data/footballProgram";
 
 import checkAchievements from "./utils/checkAchievements";
@@ -1038,6 +1039,14 @@ function App() {
           }}
         />
       )}
+
+      {page === "exercise-library" && (
+  <ExerciseLibraryPage
+    player={player}
+    exerciseLibrary={exerciseLibrary}
+    positionExercises={positionExercises}
+  />
+)}
 
       {page === "progress" && (
         <ProgressPage

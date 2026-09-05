@@ -17,6 +17,12 @@ function Navigation({ page, setPage }) {
     },
 
     {
+      id:"exercise-library",
+      icon:"📚",
+      label:"Exercise Library",
+    },
+
+    {
       id:"progress",
       icon:"📈",
       label:"Progress",

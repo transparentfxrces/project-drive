@@ -432,4 +432,23 @@ const positionProfiles = {
   },
 };
 
+export function getPositionProfileByCode(code) {
+  const normalized = String(code || "").trim().toUpperCase();
+
+  if (!normalized) return null;
+
+  for (const group of Object.values(positionProfiles)) {
+    for (const [label, position] of Object.entries(group.positions)) {
+      if (
+        position.code === normalized ||
+        label.trim().toUpperCase() === normalized
+      ) {
+        return position;
+      }
+    }
+  }
+
+  return null;
+}
+
 export default positionProfiles;
