@@ -301,6 +301,113 @@
   color: #eaf4ff;
 }
 
+/* =========================================
+   EXERCISE DETAILS
+   ========================================= */
+
+.exercise-library-details {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(102, 180, 255, 0.16);
+  color: #a9bed4;
+  text-align: left;
+}
+
+.exercise-library-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.exercise-library-detail {
+  min-width: 0;
+}
+
+.exercise-library-detail-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #66c7ff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.exercise-library-detail-value {
+  color: #b9cce0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.exercise-library-detail-full {
+  grid-column: 1 / -1;
+}
+
+.exercise-library-detail-value ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 17px;
+}
+
+.exercise-library-detail-value li {
+  color: #b9cce0;
+  line-height: 1.45;
+}
+
+.exercise-library-position-note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 2px solid #ffd65a;
+  border-radius: 0 8px 8px 0;
+  color: #d5e3f0;
+  background: rgba(255, 214, 90, 0.05);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.exercise-library-position-note strong {
+  color: #ffd65a;
+}
+
+.exercise-library-card.expanded {
+  min-height: auto;
+}
+
+.exercise-library-card.expanded > strong {
+  margin-bottom: 12px;
+}
+
+.exercise-library-card.expanded .exercise-library-card-footer {
+  margin-top: 14px;
+}
+
+.exercise-library-list-item.expanded {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+}
+
+.exercise-library-list-item.expanded .exercise-library-details {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+
+/* =========================================
+   RESPONSIVE DETAILS
+   ========================================= */
+
+@media (max-width: 700px) {
+  .exercise-library-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exercise-library-detail-full {
+    grid-column: auto;
+  }
+}
+
 @media (max-width: 850px) {
   .exercise-library-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
