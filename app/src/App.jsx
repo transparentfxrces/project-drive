@@ -35,6 +35,8 @@ import WorkoutSummaryPage from "./pages/WorkoutSummaryPage";
 import CoachingPage from "./pages/CoachingPage";
 import CalendarPage from "./pages/CalendarPage";
 import AuthPage from "./pages/AuthPage";
+import SettingsPage from "./pages/SettingsPage";
+import SecurityPage from "./pages/SecurityPage";
 
 import { supabase } from "./services/supabase";
 import { signOut } from "./services/auth";
@@ -863,29 +865,14 @@ function App() {
 
   return (
     <div className="app">
-      <Header {...player} />
-
-      <div className="account-control">
-        <div className="account-info">
-          <span>
-            ATHLETE ACCOUNT
-          </span>
-
-          <strong>
-            {user.email}
-          </strong>
-        </div>
-
-        <button
-          type="button"
-          className="sign-out-button"
-          onClick={
-            handleSignOut
-          }
-        >
-          SIGN OUT
-        </button>
-      </div>
+      <Header
+  {...player}
+  userEmail={user?.email}
+  onSignOut={handleSignOut}
+  onAccountProfile={() => setPage("profile")}
+  onSettings={() => setPage("settings")}
+  onSecurity={() => setPage("security")}
+/>
 
       <Navigation
         page={page}
@@ -1215,6 +1202,18 @@ function App() {
           }
         />
       )}
+
+      {page === "settings" && (
+  <SettingsPage
+    player={player}
+  />
+)}
+
+{page === "security" && (
+  <SecurityPage
+    user={user}
+  />
+)}
 
       {levelUpData && (
         <div

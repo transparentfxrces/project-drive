@@ -1,120 +1,380 @@
-.sl-header{
+.sl-header {
+  position: relative;
+  overflow: visible;
+  border-radius: 24px;
+  padding: 70px 40px;
+  margin-bottom: 35px;
 
-position:relative;
+  background:
+    linear-gradient(
+      135deg,
+      #07101d,
+      #102443,
+      #07101d
+    );
 
-overflow:hidden;
+  border: 1px solid #2d8cff;
 
-border-radius:24px;
-
-padding:70px 40px;
-
-margin-bottom:35px;
-
-background:
-linear-gradient(
-135deg,
-#07101d,
-#102443,
-#07101d
-);
-
-border:1px solid #2d8cff;
-
-box-shadow:
-0 0 40px rgba(45,140,255,.25);
-
+  box-shadow:
+    0 0 40px rgba(45, 140, 255, 0.25);
 }
 
-.sl-header-overlay{
+.sl-header-overlay {
+  position: absolute;
+  inset: 0;
 
-position:absolute;
+  border-radius: 24px;
 
-inset:0;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(77, 163, 255, 0.25),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(0, 174, 255, 0.15),
+      transparent 40%
+    );
 
-background:
-
-radial-gradient(
-circle at top right,
-rgba(77,163,255,.25),
-transparent 45%
-),
-
-radial-gradient(
-circle at bottom left,
-rgba(0,174,255,.15),
-transparent 40%
-);
-
-pointer-events:none;
-
+  pointer-events: none;
 }
 
-.sl-header-content{
+.sl-header-content {
+  position: relative;
+  z-index: 2;
 
-position:relative;
-
-z-index:2;
-
+  padding-right: 250px;
 }
 
-.hunter-rank{
+.hunter-rank {
+  display: inline-flex;
 
-display:inline-flex;
+  padding: 8px 18px;
 
-padding:8px 18px;
+  border-radius: 999px;
 
-border-radius:999px;
+  background: rgba(30, 120, 255, 0.15);
 
-background:rgba(30,120,255,.15);
+  border: 1px solid #4da3ff;
 
-border:1px solid #4da3ff;
+  margin-bottom: 18px;
 
-margin-bottom:18px;
+  letter-spacing: 2px;
 
-letter-spacing:2px;
+  font-size: 0.75rem;
 
-font-size:.75rem;
+  font-weight: 700;
 
-font-weight:700;
-
-color:#8fd0ff;
-
+  color: #8fd0ff;
 }
 
-.sl-header h1{
+.sl-header h1 {
+  font-size: 3rem;
 
-font-size:3rem;
+  margin: 0;
 
-margin:0;
+  letter-spacing: 4px;
 
-letter-spacing:4px;
+  font-weight: 900;
 
-font-weight:900;
+  color: white;
 
-color:white;
-
-text-shadow:
-
-0 0 25px rgba(80,180,255,.4);
-
+  text-shadow:
+    0 0 25px rgba(80, 180, 255, 0.4);
 }
 
-.sl-header h2{
+.sl-header h2 {
+  margin-top: 18px;
 
-margin-top:18px;
+  font-size: 1.6rem;
 
-font-size:1.6rem;
-
-color:#69b8ff;
-
+  color: #69b8ff;
 }
 
-.sl-header p{
+.sl-header p {
+  margin: 6px 0;
 
-margin:6px 0;
+  font-size: 1rem;
 
-font-size:1rem;
+  color: #cbe5ff;
+}
 
-color:#cbe5ff;
 
+/* =========================================
+   HEADER ACCOUNT MENU
+   ========================================= */
+
+.header-account {
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  z-index: 20;
+
+  width: 240px;
+}
+
+.header-account-button {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(77, 163, 255, 0.22);
+
+  background: rgba(5, 14, 27, 0.78);
+
+  color: #dceeff;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.header-account-button:hover {
+  border-color: rgba(77, 163, 255, 0.55);
+
+  background: rgba(10, 28, 52, 0.92);
+
+  transform: translateY(-1px);
+}
+
+.header-account-status {
+  width: 8px;
+  height: 8px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: #5cff9d;
+
+  box-shadow:
+    0 0 10px rgba(92, 255, 157, 0.75);
+}
+
+.header-account-text {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.header-account-label {
+  font-size: 0.58rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  color: #6e91b5;
+}
+
+.header-account-text strong {
+  overflow: hidden;
+
+  color: #d9ecff;
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.header-account-chevron {
+  color: #66c7ff;
+
+  font-size: 0.8rem;
+
+  transition: transform 150ms ease;
+}
+
+.header-account-chevron.open {
+  transform: rotate(180deg);
+}
+
+
+/* =========================================
+   ACCOUNT DROPDOWN
+   ========================================= */
+
+.header-account-menu {
+  position: absolute;
+
+  top: calc(100% + 8px);
+
+  right: 0;
+
+  width: 280px;
+
+  padding: 8px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(77, 163, 255, 0.3);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(8, 20, 38, 0.98),
+      rgba(5, 14, 27, 0.98)
+    );
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    0 0 25px rgba(45, 140, 255, 0.12);
+
+  backdrop-filter: blur(14px);
+}
+
+.header-account-menu button {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 11px 12px;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #d9ecff;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.header-account-menu button:hover {
+  background: rgba(77, 163, 255, 0.1);
+
+  color: white;
+}
+
+.header-account-menu button > span:first-child {
+  width: 22px;
+
+  flex: 0 0 22px;
+
+  color: #66c7ff;
+
+  font-size: 0.9rem;
+
+  text-align: center;
+}
+
+.header-account-menu button > span:last-child {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.header-account-menu button strong {
+  font-size: 0.7rem;
+
+  letter-spacing: 0.04em;
+}
+
+.header-account-menu button small {
+  color: #7693ad;
+
+  font-size: 0.66rem;
+
+  line-height: 1.35;
+}
+
+.header-account-divider {
+  height: 1px;
+
+  margin: 6px 4px;
+
+  background: rgba(102, 180, 255, 0.12);
+}
+
+.header-account-menu .header-account-signout {
+  color: #ff9a9a;
+}
+
+.header-account-menu .header-account-signout:hover {
+  background: rgba(255, 80, 80, 0.08);
+
+  color: #ffb0b0;
+}
+
+.header-account-menu .header-account-signout > span:first-child {
+  color: #ff8585;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+  .sl-header {
+    padding: 120px 24px 45px;
+  }
+
+  .sl-header-content {
+    padding-right: 0;
+  }
+
+  .header-account {
+    top: 14px;
+    right: 14px;
+
+    width: min(240px, calc(100% - 28px));
+  }
+
+  .header-account-menu {
+    width: min(280px, calc(100vw - 28px));
+  }
+
+  .sl-header h1 {
+    font-size: 2.2rem;
+
+    letter-spacing: 2px;
+  }
+
+  .sl-header h2 {
+    font-size: 1.35rem;
+  }
 }
