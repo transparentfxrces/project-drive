@@ -35,6 +35,7 @@ import WorkoutSummaryPage from "./pages/WorkoutSummaryPage";
 import CoachingPage from "./pages/CoachingPage";
 import CalendarPage from "./pages/CalendarPage";
 import AuthPage from "./pages/AuthPage";
+import AccountPage from "./pages/AccountPage";
 import SettingsPage from "./pages/SettingsPage";
 import SecurityPage from "./pages/SecurityPage";
 
@@ -168,6 +169,9 @@ function formatCountdown(target) {
 function App() {
   const [page, setPage] =
     useState("dashboard");
+
+  const [accountSection, setAccountSection] =
+    useState("profile");
 
   const [user, setUser] =
     useState(null);
@@ -864,20 +868,33 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <Header
-  {...player}
-  userEmail={user?.email}
-  onSignOut={handleSignOut}
-  onAccountProfile={() => setPage("profile")}
-  onSettings={() => setPage("settings")}
-  onSecurity={() => setPage("security")}
-/>
+  <div className="app">
+    {page !== "account" && (
+      <>
+        <Header
+          {...player}
+          userEmail={user?.email}
+          onSignOut={handleSignOut}
+          onAccountProfile={() => {
+            setAccountSection("profile");
+            setPage("account");
+          }}
+          onSettings={() => {
+            setAccountSection("settings");
+            setPage("account");
+          }}
+          onSecurity={() => {
+            setAccountSection("security");
+            setPage("account");
+          }}
+        />
 
-      <Navigation
-        page={page}
-        setPage={setPage}
-      />
+        <Navigation
+          page={page}
+          setPage={setPage}
+        />
+      </>
+    )}
 
       {page === "dashboard" && (
         <Dashboard
@@ -1202,6 +1219,24 @@ function App() {
           }
         />
       )}
+
+      {page === "account" && (
+  <AccountPage
+    section={accountSection}
+    setSection={setAccountSection}
+    player={player}
+    updatePlayer={updatePlayer}
+    updateSeasonGoal={updateSeasonGoal}
+    streak={streak}
+    workoutsLogged={workoutsLogged}
+    xp={levelData.currentXP}
+    level={levelData.level}
+    nextLevelXP={levelData.nextLevelXP}
+    achievements={achievements}
+    user={user}
+    onBack={() => setPage("dashboard")}
+  />
+)}
 
       {page === "settings" && (
   <SettingsPage

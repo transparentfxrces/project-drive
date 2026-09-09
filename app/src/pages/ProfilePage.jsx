@@ -30,9 +30,15 @@ function ProfilePage({
 
   return (
     <>
-      <h2>👤 Athlete Profile</h2>
+  <div className="profile-intro">
+    <span>ATHLETE PROFILE</span>
+    <h2>PLAYER OVERVIEW</h2>
+    <p>
+      Your identity, training activity, and season objectives.
+    </p>
+  </div>
 
-      <div className="profile-grid">
+  <div className="profile-grid">
 
         {/* PLAYER INFORMATION */}
 

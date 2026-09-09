@@ -1,146 +1,308 @@
-/* ==========================================================
-   PROJECT DRIVE - Profile.css
-   Solo Leveling Theme
-========================================================== */
+/* =========================================
+   PROJECT DRIVE — PROFILE
+   ========================================= */
 
-.profile-page{
-    display:flex;
-    flex-direction:column;
-    gap:32px;
-    animation:profileFade .4s ease;
+.profile-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 0 50px;
+  animation: profileFade 0.35s ease;
 }
 
-.profile-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-    gap:24px;
+.profile-intro {
+  margin-bottom: 24px;
 }
 
-.profile-card{
-    background:linear-gradient(145deg,#0b1728,#132741);
-    border:1px solid rgba(77,170,255,.15);
-    border-radius:22px;
-    padding:24px;
-    box-shadow:0 0 22px rgba(40,120,255,.08);
-    transition:.25s;
+.profile-intro span {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #66c7ff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.profile-card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(90,185,255,.35);
-    box-shadow:0 0 28px rgba(55,145,255,.16);
+.profile-intro h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
 }
 
-.profile-card-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-    gap:12px;
+.profile-intro p {
+  margin: 8px 0 0;
+  color: #91a9c0;
+  font-size: 0.9rem;
 }
 
-.profile-card h3{
-    margin:0;
-    color:#f6d46f;
-    font-size:1.35rem;
-    font-weight:800;
-    letter-spacing:.5px;
+/* =========================================
+   GRID
+   ========================================= */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.profile-card p{
-    margin:10px 0;
-    color:#d6e6f6;
-    line-height:1.6;
-    border-bottom:1px solid rgba(255,255,255,.05);
-    padding-bottom:10px;
+/* =========================================
+   CARDS
+   ========================================= */
+
+.profile-card {
+  padding: 20px;
+  border: 1px solid rgba(77, 163, 255, 0.18);
+  border-radius: 18px;
+  background: rgba(7, 16, 29, 0.72);
+  box-shadow: none;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease;
 }
 
-.profile-card p:last-child{
-    border-bottom:none;
-    padding-bottom:0;
+.profile-card:hover {
+  transform: none;
+  border-color: rgba(102, 199, 255, 0.28);
+  background: rgba(8, 19, 34, 0.82);
+  box-shadow: none;
 }
 
-.profile-card strong{
-    color:#82d8ff;
+.profile-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
-.profile-input{
-    width:100%;
-    padding:12px 14px;
-    margin-bottom:12px;
-    border-radius:12px;
-    border:1px solid rgba(78,170,255,.16);
-    background:#0f2137;
-    color:#fff;
-    font-size:.95rem;
-    outline:none;
-    transition:.2s;
-    box-sizing:border-box;
+.profile-card h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
-.profile-input:focus{
-    border-color:#57b8ff;
-    box-shadow:0 0 12px rgba(87,184,255,.25);
+.profile-card p {
+  margin: 0;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(102, 180, 255, 0.1);
+  color: #91a9c0;
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
+
+.profile-card p:first-of-type {
+  padding-top: 0;
+}
+
+.profile-card p:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.profile-card strong {
+  color: #d9e9f7;
+  font-weight: 700;
+}
+
+/* =========================================
+   PLAYER INFORMATION
+   ========================================= */
+
+.profile-card:first-child {
+  grid-column: 1 / -1;
+}
+
+.profile-card:first-child p {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.profile-card:first-child p strong {
+  color: #7189a0;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.profile-card:first-child p:not(:has(strong)) {
+  display: block;
+}
+
+/* =========================================
+   EDIT INPUTS
+   ========================================= */
+
+.profile-input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+
+  border: 1px solid rgba(102, 180, 255, 0.18);
+  border-radius: 9px;
+
+  outline: none;
+
+  background: rgba(12, 28, 48, 0.9);
+  color: #d9e9f7;
+
+  font: inherit;
+  font-size: 0.82rem;
+
+  transition: 150ms ease;
+}
+
+.profile-input:focus {
+  border-color: #66c7ff;
+  box-shadow: 0 0 0 2px rgba(102, 199, 255, 0.08);
+}
+
+.profile-input:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
 
 .edit-button,
-.save-button{
-    border:none;
-    border-radius:12px;
-    padding:10px 18px;
-    cursor:pointer;
-    font-weight:800;
-    color:#fff;
-    transition:.2s;
+.save-button {
+  flex-shrink: 0;
+
+  padding: 9px 13px;
+
+  border-radius: 9px;
+
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+
+  transition: 150ms ease;
 }
 
-.edit-button{
-    background:linear-gradient(135deg,#2979ff,#45c7ff);
+.edit-button {
+  border: 1px solid rgba(102, 180, 255, 0.25);
+  background: rgba(12, 28, 48, 0.9);
+  color: #a9c8df;
 }
 
-.save-button{
-    background:linear-gradient(135deg,#2dbd7f,#52e0aa);
+.edit-button:hover {
+  border-color: #66c7ff;
+  background: rgba(102, 199, 255, 0.07);
+  color: #66c7ff;
 }
 
-.edit-button:hover,
-.save-button:hover{
-    transform:translateY(-2px);
-    filter:brightness(1.06);
+.save-button {
+  border: 1px solid rgba(102, 199, 255, 0.3);
+  background: rgba(102, 199, 255, 0.08);
+  color: #66c7ff;
 }
 
-.version-footer{
-    text-align:center;
-    color:#6f8da8;
-    padding:18px;
-    font-size:.9rem;
-    border-top:1px solid rgba(255,255,255,.06);
-    margin-top:12px;
+.save-button:hover {
+  border-color: #66c7ff;
+  background: rgba(102, 199, 255, 0.14);
 }
 
-@keyframes profileFade{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
+/* =========================================
+   TRAINING SUMMARY
+   ========================================= */
+
+.profile-card:nth-child(2) p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-@media(max-width:768px){
+.profile-card:nth-child(2) p strong {
+  color: #7189a0;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
-    .profile-grid{
-        grid-template-columns:1fr;
-    }
+/* =========================================
+   SEASON GOALS
+   ========================================= */
 
-    .profile-card-header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+.profile-card:nth-child(3) p {
+  color: #a9c8df;
+}
 
-    .edit-button,
-    .save-button{
-        width:100%;
-    }
+.profile-card:nth-child(3) p::first-letter {
+  color: #66c7ff;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.version-footer {
+  margin-top: 18px;
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(102, 180, 255, 0.08);
+
+  text-align: center;
+
+  color: #526b82;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+}
+
+/* =========================================
+   ANIMATION
+   ========================================= */
+
+@keyframes profileFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+  .profile-page {
+    padding: 10px 0 40px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card:first-child {
+    grid-column: auto;
+  }
+
+  .profile-card-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .edit-button,
+  .save-button {
+    width: 100%;
+  }
+
+  .profile-card:first-child p {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
 }

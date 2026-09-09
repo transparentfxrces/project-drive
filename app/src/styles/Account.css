@@ -1,0 +1,195 @@
+.account-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 40px 60px;
+}
+
+.account-header {
+  margin-bottom: 32px;
+}
+
+.account-back {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 28px;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.account-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.account-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.03em;
+}
+
+.account-header p {
+  margin: 10px 0 0;
+  opacity: 0.65;
+}
+
+.account-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.account-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+.account-sidebar-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  opacity: 0.5;
+  margin-bottom: 10px;
+  padding: 0 14px;
+}
+
+.account-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account-nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.account-nav-item:hover {
+  background: rgba(127, 127, 127, 0.08);
+}
+
+.account-nav-item.active {
+  border-color: rgba(127, 127, 127, 0.2);
+  background: rgba(127, 127, 127, 0.1);
+}
+
+.account-nav-icon {
+  width: 28px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.account-nav-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.account-nav-copy strong {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+}
+
+.account-nav-copy small {
+  font-size: 0.72rem;
+  opacity: 0.55;
+}
+
+.account-content {
+  min-width: 0;
+}
+
+/*
+  The Account shell now owns the page-level header.
+  These prevent the old subsection headers from competing
+  with ACCOUNT.
+*/
+
+.account-content .profile-page > .profile-header,
+.account-content .settings-page > .settings-header,
+.account-content .security-page > .security-header {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .account-page {
+    padding: 24px 20px 48px;
+  }
+
+  .account-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .account-sidebar {
+    position: static;
+  }
+
+  .account-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .account-nav-item {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .account-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   ACCOUNT SECTION POLISH
+========================================= */
+
+.profile-intro {
+  margin-bottom: 24px;
+}
+
+.profile-intro span {
+  display: block;
+  margin-bottom: 6px;
+  color: #66c7ff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.profile-intro h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.profile-intro p {
+  margin: 7px 0 0;
+  color: #91a9c0;
+  font-size: 0.85rem;
+}
+
+.account-content .settings-header,
+.account-content .security-header {
+  display: none;
+}
