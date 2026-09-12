@@ -17,6 +17,7 @@ function AccountPage({
   nextLevelXP,
   achievements,
   user,
+  onSignOut,
   onBack,
 }) {
   const sections = [

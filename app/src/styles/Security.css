@@ -240,3 +240,28 @@
 .security-danger {
   margin-top: 6px;
 }
+
+.security-message {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.security-success {
+  border: 1px solid rgba(102, 199, 255, 0.2);
+  background: rgba(102, 199, 255, 0.06);
+  color: #66c7ff;
+}
+
+.security-error {
+  border: 1px solid rgba(255, 100, 100, 0.2);
+  background: rgba(255, 100, 100, 0.06);
+  color: #ff9c9c;
+}
+
+.security-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

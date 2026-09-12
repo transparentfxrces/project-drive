@@ -683,3 +683,24 @@
     animation: none;
   }
 }
+
+/* ==========================================
+   PROJECT DRIVE — ANIMATIONS TOGGLE
+========================================== */
+
+.app.animations-disabled *,
+.app.animations-disabled *::before,
+.app.animations-disabled *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+.app.animations-disabled {
+    scroll-behavior: auto !important;
+}
+
+.app.animations-disabled .xp-notification,
+.app.animations-disabled .level-up-overlay,
+.app.animations-disabled .level-up-popup {
+    animation: none !important;
+}

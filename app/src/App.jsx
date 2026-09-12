@@ -167,8 +167,46 @@ function formatCountdown(target) {
 }
 
 function App() {
-  const [page, setPage] =
-    useState("dashboard");
+  const [page, setPage] = useState(() => {
+  const validPages = [
+    "dashboard",
+    "workout",
+    "progress",
+    "performance",
+  ];
+
+  try {
+    const saved = localStorage.getItem("projectDriveSettings");
+
+    if (saved) {
+      const settings = JSON.parse(saved);
+
+      if (validPages.includes(settings.startPage)) {
+        return settings.startPage;
+      }
+    }
+  } catch {
+    // Fall back to dashboard if settings cannot be read.
+  }
+
+  return "dashboard";
+});
+
+  const [animationsEnabled, setAnimationsEnabled] = useState(() => {
+    try {
+      const saved = localStorage.getItem("projectDriveSettings");
+
+      if (saved) {
+        const settings = JSON.parse(saved);
+
+        return settings.animations ?? true;
+      }
+    } catch {
+      return true;
+    }
+
+    return true;
+  });
 
   const [accountSection, setAccountSection] =
     useState("profile");
@@ -450,6 +488,36 @@ function App() {
     levelUpData,
     dismissLevelUp,
   ]);
+
+  useEffect(() => {
+  function handleSettingsChange() {
+    try {
+      const saved = localStorage.getItem("projectDriveSettings");
+
+      if (saved) {
+        const settings = JSON.parse(saved);
+
+        setAnimationsEnabled(
+          settings.animations ?? true
+        );
+      }
+    } catch {
+      setAnimationsEnabled(true);
+    }
+  }
+
+  window.addEventListener(
+    "projectDriveSettingsChanged",
+    handleSettingsChange
+  );
+
+  return () => {
+    window.removeEventListener(
+      "projectDriveSettingsChanged",
+      handleSettingsChange
+    );
+  };
+}, []);
 
   const displayXP =
     Math.max(
@@ -868,7 +936,11 @@ function App() {
   }
 
   return (
-  <div className="app">
+  <div
+  className={`app ${
+    animationsEnabled ? "" : "animations-disabled"
+  }`}
+>
     {page !== "account" && (
       <>
         <Header
@@ -1222,20 +1294,21 @@ function App() {
 
       {page === "account" && (
   <AccountPage
-    section={accountSection}
-    setSection={setAccountSection}
-    player={player}
-    updatePlayer={updatePlayer}
-    updateSeasonGoal={updateSeasonGoal}
-    streak={streak}
-    workoutsLogged={workoutsLogged}
-    xp={levelData.currentXP}
-    level={levelData.level}
-    nextLevelXP={levelData.nextLevelXP}
-    achievements={achievements}
-    user={user}
-    onBack={() => setPage("dashboard")}
-  />
+  section={accountSection}
+  setSection={setAccountSection}
+  player={player}
+  updatePlayer={updatePlayer}
+  updateSeasonGoal={updateSeasonGoal}
+  streak={streak}
+  workoutsLogged={workoutsLogged}
+  xp={levelData.currentXP}
+  level={levelData.level}
+  nextLevelXP={levelData.nextLevelXP}
+  achievements={achievements}
+  user={user}
+  onSignOut={handleSignOut}
+  onBack={() => setPage("dashboard")}
+/>
 )}
 
       {page === "settings" && (

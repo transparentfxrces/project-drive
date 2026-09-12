@@ -39,12 +39,16 @@ function SettingsPage() {
 
   function saveSettings() {
     localStorage.setItem(
-      "projectDriveSettings",
-      JSON.stringify(settings)
+        "projectDriveSettings",
+        JSON.stringify(settings)
+    );
+
+    window.dispatchEvent(
+        new Event("projectDriveSettingsChanged")
     );
 
     setSaved(true);
-  }
+}
 
   return (
     <section className="settings-page">

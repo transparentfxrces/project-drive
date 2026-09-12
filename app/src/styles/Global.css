@@ -259,6 +259,7 @@ hr{
     color:white;
 }
 
+
 /* ==========================================
    RESPONSIVE
 ========================================== */
@@ -277,4 +278,16 @@ hr{
         font-size:1.7rem;
     }
 
+}
+
+/* ==========================================
+   ANIMATIONS SETTING
+========================================== */
+
+.animations-disabled *,
+.animations-disabled *::before,
+.animations-disabled *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
 }
