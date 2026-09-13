@@ -32,8 +32,8 @@
     ),
     linear-gradient(
       145deg,
-      rgba(var(--user-accent-rgb),0.96),
-      rgba(var(--user-accent-rgb),0.98)
+      rgba(var(--user-accent-rgb),0.055),
+      rgba(var(--user-accent-rgb),0.045)
     );
 
   box-shadow:
@@ -126,7 +126,7 @@
     linear-gradient(
       145deg,
       rgba(var(--user-accent-rgb),0.9),
-      rgba(var(--user-accent-rgb),0.94)
+      rgba(var(--user-accent-rgb),0.045)
     );
 
   box-shadow:
@@ -187,8 +187,8 @@
   background:
     linear-gradient(
       150deg,
-      rgba(var(--user-accent-rgb),0.97),
-      rgba(var(--user-accent-rgb),0.98)
+      rgba(var(--user-accent-rgb),0.05),
+      rgba(var(--user-accent-rgb),0.045)
     );
 
   box-shadow:
@@ -497,7 +497,7 @@
       rgba(255, 190, 47, 0.13),
       transparent 65%
     ),
-    rgba(var(--user-accent-rgb),0.96);
+    rgba(var(--user-accent-rgb),0.055);
 
   box-shadow:
     0 0 0 1px
@@ -602,7 +602,7 @@
     radial-gradient(
       circle at center,
       rgba(var(--user-accent-rgb),0.18),
-      rgba(var(--user-accent-rgb),0.96)
+      rgba(var(--user-accent-rgb),0.055)
     );
 
   box-shadow:
@@ -682,8 +682,8 @@
   background:
     linear-gradient(
       145deg,
-      rgba(var(--user-accent-rgb),0.96),
-      rgba(var(--user-accent-rgb),0.98)
+      rgba(var(--user-accent-rgb),0.055),
+      rgba(var(--user-accent-rgb),0.045)
     );
 
   box-shadow:
@@ -827,7 +827,7 @@
   padding: 16px 18px;
 
   background:
-    rgba(var(--user-accent-rgb),0.96);
+    rgba(var(--user-accent-rgb),0.055);
 }
 
 .calendar-exercise-header {
@@ -1191,204 +1191,122 @@
   }
 
 }
+
 /* =========================================================
-   PROJECT DRIVE — SOLO LEVELING FINAL OVERRIDE
-   Loaded last via Calendar.css so no App.jsx import is needed.
+   FINAL SOLO LEVELING AURA — CALENDAR READABILITY
+   Dark surfaces, brighter information, restrained accent glow.
 ========================================================= */
-
-html, body {
-  background: #030405 !important;
-  color: #f2f2f2 !important;
-  min-height: 100%;
+.calendar-stat-card small,
+.calendar-weekdays span,
+.calendar-header span,
+.calendar-system-label {
+  color: var(--theme-300);
 }
 
-body {
-  background:
-    radial-gradient(circle at 50% -10%, rgba(var(--user-accent-rgb), .10), transparent 38%),
-    #030405 !important;
+.calendar-stat-card strong,
+.calendar-header h3,
+.calendar-number,
+.calendar-day,
+.calendar-session-top strong,
+.calendar-exercise-header strong,
+.calendar-set-row strong,
+.calendar-details-header h3 {
+  color: var(--text-primary);
 }
 
-.app {
-  background:
-    radial-gradient(circle at 92% 2%, rgba(var(--user-accent-rgb), .075), transparent 28%),
-    radial-gradient(circle at 8% 92%, rgba(var(--user-accent-rgb), .035), transparent 26%),
-    #030405 !important;
-  color: var(--text-primary) !important;
+.calendar-day {
+  color: var(--text-secondary);
 }
 
-/* Header: black/charcoal instead of the old navy-blue block. */
-.app > :first-child:not(.sl-nav),
-.app > header,
-.app .site-header,
-.app .app-header,
-.app .main-header,
-.app .profile-header,
-.app .profile-hero,
-.app .hero,
-.app .profile-banner,
-.app .athlete-header {
-  background:
-    linear-gradient(145deg, rgba(16,16,20,.98), rgba(5,5,7,.99) 72%) !important;
-  background-color: #08090b !important;
-  border-color: rgba(var(--user-accent-rgb), .38) !important;
-  box-shadow: 0 12px 42px rgba(var(--user-accent-rgb), .09) !important;
+.calendar-day:not(.empty):hover {
+  color: var(--text-primary);
 }
 
-/* Kill old blue decorative washes. */
-.app > :first-child:not(.sl-nav)::before,
-.app > :first-child:not(.sl-nav)::after,
-.app .profile-header::before,
-.app .profile-header::after,
-.app .profile-hero::before,
-.app .profile-hero::after,
-.app .hero::before,
-.app .hero::after,
-.app .dashboard-card::after,
-.app .stat-card::after {
-  background: none !important;
-  box-shadow: none !important;
+.calendar-day.trained,
+.calendar-day.pr-day,
+.calendar-day.selected,
+.calendar-day.today {
+  color: var(--text-primary);
 }
 
-/* Navigation should be black glass, not a giant purple rectangle. */
-.app .sl-nav {
-  background: rgba(7,7,9,.92) !important;
-  border: 1px solid rgba(var(--user-accent-rgb), .20) !important;
-  box-shadow: 0 14px 40px rgba(0,0,0,.42), 0 0 26px rgba(var(--user-accent-rgb), .06) !important;
+.calendar-day.trained .calendar-number,
+.calendar-day.pr-day .calendar-number,
+.calendar-day.selected .calendar-number,
+.calendar-day.today .calendar-number {
+  color: #fff;
 }
 
-.app .sl-nav-btn {
-  background: rgba(15,15,18,.96) !important;
-  color: #d8d8dc !important;
-  border: 1px solid rgba(255,255,255,.045) !important;
-  box-shadow: none !important;
+.calendar-day.trained small,
+.calendar-pr-badge,
+.calendar-workout-marker {
+  color: var(--theme-200);
 }
 
-.app .sl-nav-btn:hover {
-  background: rgba(var(--user-accent-rgb), .13) !important;
-  color: var(--theme-100) !important;
-  border-color: rgba(var(--user-accent-rgb), .32) !important;
-  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .12) !important;
+.calendar-session-top span,
+.calendar-reps-label,
+.calendar-details-header span,
+.calendar-rest-day p {
+  color: var(--text-secondary);
 }
 
-.app .sl-nav-btn.active {
-  background: linear-gradient(135deg, var(--theme-700), var(--theme-500)) !important;
-  color: #fff !important;
-  border-color: rgba(var(--user-accent-rgb), .72) !important;
-  box-shadow: 0 0 24px rgba(var(--user-accent-rgb), .25) !important;
+.calendar-set-number {
+  color: var(--theme-300);
 }
 
-/* Cards: nearly-black surfaces with restrained accent edges. */
-.app .dashboard-card,
-.app .stat-card,
-.app .profile-card,
-.app .progress-card,
-.app .exercise-card,
-.app .metric-card,
-.app .history-session,
-.app .summary-card,
-.app .football-program-card,
-.app .exercise-picker,
-.app .custom-exercise-card,
-.app .athlete-status-card {
-  background: linear-gradient(145deg, rgba(14,14,17,.97), rgba(7,7,9,.97)) !important;
-  border-color: rgba(var(--user-accent-rgb), .18) !important;
-  box-shadow: 0 12px 30px rgba(0,0,0,.28), inset 0 0 0 1px rgba(255,255,255,.015) !important;
+.calendar-card,
+.calendar-details {
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.28),
+    0 0 26px rgba(var(--user-accent-rgb),.075),
+    inset 0 0 35px rgba(var(--user-accent-rgb),.02);
 }
 
-.app .dashboard-card:hover,
-.app .stat-card:hover,
-.app .profile-card:hover,
-.app .progress-card:hover,
-.app .exercise-card:hover,
-.app .metric-card:hover,
-.app .history-session:hover,
-.app .summary-card:hover,
-.app .football-program-card:hover,
-.app .exercise-picker:hover,
-.app .custom-exercise-card:hover,
-.app .athlete-status-card:hover {
-  border-color: rgba(var(--user-accent-rgb), .38) !important;
-  box-shadow: 0 16px 34px rgba(0,0,0,.34), 0 0 24px rgba(var(--user-accent-rgb), .08) !important;
+.calendar-stat-card:hover,
+.calendar-day:not(.empty):hover {
+  box-shadow:
+    0 0 20px rgba(var(--user-accent-rgb),.12),
+    0 10px 28px rgba(0,0,0,.25);
 }
 
-/* Typography: accent, but not every heading screaming neon. */
-.app h1,
-.app h2 {
-  color: #f5f5f7 !important;
-  text-shadow: 0 0 22px rgba(var(--user-accent-rgb), .16) !important;
-}
 
-.app h3,
-.app h4,
-.app h5,
-.app h6 {
+/* =========================================================
+   V5.8 FINAL — CALENDAR LEGEND READABILITY
+========================================================= */
+.calendar-legend {
+  color: #dfe3e8 !important;
+  text-shadow: 0 0 10px rgba(var(--user-accent-rgb), .06);
+}
+.calendar-legend span {
+  color: #dfe3e8 !important;
+}
+.calendar-legend .legend-trained,
+.calendar-legend .legend-today {
   color: var(--theme-200) !important;
+  text-shadow:
+    0 0 8px rgba(var(--user-accent-rgb), .38),
+    0 0 18px rgba(var(--user-accent-rgb), .12);
 }
-
-.app a {
-  color: var(--theme-300) !important;
+.calendar-legend .legend-pr {
+  color: #ffd15b !important;
+  text-shadow:
+    0 0 8px rgba(255, 195, 54, .45),
+    0 0 16px rgba(255, 195, 54, .12);
 }
-
-/* Buttons, inputs, selects and progress use the selected accent. */
-.app button:not(.sl-nav-btn) {
-  background: linear-gradient(135deg, var(--theme-700), var(--theme-500)) !important;
-  color: #fff !important;
-  border: 1px solid rgba(var(--user-accent-rgb), .32) !important;
-  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .08) !important;
-}
-
-.app button:not(.sl-nav-btn):hover {
-  background: linear-gradient(135deg, var(--theme-600), var(--theme-400)) !important;
-  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .16) !important;
-}
-
-.app input,
-.app select,
-.app textarea {
-  background: #090a0d !important;
-  color: #f4f4f5 !important;
-  border-color: rgba(var(--user-accent-rgb), .20) !important;
-}
-
-.app input:focus,
-.app select:focus,
-.app textarea:focus {
-  border-color: rgba(var(--user-accent-rgb), .62) !important;
-  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .13) !important;
-}
-
-.app .progress-fill,
-.app .progress-bar-fill,
-.app .xp-fill,
-.app .xp-progress-fill {
-  background: linear-gradient(90deg, var(--theme-700), var(--theme-400), var(--theme-200)) !important;
-  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .28) !important;
-}
-
-/* Remove the old gold active-state treatment. */
-.app .sl-nav-btn.active::before {
-  background: linear-gradient(180deg, transparent, var(--theme-100), transparent) !important;
-}
-
-/* Neutralize remaining common hard-coded blue surfaces. */
-.app [style*="#081223"],
-.app [style*="#101b2d"],
-.app [style*="#0b1321"],
-.app [style*="#11233b"] {
-  background: #090a0d !important;
+.calendar-legend i {
+  filter: drop-shadow(0 0 5px rgba(var(--user-accent-rgb), .22));
 }
 
 
-/* FINAL THEME PASS LOADED LAST */
-/* PROJECT DRIVE — SOLO LEVELING FINAL THEME */
-html,body,#root{background:#030305!important;}
-.app{background:radial-gradient(ellipse 80% 35% at 50% -10%,rgba(var(--user-accent-rgb),.08),transparent 62%),#030305!important;color:#e8e5eb!important;}
-.app .dashboard-card,.app .stat-card,.app .profile-card,.app .progress-card,.app .exercise-card,.app .metric-card,.app .history-session,.app .summary-card,.app .football-program-card,.app .exercise-picker,.app .custom-exercise-card,.app .xp-card,.app .weekly-goal-card{background:linear-gradient(145deg,#101015 0%,#07070a 100%)!important;border:1px solid rgba(var(--user-accent-rgb),.20)!important;box-shadow:0 0 20px rgba(var(--user-accent-rgb),.045),inset 0 0 0 1px rgba(255,255,255,.015)!important;}
-.app .dashboard-card::after,.app .stat-card::after,.app .profile-card::after,.app .progress-card::after,.app .exercise-card::after,.app .metric-card::after,.app .history-session::after,.app .summary-card::after,.app .football-program-card::after,.app .exercise-picker::after,.app .custom-exercise-card::after{display:none!important;content:none!important;}
-.app h1,.app h2,.app h3,.app h4,.app h5,.app h6{color:var(--theme-200)!important}.app p,.app li{color:#d8d3dc!important}.app strong{color:#fff!important}.app a{color:var(--theme-300)!important}
-.app .navigation,.app .sl-nav{background:rgba(6,6,9,.96)!important;border-color:rgba(var(--user-accent-rgb),.16)!important;box-shadow:0 12px 32px rgba(0,0,0,.45)!important}.app .navigation button,.app .sl-nav-btn{background:#0b0b0f!important;color:#aaa5ae!important;border-color:rgba(255,255,255,.045)!important;box-shadow:none!important}.app .navigation button:hover,.app .sl-nav-btn:hover{background:rgba(var(--user-accent-rgb),.07)!important;color:#f4f0f6!important;border-color:rgba(var(--user-accent-rgb),.28)!important}.app .navigation button.active,.app .navigation button[aria-current="page"],.app .sl-nav-btn.active{background:linear-gradient(135deg,rgba(var(--user-accent-rgb),.18),rgba(var(--user-accent-rgb),.035))!important;color:#fff!important;border-color:rgba(var(--user-accent-rgb),.48)!important;box-shadow:0 0 18px rgba(var(--user-accent-rgb),.10)!important}
-.app button{background:linear-gradient(135deg,var(--theme-600),var(--theme-700))!important;color:#fff!important;border:1px solid rgba(var(--user-accent-rgb),.32)!important}.app button:hover{background:linear-gradient(135deg,var(--theme-500),var(--theme-600))!important}.app input,.app select,.app textarea{background:#07070a!important;color:#f3eff5!important;border-color:rgba(var(--user-accent-rgb),.18)!important}.app .progress-fill,.app .xp-progress-fill,.app .quest-progress-fill,.app .goal-progress-fill,.app .weekly-progress-fill{background:linear-gradient(90deg,var(--theme-700),var(--theme-500),var(--theme-300))!important;box-shadow:0 0 14px rgba(var(--user-accent-rgb),.24)!important}
-/* Legacy dashboard fills */
-.app .stat-card,.app .dashboard-card,.app .xp-card,.app .weekly-goal-card{background:linear-gradient(145deg,#101015,#07070a)!important}
-
-html,body,#root{background:#030305!important}.app{background:#030305!important}
+/* V5.9 — legend readability: readable first, glow second. */
+.calendar-legend {
+  color: var(--theme-200) !important;
+  text-shadow: 0 0 10px rgba(var(--user-accent-rgb), .18) !important;
+}
+.calendar-legend span {
+  color: var(--theme-200) !important;
+  text-shadow: 0 0 8px rgba(var(--user-accent-rgb), .22) !important;
+}
+.calendar-legend .legend-pr {
+  color: #ffd15b !important;
+  text-shadow: 0 0 8px rgba(255,195,54,.45) !important;
+}

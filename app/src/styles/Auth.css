@@ -5,12 +5,7 @@
   justify-content: center;
   padding: 24px;
   background:
-    radial-gradient(
-      circle at top,
-      rgba(var(--user-accent-rgb),0.18),
-      transparent 40%
-    ),
-    var(--theme-600);
+    linear-gradient(145deg,#101015 0%,#07070a 100%);
 }
 
 .auth-panel {
@@ -19,7 +14,7 @@
   padding: 42px 36px;
   border: 1px solid rgba(var(--user-accent-rgb),0.35);
   border-radius: 18px;
-  background: rgba(var(--user-accent-rgb),0.94);
+  background: linear-gradient(145deg,#101015 0%,#07070a 100%);
 
   box-shadow:
     0 0 40px rgba(var(--user-accent-rgb),0.12),
@@ -78,7 +73,7 @@
   border: 1px solid var(--theme-700);
   border-radius: 9px;
 
-  background: var(--theme-600);
+  background: #030305;
   color: white;
 
   font-size: 14px;
@@ -198,3 +193,62 @@
     font-size: 27px;
   }
 }
+
+/* =========================================================
+   V5.8 FINAL — AUTH / LOADING SYSTEM SCREEN
+========================================================= */
+.auth-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 38% at 50% 0%, rgba(var(--user-accent-rgb), .07), transparent 72%),
+    #010204 !important;
+}
+.auth-page::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--user-accent-rgb), .035), transparent 68%);
+  filter: blur(20px);
+}
+.auth-panel {
+  position: relative;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .08), transparent 52%),
+    linear-gradient(145deg, #111218 0%, #06070a 100%) !important;
+  border-color: rgba(var(--user-accent-rgb), .30) !important;
+  box-shadow:
+    0 0 30px rgba(var(--user-accent-rgb), .10),
+    0 22px 60px rgba(0,0,0,.48),
+    inset 0 0 26px rgba(var(--user-accent-rgb), .025) !important;
+}
+.auth-subtitle,
+.auth-switch {
+  color: #b9b3be !important;
+}
+.auth-message {
+  background: #0b0c10 !important;
+  color: #d7d2da !important;
+  border-color: rgba(var(--user-accent-rgb), .22) !important;
+  box-shadow: 0 0 16px rgba(var(--user-accent-rgb), .05) !important;
+}
+.auth-primary {
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .16) !important;
+}
+
+/* V5.9 — persisted accent is supplied by .system-shell before .app exists. */
+.system-shell .auth-page, .system-shell .onboarding-page { color:var(--theme-200); }
+.system-shell .auth-page .auth-title, .system-shell .onboarding-page .onboarding-hero h1 { text-shadow:0 0 14px rgba(var(--user-accent-rgb),.20); }
+
+
+/* V5.10 final shell safety: no legacy accent-filled auth surfaces. */
+.system-shell .auth-page { background:transparent !important; }
+.system-shell .auth-panel {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb),.065), transparent 58%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+}
+.system-shell .auth-message { background:#0b0c10 !important; color:#dfe5ec !important; }

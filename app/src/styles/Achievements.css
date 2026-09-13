@@ -54,7 +54,7 @@
 
     padding:30px 24px;
 
-    background:rgba(var(--user-accent-rgb),.92);
+    background:linear-gradient(145deg,#101015 0%,#07070a 100%);
 
     border:1px solid rgba(var(--user-accent-rgb),.15);
 

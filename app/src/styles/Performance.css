@@ -1,14 +1,14 @@
 /* PROJECT DRIVE - Performance.css */
 
 .performance-page{display:flex;flex-direction:column;gap:32px;animation:performanceFade .4s ease}
-.performance-hero{padding:46px 34px;text-align:center;border-radius:26px;border:1px solid rgba(var(--user-accent-rgb),.18);background:radial-gradient(circle at top,rgba(var(--user-accent-rgb),.14),transparent 42%),linear-gradient(145deg,var(--theme-500),var(--theme-500));box-shadow:0 0 28px rgba(var(--user-accent-rgb),.12)}
+.performance-hero{padding:46px 34px;text-align:center;border-radius:26px;border:1px solid rgba(var(--user-accent-rgb),.18);background:radial-gradient(circle at top,rgba(var(--user-accent-rgb),.10),transparent 42%),linear-gradient(145deg,#101015,#07070a);box-shadow:0 0 28px rgba(var(--user-accent-rgb),.12)}
 .performance-system-tag{display:inline-block;color:var(--theme-200);font-size:.75rem;font-weight:800;letter-spacing:3px;margin-bottom:12px}
 .performance-hero h1{margin:0 0 12px;color:#f6d46f;font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:3px}
 .performance-hero p{max-width:700px;margin:auto;color:var(--theme-700);line-height:1.7}
 .performance-summary-grid,.performance-grid{display:grid;gap:22px}
 .performance-summary-grid{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 .performance-grid{grid-template-columns:repeat(auto-fit,minmax(360px,1fr))}
-.profile-card{background:linear-gradient(145deg,var(--theme-500),var(--theme-500));border:1px solid rgba(var(--user-accent-rgb),.15);border-radius:22px;padding:24px;box-shadow:0 0 20px rgba(var(--user-accent-rgb),.08)}
+.profile-card{background:linear-gradient(145deg,#101015,#07070a);border:1px solid rgba(var(--user-accent-rgb),.15);border-radius:22px;padding:24px;box-shadow:0 0 20px rgba(var(--user-accent-rgb),.08)}
 .profile-card>h3{margin:0 0 20px;color:#f6d46f;font-size:1.35rem}
 .pr-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .pr-row:last-child{border-bottom:none}.pr-row span{color:var(--theme-600)}.pr-row strong{color:#fff}
@@ -16,7 +16,7 @@
 .metric-heading-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .metric-heading-row h4{margin:0;color:#fff}.metric-entry-count{color:var(--theme-200);font-size:.8rem}
 .metric-input-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.metric-input-row input,.metric-card input[type=date]{width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(var(--user-accent-rgb),.15);background:var(--theme-500);color:#fff;outline:none}
+.metric-input-row input,.metric-card input[type=date]{width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(var(--user-accent-rgb),.15);background:#07070a;color:#fff;outline:none}
 .metric-unit{color:var(--theme-200);font-weight:700}
 .metric-save-button{width:100%;margin-top:12px;padding:12px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,var(--theme-200),var(--theme-200));color:#fff;font-weight:800}
 .metric-save-button:hover{filter:brightness(1.08)}
@@ -24,10 +24,10 @@
 .metric-latest-result{margin-top:14px;padding:14px;border-radius:12px;background:rgba(255,255,255,.03)}
 .metric-latest-result span,.metric-latest-result small{display:block;color:var(--theme-600)}
 .metric-latest-result strong{color:#f6d46f;font-size:1.2rem}
-.metric-chart{margin-top:18px;padding:12px;border-radius:14px;background:var(--theme-400)}
+.metric-chart{margin-top:18px;padding:12px;border-radius:14px;background:#0b0d11}
 .metric-chart-label{margin-top:8px;text-align:center;color:var(--theme-700);font-size:.82rem}
 .metric-goal-section{margin-top:18px}.metric-goal-label{display:block;margin-bottom:8px;color:var(--theme-200);font-weight:700}
-.goal-progress{width:100%;height:10px;margin-top:14px;overflow:hidden;border-radius:999px;background:var(--theme-500)}
+.goal-progress{width:100%;height:10px;margin-top:14px;overflow:hidden;border-radius:999px;background:#090b0f}
 .goal-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--theme-200),#f6d46f)}
 .goal-text,.goal-remaining,.goal-complete{margin-top:10px;text-align:center}
 .goal-text{color:#fff}.goal-remaining{color:var(--theme-200)}.goal-complete{color:#72ef9c;font-weight:800}

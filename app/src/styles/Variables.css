@@ -43,12 +43,7 @@
    GRADIENTS
 ===========================*/
 
---gradient-card:
-linear-gradient(
-160deg,
-rgba(var(--user-accent-rgb),.92),
-rgba(var(--user-accent-rgb),.88)
-);
+--gradient-card:linear-gradient(160deg,#101318,#080a0e);
 
 --gradient-blue:
 linear-gradient(
@@ -76,8 +71,7 @@ linear-gradient(
    GLASS
 ===========================*/
 
---glass:
-rgba(var(--user-accent-rgb),.82);
+--glass:rgba(10,12,16,.96);
 
 --glass-light:
 rgba(255,255,255,.03);

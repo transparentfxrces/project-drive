@@ -1,10 +1,674 @@
-/* PROJECT DRIVE — SOLO LEVELING FINAL THEME */
-html,body,#root{background:#030305!important;}
-.app{background:radial-gradient(ellipse 80% 35% at 50% -10%,rgba(var(--user-accent-rgb),.08),transparent 62%),#030305!important;color:#e8e5eb!important;}
-.app .dashboard-card,.app .stat-card,.app .profile-card,.app .progress-card,.app .exercise-card,.app .metric-card,.app .history-session,.app .summary-card,.app .football-program-card,.app .exercise-picker,.app .custom-exercise-card,.app .xp-card,.app .weekly-goal-card{background:linear-gradient(145deg,#101015 0%,#07070a 100%)!important;border:1px solid rgba(var(--user-accent-rgb),.20)!important;box-shadow:0 0 20px rgba(var(--user-accent-rgb),.045),inset 0 0 0 1px rgba(255,255,255,.015)!important;}
-.app .dashboard-card::after,.app .stat-card::after,.app .profile-card::after,.app .progress-card::after,.app .exercise-card::after,.app .metric-card::after,.app .history-session::after,.app .summary-card::after,.app .football-program-card::after,.app .exercise-picker::after,.app .custom-exercise-card::after{display:none!important;content:none!important;}
-.app h1,.app h2,.app h3,.app h4,.app h5,.app h6{color:var(--theme-200)!important}.app p,.app li{color:#d8d3dc!important}.app strong{color:#fff!important}.app a{color:var(--theme-300)!important}
-.app .navigation,.app .sl-nav{background:rgba(6,6,9,.96)!important;border-color:rgba(var(--user-accent-rgb),.16)!important;box-shadow:0 12px 32px rgba(0,0,0,.45)!important}.app .navigation button,.app .sl-nav-btn{background:#0b0b0f!important;color:#aaa5ae!important;border-color:rgba(255,255,255,.045)!important;box-shadow:none!important}.app .navigation button:hover,.app .sl-nav-btn:hover{background:rgba(var(--user-accent-rgb),.07)!important;color:#f4f0f6!important;border-color:rgba(var(--user-accent-rgb),.28)!important}.app .navigation button.active,.app .navigation button[aria-current="page"],.app .sl-nav-btn.active{background:linear-gradient(135deg,rgba(var(--user-accent-rgb),.18),rgba(var(--user-accent-rgb),.035))!important;color:#fff!important;border-color:rgba(var(--user-accent-rgb),.48)!important;box-shadow:0 0 18px rgba(var(--user-accent-rgb),.10)!important}
-.app button{background:linear-gradient(135deg,var(--theme-600),var(--theme-700))!important;color:#fff!important;border:1px solid rgba(var(--user-accent-rgb),.32)!important}.app button:hover{background:linear-gradient(135deg,var(--theme-500),var(--theme-600))!important}.app input,.app select,.app textarea{background:#07070a!important;color:#f3eff5!important;border-color:rgba(var(--user-accent-rgb),.18)!important}.app .progress-fill,.app .xp-progress-fill,.app .quest-progress-fill,.app .goal-progress-fill,.app .weekly-progress-fill{background:linear-gradient(90deg,var(--theme-700),var(--theme-500),var(--theme-300))!important;box-shadow:0 0 14px rgba(var(--user-accent-rgb),.24)!important}
-/* Legacy dashboard fills */
-.app .stat-card,.app .dashboard-card,.app .xp-card,.app .weekly-goal-card{background:linear-gradient(145deg,#101015,#07070a)!important}
+/* PROJECT DRIVE — V5.5 SOLO LEVELING VISUAL SYSTEM
+   Dark-first surfaces. One selected accent. Glow instead of color blocks. */
+
+html, body, #root {
+  min-height: 100%;
+  background: #020204 !important;
+  background-image: none !important;
+  color: #e8e5eb;
+}
+
+body {
+  background-color: #020204 !important;
+  background-attachment: fixed;
+}
+
+.app {
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+  color: #e8e5eb !important;
+}
+
+/* One atmospheric aura behind the interface — never a blue page wash. */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 32% at 50% 0%, rgba(var(--user-accent-rgb), .075), transparent 70%),
+    radial-gradient(ellipse 32% 26% at 8% 38%, rgba(var(--user-accent-rgb), .025), transparent 75%),
+    radial-gradient(ellipse 32% 26% at 92% 62%, rgba(var(--user-accent-rgb), .02), transparent 75%);
+}
+
+/* Shared dark surface language. */
+.app :where(
+  .stat-card,.dashboard-card,.xp-card,.weekly-goal-card,.quest-card,
+  .achievement-card,.goal-box,.history-empty,.history-session,.history-exercise,
+  .football-program-card,.exercise-picker,.exercise-card,.custom-exercise-card,
+  .profile-card,.settings-section,.security-section,.onboarding-card,
+  .auth-panel,.exercise-library-hero,.exercise-library-card,.exercise-library-category,
+  .recruit-hero,.recruit-rank-card,.recruit-panel,.measurement-card,.performance-grid,
+  .recruit-achievement,.recovery-history-card,.recovery-trends-card,.recovery-factor-card,
+  .coach-hero,.coach-status-card,.coach-card,.priority-card,.recovery-status-card,.trend-card,
+  .performance-hero,.metric-card,.metric-chart,
+  .calendar-hero,.calendar-stat-card,.calendar-card,.calendar-day,.calendar-details,
+  .calendar-session,.calendar-session-summary,.calendar-summary-grid > div,
+  .progress-hero,.progress-stat-card,.progress-chart-card,.progress-records-card,
+  .progress-current-result,.progress-chart-wrapper,.progress-record-item,
+  .account-sidebar,.account-content
+) {
+  background: linear-gradient(145deg, #101015 0%, #07070a 100%) !important;
+  background-image: linear-gradient(145deg, #101015 0%, #07070a 100%) !important;
+  border-color: rgba(var(--user-accent-rgb), .20) !important;
+  color: #e9edf3;
+  box-shadow:
+    0 0 24px rgba(var(--user-accent-rgb), .085),
+    0 12px 36px rgba(0,0,0,.20),
+    inset 0 0 0 1px rgba(255,255,255,.018);
+}
+
+/* Nested tiles: slightly lifted black, never accent-filled. */
+.app :where(
+  .settings-row,.security-row,.metric-latest-result,.exercise-library-detail,
+  .calendar-details-grid > div,.calendar-summary-grid > div,
+  .measurement-card,.performance-grid article,.recruit-links a,.profile-details > div,
+  .progress-result-details div,.progress-records-empty
+) {
+  background: #0b0c10 !important;
+  border-color: rgba(var(--user-accent-rgb), .12) !important;
+}
+
+/* Account — sidebar should feel like part of the same system, not a colored block. */
+.app .account-page { color: #e9edf3; }
+.app .account-sidebar {
+  padding: 14px;
+  border: 1px solid rgba(var(--user-accent-rgb), .16) !important;
+  box-shadow: 0 0 22px rgba(var(--user-accent-rgb), .07) !important;
+}
+.app .account-nav-item {
+  background: #08090c !important;
+  border: 1px solid rgba(255,255,255,.045) !important;
+  color: #d9dce2 !important;
+  box-shadow: none !important;
+}
+.app .account-nav-item:hover {
+  background: rgba(var(--user-accent-rgb), .055) !important;
+  border-color: rgba(var(--user-accent-rgb), .26) !important;
+  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .06) !important;
+}
+.app .account-nav-item.active {
+  background: linear-gradient(90deg, rgba(var(--user-accent-rgb), .14), rgba(var(--user-accent-rgb), .035)) !important;
+  border-color: rgba(var(--user-accent-rgb), .48) !important;
+  color: #fff !important;
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .10) !important;
+}
+.app .account-content > * { border-color: rgba(var(--user-accent-rgb), .20); }
+
+/* Coaching / Recruit / Calendar / Progress: dark surfaces with a coherent aura. */
+.app :where(
+  .coach-hero,.coach-status-card,.coach-card,.priority-card,.recovery-history-card,
+  .recovery-trends-card,.recovery-factor-card,.recovery-system-insight,.trend-card,
+  .recruit-hero,.recruit-rank-card,.recruit-panel,.measurement-card,.performance-grid,
+  .recruit-achievement,.recruit-empty-state,.calendar-hero,.calendar-stat-card,
+  .calendar-card,.calendar-day,.calendar-details,.calendar-session,.calendar-rest-day,
+  .calendar-session-summary,.progress-hero,.progress-stat-card,.progress-chart-card,
+  .progress-records-card,.progress-current-result,.progress-chart-wrapper,
+  .progress-record-item
+) {
+  box-shadow:
+    0 0 26px rgba(var(--user-accent-rgb), .085),
+    0 14px 40px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.016);
+}
+
+/* Hero atmosphere: glow inside the dark surface, not a solid color fill. */
+.app :where(.coach-hero,.recruit-hero,.calendar-hero,.progress-hero,.performance-hero) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .09), transparent 48%),
+    linear-gradient(145deg, #111117 0%, #06070a 100%) !important;
+}
+
+/* Calendar cells stay black; trained/PR states get an aura rather than a patch. */
+.app :where(.calendar-day.trained,.calendar-day.pr-day) {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(var(--user-accent-rgb), .09), transparent 65%),
+    #0b0c10 !important;
+}
+.app :where(.calendar-day.trained:hover,.calendar-day.pr-day:hover) {
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .16) !important;
+}
+
+/* Exercise Library controls: accent belongs on interaction, not the library cards. */
+.app :where(.exercise-library-tabs button,.exercise-library-search button) {
+  background: #0a0b0f !important;
+  border-color: rgba(var(--user-accent-rgb), .18) !important;
+  color: #dfe3e8 !important;
+}
+.app .exercise-library-tabs button.active {
+  background: linear-gradient(90deg, rgba(var(--user-accent-rgb), .16), rgba(var(--user-accent-rgb), .035)) !important;
+  border-color: rgba(var(--user-accent-rgb), .46) !important;
+  color: #fff !important;
+  box-shadow: 0 0 16px rgba(var(--user-accent-rgb), .10) !important;
+}
+.app :where(.exercise-library-card:hover,.exercise-library-list-item:hover,.exercise-library-card.expanded,.exercise-library-list-item.expanded) {
+  background: #111217 !important;
+  border-color: rgba(var(--user-accent-rgb), .40) !important;
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .10) !important;
+}
+
+/* Workout: keep the progress/active controls energetic, but the exercise surfaces dark. */
+.app :where(.progress-banner,.football-program-card,.exercise-picker,.exercise-card,.custom-exercise-card,.workout-session-bar) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .045), transparent 50%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+}
+.app :where(.exercise-option,.favorite-button,.percent-badge,.add-set-button,.football-days button) {
+  background: #0b0c10 !important;
+  border-color: rgba(var(--user-accent-rgb), .20) !important;
+  color: #e8edf3 !important;
+}
+.app :where(.exercise-option:hover,.favorite-button:hover,.add-set-button:hover,.football-days button:hover) {
+  background: rgba(var(--user-accent-rgb), .10) !important;
+  border-color: rgba(var(--user-accent-rgb), .42) !important;
+  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .10) !important;
+}
+.app .active-day {
+  background: linear-gradient(90deg, rgba(var(--user-accent-rgb), .20), rgba(var(--user-accent-rgb), .07)) !important;
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .18) !important;
+}
+
+/* Navigation: selected color is a signal, not the whole component. */
+.app :where(.sl-nav,.navigation) {
+  background: rgba(5,6,9,.97) !important;
+  border-color: rgba(var(--user-accent-rgb), .16) !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.45), 0 0 18px rgba(var(--user-accent-rgb), .05) !important;
+}
+.app :where(.sl-nav-btn,.navigation button) {
+  background: #0a0b0f !important;
+  color: #aaa5ae !important;
+}
+.app :where(.sl-nav-btn:hover,.navigation button:hover) {
+  background: rgba(var(--user-accent-rgb), .06) !important;
+  border-color: rgba(var(--user-accent-rgb), .28) !important;
+}
+.app :where(.sl-nav-btn.active,.navigation button.active,.navigation button[aria-current="page"]) {
+  background: linear-gradient(90deg, rgba(var(--user-accent-rgb), .17), rgba(var(--user-accent-rgb), .035)) !important;
+  border-color: rgba(var(--user-accent-rgb), .48) !important;
+  color: #fff !important;
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .10) !important;
+}
+
+/* Forms. */
+.app :where(input,select,textarea) {
+  background: #07080b !important;
+  color: #f3eff5 !important;
+  border-color: rgba(var(--user-accent-rgb), .18) !important;
+}
+.app :where(input:focus,select:focus,textarea:focus) {
+  border-color: var(--theme-300) !important;
+  box-shadow: 0 0 12px rgba(var(--user-accent-rgb), .20) !important;
+}
+
+/* Strong color is reserved for progress, CTA and moment-of-achievement elements. */
+.app :where(.progress-fill,.xp-progress-fill,.quest-progress-fill,.goal-progress-fill,.weekly-progress-fill,.progress-bar-fill) {
+  background: linear-gradient(90deg,var(--theme-700),var(--theme-500),var(--theme-300)) !important;
+  box-shadow: 0 0 16px rgba(var(--user-accent-rgb), .22) !important;
+}
+.app :where(.coach-send,.metric-save-button,.load-football-button) {
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .16) !important;
+}
+
+.app h1,.app h2,.app h3,.app h4,.app h5,.app h6 {
+  text-shadow: 0 0 16px rgba(var(--user-accent-rgb), .13);
+}
+.app a { color: var(--theme-300); }
+
+html::-webkit-scrollbar-track,body::-webkit-scrollbar-track,.app::-webkit-scrollbar-track { background:#040507 !important; }
+html::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb,.app::-webkit-scrollbar-thumb {
+  background: rgba(var(--user-accent-rgb), .72) !important;
+  box-shadow: 0 0 8px rgba(var(--user-accent-rgb), .18);
+}
+
+
+/* =========================================================
+   V5.6 — SOLO LEVELING AURA PASS
+   Large surfaces stay black. Accent appears as edge + glow.
+========================================================= */
+
+/* Kill competing page washes: the atmosphere belongs to one layer only. */
+html, body, #root {
+  background: #010204 !important;
+  background-color: #010204 !important;
+  background-image: none !important;
+}
+body::before, body::after, #root::before, #root::after {
+  background-image: none !important;
+}
+.app {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* One quiet ambient aura. It should be felt, not read as a blue/purple page. */
+.app::before {
+  background:
+    radial-gradient(ellipse 58% 30% at 50% 0%, rgba(var(--user-accent-rgb), .055), transparent 72%),
+    radial-gradient(ellipse 28% 24% at 4% 48%, rgba(var(--user-accent-rgb), .012), transparent 78%),
+    radial-gradient(ellipse 28% 24% at 96% 55%, rgba(var(--user-accent-rgb), .010), transparent 78%) !important;
+}
+
+/* Calendar: no saturated cells/cards — only a thin edge and aura. */
+.app :where(.calendar-hero,.calendar-stat-card,.calendar-card,.calendar-day,.calendar-details,.calendar-session,.calendar-session-summary,.calendar-summary-grid > div) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .055), transparent 58%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  color: #e9edf3 !important;
+  box-shadow:
+    0 0 24px rgba(var(--user-accent-rgb), .075),
+    0 12px 34px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.014) !important;
+}
+.app :where(.calendar-day.trained,.calendar-day.pr-day,.calendar-day.selected) {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(var(--user-accent-rgb), .11), transparent 62%),
+    #0a0b0f !important;
+  box-shadow: 0 0 22px rgba(var(--user-accent-rgb), .14) !important;
+}
+.app .calendar-session-summary,
+.app .calendar-summary-grid > div {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .045), transparent 65%),
+    #0b0c10 !important;
+}
+
+/* Coaching / Recovery: readable dark content with status colors reserved for badges. */
+.app :where(.recovery-history-entry,.recovery-trend-stats > div,.recovery-factor-card,.recovery-system-insight,.coach-input,.coach-response) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .055), transparent 62%),
+    #0a0b0f !important;
+  color: #e9edf3 !important;
+  border-color: rgba(var(--user-accent-rgb), .16) !important;
+  box-shadow:
+    0 0 20px rgba(var(--user-accent-rgb), .065),
+    inset 0 0 0 1px rgba(255,255,255,.012) !important;
+}
+.app :where(.recovery-history-entry:hover,.recovery-trend-stats > div:hover,.recovery-factor-card:hover) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .085), transparent 62%),
+    #0d0e12 !important;
+  box-shadow: 0 0 24px rgba(var(--user-accent-rgb), .11) !important;
+}
+
+/* Exercise Library: controls can glow, but never become solid accent slabs. */
+.app :where(.exercise-library-tabs button,.exercise-library-search input,.exercise-library-card,.exercise-library-category) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .045), transparent 65%),
+    #090a0e !important;
+  color: #e9edf3 !important;
+  border-color: rgba(var(--user-accent-rgb), .17) !important;
+}
+.app :where(.exercise-library-tabs button:hover,.exercise-library-card:hover,.exercise-library-card.expanded,.exercise-library-category:hover) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .085), transparent 65%),
+    #0d0e12 !important;
+  border-color: rgba(var(--user-accent-rgb), .38) !important;
+  box-shadow: 0 0 22px rgba(var(--user-accent-rgb), .10) !important;
+}
+.app .exercise-library-tabs button.active {
+  background:
+    linear-gradient(90deg, rgba(var(--user-accent-rgb), .14), rgba(var(--user-accent-rgb), .025)),
+    #0c0d11 !important;
+  color: #fff !important;
+  border-color: rgba(var(--user-accent-rgb), .48) !important;
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .12) !important;
+}
+
+/* Progress: large panels and controls become dark command surfaces. */
+.app :where(.progress-hero,.progress-stat-card,.progress-chart-card,.progress-records-card,.progress-current-result,.progress-chart-wrapper,.progress-record-item) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .055), transparent 60%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  color: #e9edf3 !important;
+  box-shadow:
+    0 0 28px rgba(var(--user-accent-rgb), .085),
+    0 14px 40px rgba(0,0,0,.23),
+    inset 0 0 0 1px rgba(255,255,255,.014) !important;
+}
+.app .progress-control select {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .05), transparent 65%),
+    #08090d !important;
+  border-color: rgba(var(--user-accent-rgb), .18) !important;
+}
+.app .progress-current-result {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(var(--user-accent-rgb), .075), transparent 52%),
+    #0a0b0f !important;
+}
+
+/* Workout: the session banner and exercise surfaces use the same aura language. */
+.app :where(.progress-banner,.football-program-card,.exercise-picker,.exercise-card,.custom-exercise-card,.workout-session-bar) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .055), transparent 60%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  box-shadow:
+    0 0 25px rgba(var(--user-accent-rgb), .08),
+    0 12px 36px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.014) !important;
+}
+
+/* Recruit: panels stay dark; the avatar/action area gets controlled energy. */
+.app :where(.recruit-avatar,.recruit-action) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .08), transparent 65%),
+    #0a0b0f !important;
+  color: #e9edf3 !important;
+  box-shadow: 0 0 22px rgba(var(--user-accent-rgb), .08) !important;
+}
+.app .recruit-action.primary {
+  background:
+    linear-gradient(90deg, rgba(var(--user-accent-rgb), .20), rgba(var(--user-accent-rgb), .07)),
+    #0c0d11 !important;
+  border-color: rgba(var(--user-accent-rgb), .52) !important;
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .13) !important;
+}
+
+/* Account: same command-center treatment as every other section. */
+.app :where(.account-sidebar,.account-content > *) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .045), transparent 65%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  box-shadow:
+    0 0 24px rgba(var(--user-accent-rgb), .07),
+    0 12px 34px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.014) !important;
+}
+.app .account-nav-item.active {
+  background:
+    linear-gradient(90deg, rgba(var(--user-accent-rgb), .14), rgba(var(--user-accent-rgb), .025)),
+    #0a0b0f !important;
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .11) !important;
+}
+
+/* Accent is allowed to be bright only on true progress/fill/CTA elements. */
+.app :where(.progress-fill,.xp-progress-fill,.quest-progress-fill,.goal-progress-fill,.weekly-progress-fill,.progress-bar-fill) {
+  box-shadow:
+    0 0 12px rgba(var(--user-accent-rgb), .30),
+    0 0 28px rgba(var(--user-accent-rgb), .12) !important;
+}
+
+/* =========================================================
+   V5.9 — OUTSIDE-APP SYSTEM SHELL
+   Loading/auth/onboarding render before the main .app exists.
+   Give them the same persisted accent instead of falling back to blue.
+========================================================= */
+.system-shell {
+  min-height: 100vh;
+  color: #e9edf3;
+}
+.system-shell.app-accent-blue { --user-accent-rgb:33,153,238; --theme-200:#acecff; --theme-300:#72d9ff; --theme-400:#45c3fa; --theme-500:#2199ee; --theme-600:#176fc0; --theme-700:#0d477e; }
+.system-shell.app-accent-red { --user-accent-rgb:233,47,58; --theme-200:#ffb0b0; --theme-300:#ff7b7b; --theme-400:#ff4d55; --theme-500:#e92f3a; --theme-600:#c91e2a; --theme-700:#861019; }
+.system-shell.app-accent-green { --user-accent-rgb:41,200,93; --theme-200:#adffc4; --theme-300:#76ef98; --theme-400:#49dc75; --theme-500:#29c85d; --theme-600:#179b45; --theme-700:#0b672e; }
+.system-shell.app-accent-purple { --user-accent-rgb:130,54,216; --theme-200:#d7bcff; --theme-300:#bc8aff; --theme-400:#a05af7; --theme-500:#8236d8; --theme-600:#6425ae; --theme-700:#40166e; }
+.system-shell.app-accent-orange { --user-accent-rgb:236,123,19; --theme-200:#ffd09b; --theme-300:#ffb65c; --theme-400:#ff9a2f; --theme-500:#ec7b13; --theme-600:#bd5d0b; --theme-700:#773706; }
+.system-shell .auth-page,
+.system-shell .onboarding-page {
+  background:
+    radial-gradient(ellipse 58% 32% at 50% 0%, rgba(var(--user-accent-rgb), .06), transparent 72%),
+    #010204 !important;
+}
+.system-shell .auth-panel,
+.system-shell .onboarding-card {
+  box-shadow:
+    0 0 28px rgba(var(--user-accent-rgb), .11),
+    0 20px 60px rgba(0,0,0,.48),
+    inset 0 0 24px rgba(var(--user-accent-rgb), .025) !important;
+}
+
+/* =========================================================
+   V5.9 — WORKOUT SUMMARY SYSTEM WINDOW
+   The completion screen is part of the main app, but its
+   summary-card was missing from the shared theme surface map.
+========================================================= */
+.app .summary-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .055), transparent 58%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  color:#e9edf3 !important;
+  border-color:rgba(var(--user-accent-rgb), .22) !important;
+  box-shadow:
+    0 0 28px rgba(var(--user-accent-rgb), .09),
+    0 14px 40px rgba(0,0,0,.25),
+    inset 0 0 0 1px rgba(255,255,255,.014) !important;
+}
+.app .summary-card > div {
+  color:#dfe4ea;
+}
+.app .summary-card > div:not(:first-child) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .035), transparent 64%),
+    #0b0c10;
+  border-color:rgba(var(--user-accent-rgb), .12);
+}
+.app .summary-card h1,
+.app .summary-card h2,
+.app .summary-card h3,
+.app .summary-card h4 {
+  text-shadow:0 0 12px rgba(var(--user-accent-rgb), .18);
+}
+
+/* Keep achievement/status colors semantic; user accent powers the surrounding glow. */
+.app .summary-card strong,
+.app .summary-card .summary-value {
+  color:var(--theme-200);
+}
+
+/* Coaching priority panels: no more near-solid accent wash. */
+.app .priority-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .08), transparent 62%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  border-color:rgba(var(--user-accent-rgb), .22) !important;
+  box-shadow:0 0 24px rgba(var(--user-accent-rgb), .09) !important;
+}
+
+/* =========================================================
+   V5.10 — FINAL SYSTEM-SHELL + SUMMARY SURFACE LOCK
+   No fallback blue surfaces. Dark surfaces first; accent is
+   expressed through the aura, border, and true highlights.
+========================================================= */
+.system-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  background: #010204 !important;
+  background-color: #010204 !important;
+  background-image: none !important;
+  overflow: hidden;
+}
+.system-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 58% 34% at 50% 0%, rgba(var(--user-accent-rgb), .075), transparent 70%),
+    radial-gradient(ellipse 30% 24% at 8% 45%, rgba(var(--user-accent-rgb), .018), transparent 78%),
+    radial-gradient(ellipse 30% 24% at 92% 55%, rgba(var(--user-accent-rgb), .015), transparent 78%) !important;
+}
+.system-shell .auth-page,
+.system-shell .onboarding-page {
+  position: relative;
+  z-index: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+.system-shell .auth-panel,
+.system-shell .onboarding-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .065), transparent 58%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+  border-color: rgba(var(--user-accent-rgb), .28) !important;
+}
+.system-shell .auth-page *:not(button),
+.system-shell .onboarding-page *:not(button) {
+  text-shadow: 0 0 10px rgba(var(--user-accent-rgb), .055);
+}
+
+/* Workout completion: every session-log surface must stay dark.
+   This intentionally uses !important because the summary page has
+   its own legacy surface declarations loaded through the page module. */
+.app .summary-card > div,
+.app .summary-card .summary-exercise,
+.app .summary-card .summary-set,
+.app .summary-card .summary-set-row,
+.app .summary-card .summary-exercise-card,
+.app .summary-card .summary-log,
+.app .summary-card .session-log,
+.app .summary-card .summary-stats,
+.app .summary-card .session-stats {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .035), transparent 68%),
+    #0b0c10 !important;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .035), transparent 68%) !important;
+  color: #dfe5ec !important;
+  border-color: rgba(var(--user-accent-rgb), .12) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.012) !important;
+}
+.app .summary-card .summary-exercise,
+.app .summary-card .summary-exercise-card,
+.app .summary-card .summary-log,
+.app .summary-card .session-log {
+  box-shadow:
+    0 0 18px rgba(var(--user-accent-rgb), .055),
+    inset 0 0 0 1px rgba(255,255,255,.012) !important;
+}
+.app .summary-card .summary-exercise:hover,
+.app .summary-card .summary-exercise-card:hover {
+  border-color: rgba(var(--user-accent-rgb), .28) !important;
+  box-shadow: 0 0 22px rgba(var(--user-accent-rgb), .09) !important;
+}
+
+
+/* =========================================================
+   V5.11 — ACTUAL SUMMARY / LOADING CASCADE LOCK
+   The workout summary's exercise panels are siblings of the
+   summary card in the page markup, so they need their own
+   scoped theme rule. System-shell also needs full theme tokens
+   because it renders outside .app.
+========================================================= */
+
+/* Outside-app screens: carry the complete selected theme, not just the accent RGB. */
+.system-shell.app-accent-blue {
+  --theme-bg-1:#030507; --theme-bg-2:#07090d; --theme-bg-3:#0b0e13;
+  --theme-card:rgba(10,12,17,.96);
+  --bg-dark:#030507; --bg-primary:#07090d; --bg-secondary:#0b0e13;
+  --bg-card:rgba(10,12,17,.96);
+}
+.system-shell.app-accent-red {
+  --theme-bg-1:#030305; --theme-bg-2:#070709; --theme-bg-3:#0c0a0d;
+  --theme-card:rgba(12,10,14,.96);
+  --bg-dark:#030305; --bg-primary:#070709; --bg-secondary:#0c0a0d;
+  --bg-card:rgba(12,10,14,.96);
+}
+.system-shell.app-accent-green {
+  --theme-bg-1:#020604; --theme-bg-2:#070b09; --theme-bg-3:#0b110e;
+  --theme-card:rgba(9,14,11,.96);
+  --bg-dark:#020604; --bg-primary:#070b09; --bg-secondary:#0b110e;
+  --bg-card:rgba(9,14,11,.96);
+}
+.system-shell.app-accent-purple {
+  --theme-bg-1:#040205; --theme-bg-2:#09070d; --theme-bg-3:#0e0b14;
+  --theme-card:rgba(13,10,17,.96);
+  --bg-dark:#040205; --bg-primary:#09070d; --bg-secondary:#0e0b14;
+  --bg-card:rgba(13,10,17,.96);
+}
+.system-shell.app-accent-orange {
+  --theme-bg-1:#050302; --theme-bg-2:#0b0906; --theme-bg-3:#120e09;
+  --theme-card:rgba(16,12,8,.96);
+  --bg-dark:#050302; --bg-primary:#0b0906; --bg-secondary:#120e09;
+  --bg-card:rgba(16,12,8,.96);
+}
+
+.system-shell {
+  background:#010204 !important;
+  background-color:#010204 !important;
+  color:#e9edf3 !important;
+}
+.system-shell .auth-page,
+.system-shell .onboarding-page {
+  background:
+    radial-gradient(ellipse 58% 32% at 50% 0%, rgba(var(--user-accent-rgb),.065), transparent 72%),
+    #010204 !important;
+}
+
+/* The real workout summary exercise panels are .summary-exercise,
+   not necessarily children of .summary-card. Keep every content
+   surface dark and let the selected accent live in the aura. */
+.app .summary-exercise,
+.app .summary-exercise-card,
+.app .summary-log,
+.app .session-log,
+.app .summary-set,
+.app .summary-set-row,
+.app .summary-exercise > div,
+.app .summary-exercise-card > div,
+.app .summary-log > div,
+.app .session-log > div {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb),.035), transparent 68%),
+    #0b0c10 !important;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb),.035), transparent 68%) !important;
+  border-color:rgba(var(--user-accent-rgb),.13) !important;
+  color:#dfe5ec !important;
+  box-shadow:
+    0 0 18px rgba(var(--user-accent-rgb),.055),
+    inset 0 0 0 1px rgba(255,255,255,.012) !important;
+}
+
+.app .summary-exercise:hover,
+.app .summary-exercise-card:hover {
+  border-color:rgba(var(--user-accent-rgb),.30) !important;
+  box-shadow:0 0 24px rgba(var(--user-accent-rgb),.09) !important;
+}
+
+/* Summary page headings/data retain the same readable hierarchy. */
+.app .summary-exercise h1,
+.app .summary-exercise h2,
+.app .summary-exercise h3,
+.app .summary-exercise h4,
+.app .summary-exercise-card h1,
+.app .summary-exercise-card h2,
+.app .summary-exercise-card h3,
+.app .summary-exercise-card h4 {
+  color:#f4f6f8 !important;
+  text-shadow:0 0 12px rgba(var(--user-accent-rgb),.16) !important;
+}
+.app .summary-exercise span,
+.app .summary-exercise p,
+.app .summary-exercise small,
+.app .summary-exercise-card span,
+.app .summary-exercise-card p,
+.app .summary-exercise-card small {
+  color:#cbd2dc !important;
+}
+
+/* =========================================================
+   V5.12 — ROOT ACCENT BOOTSTRAP SAFETY
+   The persisted accent is written to <html> before React renders.
+   This prevents refresh/loading screens from ever falling back to the
+   legacy blue root tokens while the .app shell is not mounted yet.
+========================================================= */
+html[data-project-drive-accent] {
+  background:#010204 !important;
+  background-color:#010204 !important;
+}
+html[data-project-drive-accent] body,
+html[data-project-drive-accent] #root {
+  background:#010204 !important;
+  background-color:#010204 !important;
+}
+
+/* If an outside-app screen is rendered without its system-shell class,
+   it still inherits the bootstrapped user accent from <html>. */
+html[data-project-drive-accent] .system-shell {
+  background:#010204 !important;
+  background-color:#010204 !important;
+}

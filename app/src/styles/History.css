@@ -43,7 +43,7 @@
 
     text-align:center;
 
-    background:rgba(var(--user-accent-rgb),.92);
+    background:linear-gradient(145deg,#101015 0%,#07070a 100%);
 
     border:1px solid rgba(var(--user-accent-rgb),.18);
 
@@ -85,7 +85,7 @@
     padding:28px;
 
     background:
-        rgba(var(--user-accent-rgb),.92);
+        linear-gradient(145deg,#101015 0%,#07070a 100%);
 
     border:1px solid rgba(var(--user-accent-rgb),.16);
 
@@ -213,7 +213,7 @@
     padding:24px;
 
     background:
-        rgba(var(--user-accent-rgb),.92);
+        linear-gradient(145deg,#111117 0%,#08080c 100%);
 
     border:1px solid rgba(var(--user-accent-rgb),.12);
 

@@ -167,6 +167,76 @@ function formatCountdown(target) {
   return `${hours}h ${minutes}m`;
 }
 
+const PROJECT_DRIVE_ACCENTS = {
+  blue: {
+    rgb: "61, 167, 255",
+  },
+
+  red: {
+    rgb: "255, 70, 70",
+  },
+
+  green: {
+    rgb: "70, 220, 130",
+  },
+
+  purple: {
+    rgb: "170, 100, 255",
+  },
+
+  orange: {
+    rgb: "255, 150, 60",
+  },
+};
+
+function getSavedAccent() {
+  try {
+    const saved =
+      localStorage.getItem("projectDriveSettings");
+
+    if (saved) {
+      const settings = JSON.parse(saved);
+
+      if (
+        PROJECT_DRIVE_ACCENTS[
+          settings.accentColor
+        ]
+      ) {
+        return settings.accentColor;
+      }
+    }
+  } catch {
+    // Use blue if settings cannot be read.
+  }
+
+  return "blue";
+}
+
+function bootstrapProjectDriveTheme() {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  const accentName = getSavedAccent();
+
+  const accent =
+    PROJECT_DRIVE_ACCENTS[accentName] ||
+    PROJECT_DRIVE_ACCENTS.blue;
+
+  const root =
+    document.documentElement;
+
+  root.dataset.projectDriveAccent =
+    accentName;
+
+  root.style.setProperty(
+    "--user-accent-rgb",
+    accent.rgb
+  );
+}
+
+bootstrapProjectDriveTheme();
+
 function App() {
   const [page, setPage] = useState(() => {
   const validPages = [
@@ -913,8 +983,11 @@ function App() {
     }
   }
 
-  if (authLoading) {
-    return (
+   if (authLoading) {
+  return (
+    <div
+      className={`system-shell app-accent-${appSettings.accentColor}`}
+    >
       <div className="auth-page">
         <div className="auth-panel">
           <div className="auth-eyebrow">
@@ -930,15 +1003,19 @@ function App() {
           </p>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   if (!user) {
     return <AuthPage />;
   }
 
   if (profileLoading) {
-    return (
+  return (
+    <div
+      className={`system-shell app-accent-${appSettings.accentColor}`}
+    >
       <div className="auth-page">
         <div className="auth-panel">
           <div className="auth-eyebrow">
@@ -954,19 +1031,24 @@ function App() {
           </p>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   if (!profileCompleted) {
-    return (
+  return (
+    <div
+      className={`system-shell app-accent-${appSettings.accentColor}`}
+    >
       <OnboardingPage
         player={player}
         updatePlayer={
           updatePlayer
         }
       />
-    );
-  }
+    </div>
+  );
+}
 
   return (
   <div

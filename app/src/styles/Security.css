@@ -72,7 +72,7 @@
   padding: 20px;
   border: 1px solid rgba(var(--user-accent-rgb),0.18);
   border-radius: 18px;
-  background: rgba(var(--user-accent-rgb),0.72);
+  background: linear-gradient(145deg,#101015 0%,#07070a 100%);
 }
 
 .security-section-header {
@@ -264,4 +264,55 @@
 .security-action:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+/* =========================================================
+   FINAL SOLO LEVELING AURA — SECURITY
+========================================================= */
+.security-section {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb),.055), transparent 64%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%);
+  border-color: rgba(var(--user-accent-rgb),.22);
+  box-shadow:
+    0 0 24px rgba(var(--user-accent-rgb),.075),
+    inset 0 0 22px rgba(var(--user-accent-rgb),.018);
+}
+
+.security-section-header p,
+.security-row-info span,
+.security-status span {
+  color: var(--text-secondary);
+}
+
+.security-row-info strong {
+  color: var(--theme-300);
+}
+
+.security-email {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb),.055), transparent 70%),
+    #090a0e;
+  color: var(--text-primary);
+  border-color: rgba(var(--user-accent-rgb),.20);
+  box-shadow: inset 0 0 16px rgba(var(--user-accent-rgb),.018);
+}
+
+.security-action {
+  background:
+    linear-gradient(90deg,rgba(var(--user-accent-rgb),.16),rgba(var(--user-accent-rgb),.045)),
+    #0b0c10;
+  color: var(--theme-200);
+  border-color: rgba(var(--user-accent-rgb),.38);
+  box-shadow: 0 0 14px rgba(var(--user-accent-rgb),.08);
+}
+
+.security-action:hover {
+  background:
+    linear-gradient(90deg,rgba(var(--user-accent-rgb),.22),rgba(var(--user-accent-rgb),.07)),
+    #101116;
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb),.14);
+}
+
+.security-section-icon {
+  box-shadow: 0 0 16px rgba(var(--user-accent-rgb),.08);
 }

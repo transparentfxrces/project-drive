@@ -5,12 +5,7 @@
   justify-content: center;
   padding: 40px 20px;
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(var(--user-accent-rgb),0.14),
-      transparent 38%
-    ),
-    var(--theme-500);
+    linear-gradient(145deg,#101015 0%,#07070a 100%);
   color: var(--theme-200);
   box-sizing: border-box;
 }
@@ -105,11 +100,7 @@
   border: 1px solid rgba(var(--user-accent-rgb),0.17);
   border-radius: 22px;
   background:
-    linear-gradient(
-      145deg,
-      rgba(var(--user-accent-rgb),0.98),
-      rgba(var(--user-accent-rgb),0.98)
-    );
+    linear-gradient(145deg,#101015 0%,#07070a 100%);
   padding: 30px;
   box-shadow:
     0 0 45px rgba(var(--user-accent-rgb),0.08);
@@ -191,7 +182,7 @@
 }
 
 .onboarding-grid select option {
-  background: var(--theme-500);
+  background: #030305;
 }
 
 .onboarding-info-box {
@@ -418,3 +409,87 @@
     width: 100%;
   }
 }
+
+/* =========================================================
+   V5.8 FINAL — ONBOARDING READABILITY / AURA
+========================================================= */
+.onboarding-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 62% 30% at 50% 0%, rgba(var(--user-accent-rgb), .065), transparent 72%),
+    #010204 !important;
+}
+.onboarding-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .07), transparent 52%),
+    linear-gradient(145deg, #111218 0%, #06070a 100%) !important;
+  border-color: rgba(var(--user-accent-rgb), .30) !important;
+  box-shadow:
+    0 0 34px rgba(var(--user-accent-rgb), .10),
+    0 22px 60px rgba(0,0,0,.42),
+    inset 0 0 25px rgba(var(--user-accent-rgb), .025) !important;
+}
+.onboarding-grid label {
+  color: var(--theme-300) !important;
+}
+.onboarding-grid input,
+.onboarding-grid select {
+  background: #07080b !important;
+  color: #f1eef4 !important;
+  border-color: rgba(var(--user-accent-rgb), .20) !important;
+  box-shadow: inset 0 0 14px rgba(var(--user-accent-rgb), .015);
+}
+.onboarding-grid input:focus,
+.onboarding-grid select:focus {
+  border-color: rgba(var(--user-accent-rgb), .62) !important;
+  box-shadow:
+    0 0 0 3px rgba(var(--user-accent-rgb), .08),
+    0 0 16px rgba(var(--user-accent-rgb), .10) !important;
+}
+.goal-option {
+  background: #090a0e !important;
+  color: #dfe3e8 !important;
+  border-color: rgba(var(--user-accent-rgb), .18) !important;
+}
+.goal-option:hover {
+  background: rgba(var(--user-accent-rgb), .055) !important;
+  border-color: rgba(var(--user-accent-rgb), .38) !important;
+  box-shadow: 0 0 16px rgba(var(--user-accent-rgb), .07) !important;
+}
+.goal-option.selected {
+  background:
+    linear-gradient(90deg, rgba(var(--user-accent-rgb), .14), rgba(var(--user-accent-rgb), .025)),
+    #0b0c10 !important;
+  color: #ffffff !important;
+  border-color: rgba(var(--user-accent-rgb), .52) !important;
+  box-shadow: 0 0 18px rgba(var(--user-accent-rgb), .11) !important;
+}
+.goal-check {
+  color: #a9a4ad !important;
+}
+.goal-option.selected .goal-check {
+  color: var(--theme-200) !important;
+  text-shadow: 0 0 8px rgba(var(--user-accent-rgb), .35);
+}
+.onboarding-footer {
+  color: #8f8993 !important;
+}
+.onboarding-back {
+  color: #c9c5cd !important;
+}
+
+/* V5.9 — persisted accent is supplied by .system-shell before .app exists. */
+.system-shell .auth-page, .system-shell .onboarding-page { color:var(--theme-200); }
+.system-shell .auth-page .auth-title, .system-shell .onboarding-page .onboarding-hero h1 { text-shadow:0 0 14px rgba(var(--user-accent-rgb),.20); }
+
+
+/* V5.10 final shell safety: keep onboarding surfaces dark. */
+.system-shell .onboarding-page { background:transparent !important; }
+.system-shell .onboarding-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb),.065), transparent 58%),
+    linear-gradient(145deg,#101015 0%,#07070a 100%) !important;
+}
+.system-shell .onboarding-grid input,
+.system-shell .onboarding-grid select { background:#07080b !important; color:#f1eef4 !important; }

@@ -26,8 +26,8 @@
     ),
     linear-gradient(
       145deg,
-      rgba(var(--user-accent-rgb),0.97),
-      rgba(var(--user-accent-rgb),0.94)
+      rgba(var(--user-accent-rgb),0.05),
+      rgba(var(--user-accent-rgb),0.05)
     );
   border: 1px solid rgba(var(--user-accent-rgb),0.2);
   border-radius: 26px;
@@ -125,7 +125,7 @@
   background:
     linear-gradient(
       150deg,
-      rgba(var(--user-accent-rgb),0.96),
+      rgba(var(--user-accent-rgb),0.05),
       rgba(var(--user-accent-rgb),0.9)
     );
   border: 1px solid rgba(var(--user-accent-rgb),0.16);
@@ -221,8 +221,8 @@
   background:
     linear-gradient(
       150deg,
-      rgba(var(--user-accent-rgb),0.97),
-      rgba(var(--user-accent-rgb),0.93)
+      rgba(var(--user-accent-rgb),0.05),
+      rgba(var(--user-accent-rgb),0.045)
     );
   border: 1px solid rgba(var(--user-accent-rgb),0.18);
   border-radius: 25px;
@@ -376,8 +376,8 @@
   background:
     linear-gradient(
       135deg,
-      rgba(var(--user-accent-rgb),0.72),
-      rgba(var(--user-accent-rgb),0.86)
+      rgba(var(--user-accent-rgb),0.07),
+      rgba(var(--user-accent-rgb),0.06)
     );
   border: 1px solid rgba(var(--user-accent-rgb),0.16);
   border-radius: 19px;
@@ -455,8 +455,8 @@
   background:
     linear-gradient(
       145deg,
-      rgba(var(--user-accent-rgb),0.84),
-      rgba(var(--user-accent-rgb),0.76)
+      rgba(var(--user-accent-rgb),0.05),
+      rgba(var(--user-accent-rgb),0.045)
     );
   border: 1px solid rgba(var(--user-accent-rgb),0.11);
   border-radius: 18px;
@@ -552,8 +552,8 @@
   background:
     linear-gradient(
       150deg,
-      rgba(var(--user-accent-rgb),0.94),
-      rgba(var(--user-accent-rgb),0.87)
+      rgba(var(--user-accent-rgb),0.05),
+      rgba(var(--user-accent-rgb),0.045)
     );
   border: 1px solid rgba(var(--user-accent-rgb),0.14);
   border-radius: 18px;

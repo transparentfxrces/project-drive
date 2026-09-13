@@ -11,22 +11,7 @@
 
 .app {
     --user-accent: var(--theme-200);
-    --user-accent-rgb: 102, 199, 255;
-}
-
-.app.app-accent-purple {
-    --user-accent: var(--theme-200);
-    --user-accent-rgb: 167, 139, 250;
-}
-
-.app.app-accent-green {
-    --user-accent: #5ee58a;
-    --user-accent-rgb: 94, 229, 138;
-}
-
-.app.app-accent-orange {
-    --user-accent: #ffad5c;
-    --user-accent-rgb: 255, 173, 92;
+    --user-accent-rgb: 32, 152, 232;
 }
 
 /* ==========================================
@@ -265,7 +250,7 @@ hr{
 }
 
 ::-webkit-scrollbar-track{
-    background:var(--theme-500);
+    background:#05070a;
 }
 
 ::-webkit-scrollbar-thumb{

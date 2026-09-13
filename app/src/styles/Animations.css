@@ -784,3 +784,66 @@
 .app-spacing-comfortable .settings-section {
   padding: var(--pd-card-padding);
 }
+
+/* =========================================================
+   V5.8 FINAL — SYSTEM NOTIFICATIONS
+   Dark system surfaces; selected accent is light/glow, not fill.
+========================================================= */
+.xp-notification {
+  background:
+    radial-gradient(circle at 85% 0%, rgba(var(--user-accent-rgb), .12), transparent 52%),
+    linear-gradient(145deg, #111218 0%, #06070a 100%) !important;
+  color: #f1eef4 !important;
+  border-color: rgba(var(--user-accent-rgb), .48) !important;
+  box-shadow:
+    0 0 18px rgba(var(--user-accent-rgb), .12),
+    0 12px 36px rgba(0,0,0,.45),
+    inset 0 0 22px rgba(var(--user-accent-rgb), .025) !important;
+}
+.xp-notification:hover {
+  border-color: rgba(var(--user-accent-rgb), .68) !important;
+  box-shadow:
+    0 0 24px rgba(var(--user-accent-rgb), .18),
+    0 14px 40px rgba(0,0,0,.5) !important;
+}
+.xp-notification-amount {
+  color: var(--theme-200) !important;
+  text-shadow:
+    0 0 8px rgba(var(--user-accent-rgb), .38),
+    0 0 18px rgba(var(--user-accent-rgb), .12);
+}
+.xp-notification-reason {
+  color: #c6c1ca !important;
+}
+.level-up-overlay {
+  background:
+    radial-gradient(circle at center, rgba(var(--user-accent-rgb), .12), rgba(0,0,0,.82) 68%) !important;
+  backdrop-filter: blur(6px) !important;
+}
+.level-up-popup {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(var(--user-accent-rgb), .12), transparent 48%),
+    linear-gradient(145deg, #111218 0%, #050609 100%) !important;
+  border-color: rgba(var(--user-accent-rgb), .62) !important;
+  box-shadow:
+    0 0 24px rgba(var(--user-accent-rgb), .16),
+    0 0 70px rgba(var(--user-accent-rgb), .10),
+    0 24px 70px rgba(0,0,0,.55),
+    inset 0 0 28px rgba(var(--user-accent-rgb), .025) !important;
+}
+.level-up-eyebrow {
+  color: var(--theme-300) !important;
+  text-shadow: 0 0 8px rgba(var(--user-accent-rgb), .22);
+}
+.level-up-title {
+  color: var(--theme-200) !important;
+  text-shadow:
+    0 0 12px rgba(var(--user-accent-rgb), .65),
+    0 0 32px rgba(var(--user-accent-rgb), .28) !important;
+}
+.level-up-message {
+  color: #c9c5cd !important;
+}
+.level-up-dismiss {
+  color: #8f8993 !important;
+}

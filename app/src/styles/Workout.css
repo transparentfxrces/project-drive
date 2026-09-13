@@ -175,7 +175,7 @@
 .football-program-card{
     position:relative;
     overflow:hidden;
-    background:linear-gradient(160deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.90));
+    background:linear-gradient(145deg,#101015 0%,#07070a 100%);
     border:1px solid rgba(var(--user-accent-rgb),.20);
     border-radius:22px;
     padding:28px;
@@ -264,7 +264,7 @@
 =========================== */
 
 .exercise-picker{
-    background:linear-gradient(160deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.88));
+    background:linear-gradient(145deg,#101015 0%,#07070a 100%);
     border:1px solid rgba(var(--user-accent-rgb),.18);
     border-radius:22px;
     padding:26px;
@@ -317,7 +317,7 @@
 .exercise-card{
     position:relative;
     overflow:hidden;
-    background:linear-gradient(155deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.90));
+    background:linear-gradient(145deg,#101015 0%,#07070a 100%);
     border:1px solid rgba(var(--user-accent-rgb),.18);
     border-radius:24px;
     padding:28px;
@@ -458,7 +458,7 @@
 =========================== */
 
 .custom-exercise-card{
-    background:linear-gradient(160deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.90));
+    background:linear-gradient(145deg,#101015 0%,#07070a 100%);
     border:1px solid rgba(var(--user-accent-rgb),.18);
     border-radius:22px;
     padding:28px;
