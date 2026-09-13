@@ -6,6 +6,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap');
 
 /* ==========================================
+   USER APPEARANCE SETTINGS
+========================================== */
+
+.app {
+    --user-accent: var(--theme-200);
+    --user-accent-rgb: 102, 199, 255;
+}
+
+.app.app-accent-purple {
+    --user-accent: var(--theme-200);
+    --user-accent-rgb: 167, 139, 250;
+}
+
+.app.app-accent-green {
+    --user-accent: #5ee58a;
+    --user-accent-rgb: 94, 229, 138;
+}
+
+.app.app-accent-orange {
+    --user-accent: #ffad5c;
+    --user-accent-rgb: 255, 173, 92;
+}
+
+/* ==========================================
    RESET
 ========================================== */
 
@@ -25,11 +49,13 @@ html{
 
 body{
     font-family:'Inter',sans-serif;
-    background:var(--bg-dark);
+    background:#030305 !important;
     color:var(--text-primary);
     min-height:100vh;
     overflow-x:hidden;
 }
+
+html, body, #root { min-height:100%; background:#030305 !important; }
 
 /* ==========================================
    APP
@@ -41,6 +67,26 @@ body{
     margin:0 auto;
     padding:32px;
     min-height:100vh;
+
+    --pd-section-gap:20px;
+    --pd-card-padding:20px;
+    --pd-row-gap:16px;
+}
+
+/* ==========================================
+   SPACING PREFERENCES
+========================================== */
+
+.app.app-spacing-compact {
+    --pd-section-gap:12px;
+    --pd-card-padding:14px;
+    --pd-row-gap:10px;
+}
+
+.app.app-spacing-comfortable {
+    --pd-section-gap:20px;
+    --pd-card-padding:20px;
+    --pd-row-gap:16px;
 }
 
 /* ==========================================
@@ -117,40 +163,26 @@ a:hover{
 ========================================== */
 
 button{
-
     font-family:'Inter',sans-serif;
-
-    background:var(--blue-700);
-
-    color:white;
-
+    background:var(--user-accent);
+    color:var(--theme-400);
     border:none;
-
     border-radius:var(--radius-sm);
-
     padding:13px 20px;
-
     font-size:15px;
-
     font-weight:600;
-
     cursor:pointer;
-
     transition:
         transform var(--transition-fast),
         background var(--transition-fast),
         box-shadow var(--transition-fast);
-
 }
 
 button:hover{
-
     transform:translateY(-2px);
-
-    background:var(--blue-600);
-
-    box-shadow:var(--shadow-small);
-
+    background:var(--user-accent);
+    box-shadow:
+        0 0 14px rgba(var(--user-accent-rgb), .25);
 }
 
 button:active{
@@ -193,16 +225,11 @@ input::placeholder{
 
 input:focus,
 select:focus{
-
     outline:none;
-
     transform:scale(1.01);
-
-    border:1px solid var(--blue-400);
-
+    border:1px solid var(--user-accent);
     box-shadow:
-        0 0 10px rgba(70,170,255,.30);
-
+        0 0 10px rgba(var(--user-accent-rgb), .30);
 }
 
 /* ==========================================
@@ -238,16 +265,16 @@ hr{
 }
 
 ::-webkit-scrollbar-track{
-    background:#08111d;
+    background:var(--theme-500);
 }
 
 ::-webkit-scrollbar-thumb{
-    background:var(--blue-700);
+    background:var(--user-accent);
     border-radius:999px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
-    background:var(--blue-400);
+    background:var(--user-accent);
 }
 
 /* ==========================================
@@ -255,8 +282,8 @@ hr{
 ========================================== */
 
 ::selection{
-    background:var(--blue-700);
-    color:white;
+    background:var(--user-accent);
+    color:var(--theme-400);
 }
 
 

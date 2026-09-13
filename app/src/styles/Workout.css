@@ -22,14 +22,14 @@
     background:
         linear-gradient(
             145deg,
-            rgba(8,18,35,.96),
-            rgba(18,35,60,.92)
+            rgba(var(--user-accent-rgb),.96),
+            rgba(var(--user-accent-rgb),.92)
         );
 
-    border:1px solid rgba(70,170,255,.22);
+    border:1px solid rgba(var(--user-accent-rgb),.22);
 
     box-shadow:
-        0 0 30px rgba(40,140,255,.18);
+        0 0 30px rgba(var(--user-accent-rgb),.18);
 
 }
 
@@ -49,8 +49,8 @@
         linear-gradient(
             90deg,
             transparent,
-            #5fd2ff,
-            #9cf3ff,
+            var(--theme-200),
+            var(--theme-200),
             transparent
         );
 
@@ -70,7 +70,7 @@
 
     display:block;
 
-    color:#72bfff;
+    color:var(--theme-200);
 
     font-size:.75rem;
 
@@ -100,14 +100,14 @@
 
     font-weight:900;
 
-    color:#83ebff;
+    color:var(--theme-200);
 
     letter-spacing:2px;
 
     font-variant-numeric:tabular-nums;
 
     text-shadow:
-        0 0 16px rgba(120,240,255,.35);
+        0 0 16px rgba(var(--user-accent-rgb),.35);
 
 }
 
@@ -115,7 +115,7 @@
 
     margin:28px 0 12px;
 
-    color:#8beeff;
+    color:var(--theme-200);
 
     font-size:2rem;
 
@@ -131,7 +131,7 @@
 
     border-radius:999px;
 
-    background:#0e223b;
+    background:var(--theme-400);
 
 }
 
@@ -144,13 +144,13 @@
     background:
         linear-gradient(
             90deg,
-            #1d7cff,
-            #47c7ff,
-            #83f4ff
+            var(--theme-200),
+            var(--theme-200),
+            var(--theme-200)
         );
 
     box-shadow:
-        0 0 18px rgba(80,210,255,.45);
+        0 0 18px rgba(var(--user-accent-rgb),.45);
 
 }
 
@@ -162,7 +162,7 @@
 
     margin-top:18px;
 
-    color:#d2ebff;
+    color:var(--theme-200);
 
     font-weight:700;
 
@@ -175,8 +175,8 @@
 .football-program-card{
     position:relative;
     overflow:hidden;
-    background:linear-gradient(160deg,rgba(10,20,35,.92),rgba(15,32,58,.90));
-    border:1px solid rgba(70,150,255,.20);
+    background:linear-gradient(160deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.90));
+    border:1px solid rgba(var(--user-accent-rgb),.20);
     border-radius:22px;
     padding:28px;
     margin-bottom:34px;
@@ -190,7 +190,7 @@
     width:150px;
     height:150px;
     border-radius:50%;
-    background:radial-gradient(circle,rgba(70,180,255,.18),transparent 70%);
+    background:radial-gradient(circle,rgba(var(--user-accent-rgb),.18),transparent 70%);
 }
 
 .football-program-card h3{
@@ -208,7 +208,7 @@
 
 .football-row label{
     font-weight:700;
-    color:#79c6ff;
+    color:var(--theme-200);
     letter-spacing:1px;
 }
 
@@ -226,17 +226,17 @@
 .football-days button{
     flex:1;
     min-width:120px;
-    background:#12284b;
-    border:1px solid #2e5f99;
+    background:var(--theme-400);
+    border:1px solid var(--theme-500);
 }
 
 .football-days button:hover{
-    background:#1b4f91;
+    background:var(--theme-400);
 }
 
 .active-day{
-    background:linear-gradient(135deg,#1976d2,#43b9ff)!important;
-    box-shadow:0 0 18px rgba(60,180,255,.35);
+    background:linear-gradient(135deg,var(--theme-300),var(--theme-200))!important;
+    box-shadow:0 0 18px rgba(var(--user-accent-rgb),.35);
 }
 
 .load-football-button{
@@ -245,7 +245,7 @@
     font-size:16px;
     font-weight:700;
     letter-spacing:1px;
-    background:linear-gradient(90deg,#1976d2,#39b7ff);
+    background:linear-gradient(90deg,var(--theme-300),var(--theme-200));
 }
 
 /* ===========================
@@ -264,8 +264,8 @@
 =========================== */
 
 .exercise-picker{
-    background:linear-gradient(160deg,rgba(11,22,39,.92),rgba(16,29,49,.88));
-    border:1px solid rgba(70,150,255,.18);
+    background:linear-gradient(160deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.88));
+    border:1px solid rgba(var(--user-accent-rgb),.18);
     border-radius:22px;
     padding:26px;
     margin-bottom:30px;
@@ -291,11 +291,11 @@
 .exercise-option{
     flex:1;
     text-align:left;
-    background:#122848;
+    background:var(--theme-500);
 }
 
 .exercise-option:hover{
-    background:#1976d2;
+    background:var(--theme-300);
 }
 
 .favorite-button{
@@ -303,11 +303,11 @@
     height:54px;
     font-size:22px;
     border-radius:12px;
-    background:#10243f;
+    background:var(--theme-500);
 }
 
 .favorite-button:hover{
-    background:#1976d2;
+    background:var(--theme-300);
 }
 
 /* ===========================
@@ -317,12 +317,12 @@
 .exercise-card{
     position:relative;
     overflow:hidden;
-    background:linear-gradient(155deg,rgba(10,20,36,.92),rgba(15,29,49,.90));
-    border:1px solid rgba(70,150,255,.18);
+    background:linear-gradient(155deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.90));
+    border:1px solid rgba(var(--user-accent-rgb),.18);
     border-radius:24px;
     padding:28px;
     margin-bottom:30px;
-    box-shadow:0 0 25px rgba(37,99,235,.18),inset 0 0 0 1px rgba(255,255,255,.03);
+    box-shadow:0 0 25px rgba(var(--user-accent-rgb),.18),inset 0 0 0 1px rgba(255,255,255,.03);
     transition:var(--transition);
 }
 
@@ -333,13 +333,13 @@
     left:0;
     right:0;
     height:2px;
-    background:linear-gradient(90deg,transparent,#46b7ff,#89f0ff,transparent);
+    background:linear-gradient(90deg,transparent,var(--theme-200),var(--theme-200),transparent);
 }
 
 .exercise-card:hover{
     transform:translateY(-5px);
-    border-color:#47a8ff;
-    box-shadow:0 0 40px rgba(37,99,235,.30),inset 0 0 0 1px rgba(255,255,255,.04);
+    border-color:var(--theme-200);
+    box-shadow:0 0 40px rgba(var(--user-accent-rgb),.30),inset 0 0 0 1px rgba(255,255,255,.04);
 }
 
 .exercise-header{
@@ -378,10 +378,10 @@
     display:inline-block;
     padding:6px 14px;
     border-radius:999px;
-    background:#163862;
-    color:#79d7ff;
+    background:var(--theme-400);
+    color:var(--theme-200);
     font-weight:700;
-    box-shadow:0 0 12px rgba(80,170,255,.25);
+    box-shadow:0 0 12px rgba(var(--user-accent-rgb),.25);
 }
 
 .target-weight{
@@ -407,20 +407,20 @@
 }
 
 .set-row:hover{
-    background:rgba(70,170,255,.05);
+    background:rgba(var(--user-accent-rgb),.05);
 }
 
 .set-label{
     min-width:60px;
     font-weight:700;
-    color:#79c6ff;
+    color:var(--theme-200);
 }
 
 .set-percent{
     padding:6px 10px;
     border-radius:8px;
     background:#303030;
-    color:#4da3ff;
+    color:var(--theme-200);
     font-weight:700;
 }
 
@@ -436,11 +436,11 @@
 .add-set-button{
     width:100%;
     margin-top:18px;
-    background:#174d8b;
+    background:var(--theme-400);
 }
 
 .add-set-button:hover{
-    background:#248dff;
+    background:var(--theme-200);
 }
 
 .delete-exercise-button{
@@ -458,12 +458,12 @@
 =========================== */
 
 .custom-exercise-card{
-    background:linear-gradient(160deg,rgba(10,20,35,.92),rgba(15,29,48,.90));
-    border:1px solid rgba(70,150,255,.18);
+    background:linear-gradient(160deg,rgba(var(--user-accent-rgb),.92),rgba(var(--user-accent-rgb),.90));
+    border:1px solid rgba(var(--user-accent-rgb),.18);
     border-radius:22px;
     padding:28px;
     margin-top:36px;
-    box-shadow:0 0 25px rgba(37,99,235,.18);
+    box-shadow:0 0 25px rgba(var(--user-accent-rgb),.18);
 }
 
 .custom-exercise-card h3{
@@ -493,7 +493,7 @@
 }
 
 .workout-actions button:first-child{
-    background:linear-gradient(90deg,#1976d2,#4fc8ff);
+    background:linear-gradient(90deg,var(--theme-300),var(--theme-200));
 }
 
 .workout-actions button:last-child{
@@ -502,7 +502,7 @@
 
 .workout-actions button:hover{
     transform:translateY(-3px);
-    box-shadow:0 0 20px rgba(70,170,255,.25);
+    box-shadow:0 0 20px rgba(var(--user-accent-rgb),.25);
 }
 
 /* ===========================
@@ -520,7 +520,7 @@
 .exercise-picker input::placeholder,
 .custom-exercise-card input::placeholder,
 .exercise-title-input::placeholder{
-    color:#7ca8d9;
+    color:var(--theme-500);
 }
 
 /* ===========================
@@ -608,14 +608,14 @@
     background:
         linear-gradient(
             145deg,
-            rgba(10,22,40,.95),
-            rgba(18,34,58,.92)
+            rgba(var(--user-accent-rgb),.95),
+            rgba(var(--user-accent-rgb),.92)
         );
 
-    border:1px solid rgba(70,160,255,.22);
+    border:1px solid rgba(var(--user-accent-rgb),.22);
 
     box-shadow:
-        0 0 22px rgba(40,120,255,.18);
+        0 0 22px rgba(var(--user-accent-rgb),.18);
 
 }
 
@@ -631,7 +631,7 @@
 
 .session-title span{
 
-    color:#6fb9ff;
+    color:var(--theme-200);
 
     font-size:.82rem;
 
@@ -659,12 +659,12 @@
 
     font-weight:900;
 
-    color:#84e7ff;
+    color:var(--theme-200);
 
     letter-spacing:2px;
 
     text-shadow:
-        0 0 18px rgba(90,220,255,.35);
+        0 0 18px rgba(var(--user-accent-rgb),.35);
 
     font-variant-numeric:
         tabular-nums;
@@ -684,9 +684,9 @@
     border-radius:999px;
 
     background:
-        rgba(26,82,160,.28);
+        rgba(var(--user-accent-rgb),.28);
 
-    color:#7fd9ff;
+    color:var(--theme-200);
 
     font-weight:700;
 

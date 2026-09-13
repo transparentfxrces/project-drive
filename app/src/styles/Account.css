@@ -169,7 +169,7 @@
 .profile-intro span {
   display: block;
   margin-bottom: 6px;
-  color: #66c7ff;
+  color: var(--theme-200);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -185,7 +185,7 @@
 
 .profile-intro p {
   margin: 7px 0 0;
-  color: #91a9c0;
+  color: var(--theme-700);
   font-size: 0.85rem;
 }
 

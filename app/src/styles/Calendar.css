@@ -21,24 +21,24 @@
   margin-bottom: 22px;
   padding: 30px 32px;
 
-  border: 1px solid rgba(76, 190, 255, 0.2);
+  border: 1px solid rgba(var(--user-accent-rgb),0.2);
   border-radius: 22px;
 
   background:
     radial-gradient(
       circle at 15% 0%,
-      rgba(51, 160, 255, 0.14),
+      rgba(var(--user-accent-rgb),0.14),
       transparent 40%
     ),
     linear-gradient(
       145deg,
-      rgba(12, 29, 52, 0.96),
-      rgba(5, 15, 29, 0.98)
+      rgba(var(--user-accent-rgb),0.96),
+      rgba(var(--user-accent-rgb),0.98)
     );
 
   box-shadow:
     0 18px 50px rgba(0, 0, 0, 0.22),
-    inset 0 0 35px rgba(72, 180, 255, 0.025);
+    inset 0 0 35px rgba(var(--user-accent-rgb),0.025);
 }
 
 .calendar-hero::before {
@@ -55,16 +55,16 @@
     linear-gradient(
       90deg,
       transparent,
-      rgba(86, 211, 255, 0.85),
+      rgba(var(--user-accent-rgb),0.85),
       transparent
     );
 
   box-shadow:
-    0 0 16px rgba(70, 198, 255, 0.55);
+    0 0 16px rgba(var(--user-accent-rgb),0.55);
 }
 
 .calendar-system-label {
-  color: #65cfff;
+  color: var(--theme-200);
 
   font-size: 0.7rem;
   font-weight: 900;
@@ -72,13 +72,13 @@
   letter-spacing: 3.5px;
 
   text-shadow:
-    0 0 12px rgba(75, 201, 255, 0.4);
+    0 0 12px rgba(var(--user-accent-rgb),0.4);
 }
 
 .calendar-hero h2 {
   margin: 8px 0 7px;
 
-  color: #f1f8ff;
+  color: var(--theme-200);
 
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 900;
@@ -91,7 +91,7 @@
 
   margin: 0;
 
-  color: #819bb6;
+  color: var(--theme-700);
 
   line-height: 1.65;
 }
@@ -119,14 +119,14 @@
 
   padding: 20px 22px;
 
-  border: 1px solid rgba(70, 166, 229, 0.15);
+  border: 1px solid rgba(var(--user-accent-rgb),0.15);
   border-radius: 16px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(13, 29, 49, 0.9),
-      rgba(7, 18, 33, 0.94)
+      rgba(var(--user-accent-rgb),0.9),
+      rgba(var(--user-accent-rgb),0.94)
     );
 
   box-shadow:
@@ -142,11 +142,11 @@
   transform: translateY(-2px);
 
   border-color:
-    rgba(78, 199, 255, 0.32);
+    rgba(var(--user-accent-rgb),0.32);
 
   box-shadow:
     0 12px 35px rgba(0, 0, 0, 0.2),
-    0 0 20px rgba(51, 165, 255, 0.06);
+    0 0 20px rgba(var(--user-accent-rgb),0.06);
 }
 
 .calendar-stat-card small {
@@ -154,7 +154,7 @@
 
   margin-bottom: 8px;
 
-  color: #65809d;
+  color: var(--bg-secondary);
 
   font-size: 0.64rem;
   font-weight: 900;
@@ -163,7 +163,7 @@
 }
 
 .calendar-stat-card strong {
-  color: #eaf7ff;
+  color: var(--theme-200);
 
   font-size: 1.65rem;
   font-weight: 900;
@@ -181,19 +181,19 @@
 
   padding: 26px;
 
-  border: 1px solid rgba(77, 187, 245, 0.18);
+  border: 1px solid rgba(var(--user-accent-rgb),0.18);
   border-radius: 22px;
 
   background:
     linear-gradient(
       150deg,
-      rgba(11, 27, 47, 0.97),
-      rgba(5, 15, 28, 0.98)
+      rgba(var(--user-accent-rgb),0.97),
+      rgba(var(--user-accent-rgb),0.98)
     );
 
   box-shadow:
     0 18px 55px rgba(0, 0, 0, 0.2),
-    inset 0 0 35px rgba(70, 176, 255, 0.02);
+    inset 0 0 35px rgba(var(--user-accent-rgb),0.02);
 }
 
 .calendar-card::before {
@@ -211,7 +211,7 @@
     linear-gradient(
       90deg,
       transparent,
-      #53c8ff,
+      var(--theme-200),
       transparent
     );
 
@@ -241,7 +241,7 @@
 }
 
 .calendar-header span {
-  color: #5985a8;
+  color: var(--theme-700);
 
   font-size: 0.63rem;
   font-weight: 900;
@@ -252,7 +252,7 @@
 .calendar-header h3 {
   margin: 5px 0 0;
 
-  color: #f0f8ff;
+  color: var(--theme-200);
 
   font-size: 1.45rem;
   font-weight: 900;
@@ -267,13 +267,13 @@
   width: 46px;
   height: 46px;
 
-  border: 1px solid rgba(77, 184, 244, 0.2);
+  border: 1px solid rgba(var(--user-accent-rgb),0.2);
   border-radius: 12px;
 
   background:
-    rgba(24, 70, 106, 0.14);
+    rgba(var(--user-accent-rgb),0.14);
 
-  color: #73d8ff;
+  color: var(--theme-200);
 
   font-size: 1.8rem;
 
@@ -287,13 +287,13 @@
   transform: scale(1.05);
 
   border-color:
-    rgba(92, 211, 255, 0.6);
+    rgba(var(--user-accent-rgb),0.6);
 
   background:
-    rgba(47, 147, 209, 0.18);
+    rgba(var(--user-accent-rgb),0.18);
 
   box-shadow:
-    0 0 18px rgba(57, 184, 255, 0.12);
+    0 0 18px rgba(var(--user-accent-rgb),0.12);
 }
 
 
@@ -315,7 +315,7 @@
 .calendar-weekdays span {
   padding: 7px 0;
 
-  color: #54718d;
+  color: var(--theme-700);
 
   text-align: center;
 
@@ -347,13 +347,13 @@
 
   padding: 12px;
 
-  border: 1px solid rgba(69, 115, 154, 0.13);
+  border: 1px solid rgba(var(--user-accent-rgb),0.13);
   border-radius: 13px;
 
   background:
-    rgba(9, 22, 38, 0.62);
+    rgba(var(--user-accent-rgb),0.62);
 
-  color: #71879d;
+  color: var(--bg-secondary);
 
   text-align: left;
 
@@ -370,10 +370,10 @@
   transform: translateY(-2px);
 
   border-color:
-    rgba(72, 190, 246, 0.3);
+    rgba(var(--user-accent-rgb),0.3);
 
   background:
-    rgba(17, 46, 70, 0.75);
+    rgba(var(--user-accent-rgb),0.75);
 }
 
 .calendar-day.empty {
@@ -399,20 +399,20 @@
 
 .calendar-day.trained {
   border-color:
-    rgba(61, 190, 255, 0.34);
+    rgba(var(--user-accent-rgb),0.34);
 
   background:
     radial-gradient(
       circle at 50% 100%,
-      rgba(39, 159, 255, 0.16),
+      rgba(var(--user-accent-rgb),0.16),
       transparent 65%
     ),
-    rgba(10, 31, 50, 0.9);
+    rgba(var(--user-accent-rgb),0.9);
 
-  color: #dff6ff;
+  color: var(--theme-200);
 
   box-shadow:
-    inset 0 0 18px rgba(54, 174, 255, 0.04);
+    inset 0 0 18px rgba(var(--user-accent-rgb),0.04);
 }
 
 .calendar-day.trained::after {
@@ -430,12 +430,12 @@
     linear-gradient(
       90deg,
       transparent,
-      #51d0ff,
+      var(--theme-200),
       transparent
     );
 
   box-shadow:
-    0 0 9px rgba(75, 204, 255, 0.7);
+    0 0 9px rgba(var(--user-accent-rgb),0.7);
 }
 
 .calendar-workout-marker {
@@ -447,12 +447,12 @@
   transform:
     translate(-50%, -40%);
 
-  color: #58d3ff;
+  color: var(--theme-200);
 
   font-size: 1.45rem;
 
   text-shadow:
-    0 0 12px rgba(73, 204, 255, 0.65);
+    0 0 12px rgba(var(--user-accent-rgb),0.65);
 }
 
 .calendar-day.trained small {
@@ -471,13 +471,13 @@
 
   padding: 0 5px;
 
-  border: 1px solid rgba(81, 205, 255, 0.25);
+  border: 1px solid rgba(var(--user-accent-rgb),0.25);
   border-radius: 999px;
 
   background:
-    rgba(38, 145, 209, 0.14);
+    rgba(var(--user-accent-rgb),0.14);
 
-  color: #79dcff;
+  color: var(--theme-200);
 
   font-size: 0.62rem;
   font-weight: 900;
@@ -497,7 +497,7 @@
       rgba(255, 190, 47, 0.13),
       transparent 65%
     ),
-    rgba(18, 28, 39, 0.96);
+    rgba(var(--user-accent-rgb),0.96);
 
   box-shadow:
     0 0 0 1px
@@ -561,15 +561,15 @@
 
 .calendar-day.today {
   border-color:
-    rgba(112, 223, 255, 0.6);
+    rgba(var(--user-accent-rgb),0.6);
 
   box-shadow:
-    0 0 0 1px rgba(82, 194, 255, 0.08),
-    0 0 22px rgba(53, 171, 255, 0.12);
+    0 0 0 1px rgba(var(--user-accent-rgb),0.08),
+    0 0 22px rgba(var(--user-accent-rgb),0.12);
 }
 
 .calendar-day.today .calendar-number {
-  color: #8be7ff;
+  color: var(--theme-200);
 }
 
 .calendar-day.today::before {
@@ -580,7 +580,7 @@
   right: 8px;
   top: 8px;
 
-  color: #57bfe9;
+  color: var(--theme-300);
 
   font-size: 0.48rem;
   font-weight: 900;
@@ -596,19 +596,19 @@
 .calendar-day.selected {
   transform: translateY(-2px);
 
-  border-color: #66d8ff;
+  border-color: var(--theme-200);
 
   background:
     radial-gradient(
       circle at center,
-      rgba(52, 178, 255, 0.18),
-      rgba(9, 30, 49, 0.96)
+      rgba(var(--user-accent-rgb),0.18),
+      rgba(var(--user-accent-rgb),0.96)
     );
 
   box-shadow:
-    0 0 0 1px rgba(86, 212, 255, 0.1),
-    0 0 25px rgba(53, 182, 255, 0.17),
-    inset 0 0 20px rgba(66, 187, 255, 0.05);
+    0 0 0 1px rgba(var(--user-accent-rgb),0.1),
+    0 0 25px rgba(var(--user-accent-rgb),0.17),
+    inset 0 0 20px rgba(var(--user-accent-rgb),0.05);
 }
 
 
@@ -625,7 +625,7 @@
 
   margin-top: 20px;
 
-  color: #667e96;
+  color: var(--bg-secondary);
 
   font-size: 0.72rem;
   font-weight: 700;
@@ -644,10 +644,10 @@
 }
 
 .legend-trained {
-  color: #5bd6ff;
+  color: var(--theme-200);
 
   text-shadow:
-    0 0 8px rgba(75, 203, 255, 0.5);
+    0 0 8px rgba(var(--user-accent-rgb),0.5);
 }
 
 .legend-pr {
@@ -659,7 +659,7 @@
 }
 
 .legend-today {
-  color: #8be7ff;
+  color: var(--theme-200);
 }
 
 
@@ -676,14 +676,14 @@
 
   padding: 26px;
 
-  border: 1px solid rgba(75, 188, 247, 0.18);
+  border: 1px solid rgba(var(--user-accent-rgb),0.18);
   border-radius: 22px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(11, 28, 48, 0.96),
-      rgba(6, 16, 29, 0.98)
+      rgba(var(--user-accent-rgb),0.96),
+      rgba(var(--user-accent-rgb),0.98)
     );
 
   box-shadow:
@@ -709,7 +709,7 @@
     linear-gradient(
       90deg,
       transparent,
-      rgba(79, 206, 255, 0.8),
+      rgba(var(--user-accent-rgb),0.8),
       transparent
     );
 }
@@ -726,7 +726,7 @@
 }
 
 .calendar-details-header span {
-  color: #5ecbfa;
+  color: var(--theme-200);
 
   font-size: 0.62rem;
   font-weight: 900;
@@ -737,7 +737,7 @@
 .calendar-details-header h3 {
   margin: 5px 0 0;
 
-  color: #edf8ff;
+  color: var(--theme-200);
 
   font-size: 1.35rem;
 }
@@ -746,13 +746,13 @@
   width: 38px;
   height: 38px;
 
-  border: 1px solid rgba(75, 181, 238, 0.18);
+  border: 1px solid rgba(var(--user-accent-rgb),0.18);
   border-radius: 10px;
 
   background:
-    rgba(26, 76, 111, 0.12);
+    rgba(var(--user-accent-rgb),0.12);
 
-  color: #6d9abb;
+  color: var(--theme-600);
 
   font-size: 1.4rem;
 
@@ -763,12 +763,12 @@
 
 .calendar-details-header button:hover {
   border-color:
-    rgba(92, 210, 255, 0.5);
+    rgba(var(--user-accent-rgb),0.5);
 
-  color: #85e4ff;
+  color: var(--theme-200);
 
   box-shadow:
-    0 0 15px rgba(67, 190, 255, 0.1);
+    0 0 15px rgba(var(--user-accent-rgb),0.1);
 }
 
 
@@ -781,11 +781,11 @@
 
   margin-top: 14px;
 
-  border: 1px solid rgba(64, 142, 196, 0.14);
+  border: 1px solid rgba(var(--user-accent-rgb),0.14);
   border-radius: 15px;
 
   background:
-    rgba(7, 20, 35, 0.7);
+    rgba(var(--user-accent-rgb),0.7);
 }
 
 .calendar-session-top {
@@ -799,11 +799,11 @@
   padding: 15px 18px;
 
   border-bottom:
-    1px solid rgba(64, 130, 175, 0.1);
+    1px solid rgba(var(--user-accent-rgb),0.1);
 }
 
 .calendar-session-top strong {
-  color: #68d2ff;
+  color: var(--theme-200);
 
   font-size: 0.68rem;
   font-weight: 900;
@@ -812,7 +812,7 @@
 }
 
 .calendar-session-top span {
-  color: #718aa3;
+  color: var(--bg-secondary);
 
   font-size: 0.76rem;
   font-weight: 700;
@@ -827,7 +827,7 @@
   padding: 16px 18px;
 
   background:
-    rgba(7, 19, 33, 0.96);
+    rgba(var(--user-accent-rgb),0.96);
 }
 
 .calendar-exercise-header {
@@ -842,13 +842,13 @@
 }
 
 .calendar-exercise-header strong {
-  color: #dcecf7;
+  color: var(--theme-400);
 
   font-size: 0.92rem;
 }
 
 .calendar-exercise-header > span {
-  color: #63829d;
+  color: var(--bg-secondary);
 
   font-size: 0.72rem;
   font-weight: 700;
@@ -877,16 +877,16 @@
   padding: 9px 11px;
 
   border:
-    1px solid rgba(67, 139, 187, 0.1);
+    1px solid rgba(var(--user-accent-rgb),0.1);
 
   border-radius: 9px;
 
   background:
-    rgba(14, 34, 52, 0.48);
+    rgba(var(--user-accent-rgb),0.48);
 }
 
 .calendar-set-number {
-  color: #53738e;
+  color: var(--theme-700);
 
   font-size: 0.58rem;
   font-weight: 900;
@@ -895,13 +895,13 @@
 }
 
 .calendar-set-row strong {
-  color: #dff5ff;
+  color: var(--theme-200);
 
   font-size: 0.82rem;
 }
 
 .calendar-set-x {
-  color: #4ebce9;
+  color: var(--theme-300);
 
   text-align: center;
 
@@ -909,7 +909,7 @@
 }
 
 .calendar-reps-label {
-  color: #58748c;
+  color: var(--bg-secondary);
 
   font-size: 0.55rem;
   font-weight: 900;
@@ -928,16 +928,16 @@
   text-align: center;
 
   border:
-    1px dashed rgba(69, 145, 194, 0.17);
+    1px dashed rgba(var(--user-accent-rgb),0.17);
 
   border-radius: 15px;
 
   background:
-    rgba(7, 19, 33, 0.42);
+    rgba(var(--user-accent-rgb),0.42);
 }
 
 .calendar-rest-day > span {
-  color: #507d9d;
+  color: var(--theme-700);
 
   font-size: 2rem;
 }
@@ -945,13 +945,13 @@
 .calendar-rest-day h4 {
   margin: 10px 0 5px;
 
-  color: #a9c2d6;
+  color: var(--theme-700);
 }
 
 .calendar-rest-day p {
   margin: 0;
 
-  color: #60778d;
+  color: var(--bg-secondary);
 
   font-size: 0.85rem;
 }
@@ -1105,13 +1105,13 @@
   padding: 20px 18px;
 
   border-top:
-    1px solid rgba(74, 164, 216, 0.12);
+    1px solid rgba(var(--user-accent-rgb),0.12);
 
   background:
     linear-gradient(
       180deg,
-      rgba(11, 29, 47, 0.72),
-      rgba(7, 19, 33, 0.9)
+      rgba(var(--user-accent-rgb),0.72),
+      rgba(var(--user-accent-rgb),0.9)
     );
 }
 
@@ -1120,7 +1120,7 @@
 
   margin-bottom: 14px;
 
-  color: #5ecfff;
+  color: var(--theme-200);
 
   font-size: 0.62rem;
   font-weight: 900;
@@ -1144,12 +1144,12 @@
   padding: 13px 12px;
 
   border:
-    1px solid rgba(69, 147, 197, 0.12);
+    1px solid rgba(var(--user-accent-rgb),0.12);
 
   border-radius: 10px;
 
   background:
-    rgba(10, 25, 41, 0.68);
+    rgba(var(--user-accent-rgb),0.68);
 }
 
 .calendar-summary-grid small {
@@ -1157,7 +1157,7 @@
 
   margin-bottom: 6px;
 
-  color: #55738e;
+  color: var(--theme-700);
 
   font-size: 0.53rem;
   font-weight: 900;
@@ -1166,7 +1166,7 @@
 }
 
 .calendar-summary-grid strong {
-  color: #dff5ff;
+  color: var(--theme-200);
 
   font-size: 0.85rem;
   font-weight: 900;
@@ -1191,3 +1191,204 @@
   }
 
 }
+/* =========================================================
+   PROJECT DRIVE — SOLO LEVELING FINAL OVERRIDE
+   Loaded last via Calendar.css so no App.jsx import is needed.
+========================================================= */
+
+html, body {
+  background: #030405 !important;
+  color: #f2f2f2 !important;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(var(--user-accent-rgb), .10), transparent 38%),
+    #030405 !important;
+}
+
+.app {
+  background:
+    radial-gradient(circle at 92% 2%, rgba(var(--user-accent-rgb), .075), transparent 28%),
+    radial-gradient(circle at 8% 92%, rgba(var(--user-accent-rgb), .035), transparent 26%),
+    #030405 !important;
+  color: var(--text-primary) !important;
+}
+
+/* Header: black/charcoal instead of the old navy-blue block. */
+.app > :first-child:not(.sl-nav),
+.app > header,
+.app .site-header,
+.app .app-header,
+.app .main-header,
+.app .profile-header,
+.app .profile-hero,
+.app .hero,
+.app .profile-banner,
+.app .athlete-header {
+  background:
+    linear-gradient(145deg, rgba(16,16,20,.98), rgba(5,5,7,.99) 72%) !important;
+  background-color: #08090b !important;
+  border-color: rgba(var(--user-accent-rgb), .38) !important;
+  box-shadow: 0 12px 42px rgba(var(--user-accent-rgb), .09) !important;
+}
+
+/* Kill old blue decorative washes. */
+.app > :first-child:not(.sl-nav)::before,
+.app > :first-child:not(.sl-nav)::after,
+.app .profile-header::before,
+.app .profile-header::after,
+.app .profile-hero::before,
+.app .profile-hero::after,
+.app .hero::before,
+.app .hero::after,
+.app .dashboard-card::after,
+.app .stat-card::after {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Navigation should be black glass, not a giant purple rectangle. */
+.app .sl-nav {
+  background: rgba(7,7,9,.92) !important;
+  border: 1px solid rgba(var(--user-accent-rgb), .20) !important;
+  box-shadow: 0 14px 40px rgba(0,0,0,.42), 0 0 26px rgba(var(--user-accent-rgb), .06) !important;
+}
+
+.app .sl-nav-btn {
+  background: rgba(15,15,18,.96) !important;
+  color: #d8d8dc !important;
+  border: 1px solid rgba(255,255,255,.045) !important;
+  box-shadow: none !important;
+}
+
+.app .sl-nav-btn:hover {
+  background: rgba(var(--user-accent-rgb), .13) !important;
+  color: var(--theme-100) !important;
+  border-color: rgba(var(--user-accent-rgb), .32) !important;
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .12) !important;
+}
+
+.app .sl-nav-btn.active {
+  background: linear-gradient(135deg, var(--theme-700), var(--theme-500)) !important;
+  color: #fff !important;
+  border-color: rgba(var(--user-accent-rgb), .72) !important;
+  box-shadow: 0 0 24px rgba(var(--user-accent-rgb), .25) !important;
+}
+
+/* Cards: nearly-black surfaces with restrained accent edges. */
+.app .dashboard-card,
+.app .stat-card,
+.app .profile-card,
+.app .progress-card,
+.app .exercise-card,
+.app .metric-card,
+.app .history-session,
+.app .summary-card,
+.app .football-program-card,
+.app .exercise-picker,
+.app .custom-exercise-card,
+.app .athlete-status-card {
+  background: linear-gradient(145deg, rgba(14,14,17,.97), rgba(7,7,9,.97)) !important;
+  border-color: rgba(var(--user-accent-rgb), .18) !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,.28), inset 0 0 0 1px rgba(255,255,255,.015) !important;
+}
+
+.app .dashboard-card:hover,
+.app .stat-card:hover,
+.app .profile-card:hover,
+.app .progress-card:hover,
+.app .exercise-card:hover,
+.app .metric-card:hover,
+.app .history-session:hover,
+.app .summary-card:hover,
+.app .football-program-card:hover,
+.app .exercise-picker:hover,
+.app .custom-exercise-card:hover,
+.app .athlete-status-card:hover {
+  border-color: rgba(var(--user-accent-rgb), .38) !important;
+  box-shadow: 0 16px 34px rgba(0,0,0,.34), 0 0 24px rgba(var(--user-accent-rgb), .08) !important;
+}
+
+/* Typography: accent, but not every heading screaming neon. */
+.app h1,
+.app h2 {
+  color: #f5f5f7 !important;
+  text-shadow: 0 0 22px rgba(var(--user-accent-rgb), .16) !important;
+}
+
+.app h3,
+.app h4,
+.app h5,
+.app h6 {
+  color: var(--theme-200) !important;
+}
+
+.app a {
+  color: var(--theme-300) !important;
+}
+
+/* Buttons, inputs, selects and progress use the selected accent. */
+.app button:not(.sl-nav-btn) {
+  background: linear-gradient(135deg, var(--theme-700), var(--theme-500)) !important;
+  color: #fff !important;
+  border: 1px solid rgba(var(--user-accent-rgb), .32) !important;
+  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .08) !important;
+}
+
+.app button:not(.sl-nav-btn):hover {
+  background: linear-gradient(135deg, var(--theme-600), var(--theme-400)) !important;
+  box-shadow: 0 0 20px rgba(var(--user-accent-rgb), .16) !important;
+}
+
+.app input,
+.app select,
+.app textarea {
+  background: #090a0d !important;
+  color: #f4f4f5 !important;
+  border-color: rgba(var(--user-accent-rgb), .20) !important;
+}
+
+.app input:focus,
+.app select:focus,
+.app textarea:focus {
+  border-color: rgba(var(--user-accent-rgb), .62) !important;
+  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .13) !important;
+}
+
+.app .progress-fill,
+.app .progress-bar-fill,
+.app .xp-fill,
+.app .xp-progress-fill {
+  background: linear-gradient(90deg, var(--theme-700), var(--theme-400), var(--theme-200)) !important;
+  box-shadow: 0 0 14px rgba(var(--user-accent-rgb), .28) !important;
+}
+
+/* Remove the old gold active-state treatment. */
+.app .sl-nav-btn.active::before {
+  background: linear-gradient(180deg, transparent, var(--theme-100), transparent) !important;
+}
+
+/* Neutralize remaining common hard-coded blue surfaces. */
+.app [style*="#081223"],
+.app [style*="#101b2d"],
+.app [style*="#0b1321"],
+.app [style*="#11233b"] {
+  background: #090a0d !important;
+}
+
+
+/* FINAL THEME PASS LOADED LAST */
+/* PROJECT DRIVE — SOLO LEVELING FINAL THEME */
+html,body,#root{background:#030305!important;}
+.app{background:radial-gradient(ellipse 80% 35% at 50% -10%,rgba(var(--user-accent-rgb),.08),transparent 62%),#030305!important;color:#e8e5eb!important;}
+.app .dashboard-card,.app .stat-card,.app .profile-card,.app .progress-card,.app .exercise-card,.app .metric-card,.app .history-session,.app .summary-card,.app .football-program-card,.app .exercise-picker,.app .custom-exercise-card,.app .xp-card,.app .weekly-goal-card{background:linear-gradient(145deg,#101015 0%,#07070a 100%)!important;border:1px solid rgba(var(--user-accent-rgb),.20)!important;box-shadow:0 0 20px rgba(var(--user-accent-rgb),.045),inset 0 0 0 1px rgba(255,255,255,.015)!important;}
+.app .dashboard-card::after,.app .stat-card::after,.app .profile-card::after,.app .progress-card::after,.app .exercise-card::after,.app .metric-card::after,.app .history-session::after,.app .summary-card::after,.app .football-program-card::after,.app .exercise-picker::after,.app .custom-exercise-card::after{display:none!important;content:none!important;}
+.app h1,.app h2,.app h3,.app h4,.app h5,.app h6{color:var(--theme-200)!important}.app p,.app li{color:#d8d3dc!important}.app strong{color:#fff!important}.app a{color:var(--theme-300)!important}
+.app .navigation,.app .sl-nav{background:rgba(6,6,9,.96)!important;border-color:rgba(var(--user-accent-rgb),.16)!important;box-shadow:0 12px 32px rgba(0,0,0,.45)!important}.app .navigation button,.app .sl-nav-btn{background:#0b0b0f!important;color:#aaa5ae!important;border-color:rgba(255,255,255,.045)!important;box-shadow:none!important}.app .navigation button:hover,.app .sl-nav-btn:hover{background:rgba(var(--user-accent-rgb),.07)!important;color:#f4f0f6!important;border-color:rgba(var(--user-accent-rgb),.28)!important}.app .navigation button.active,.app .navigation button[aria-current="page"],.app .sl-nav-btn.active{background:linear-gradient(135deg,rgba(var(--user-accent-rgb),.18),rgba(var(--user-accent-rgb),.035))!important;color:#fff!important;border-color:rgba(var(--user-accent-rgb),.48)!important;box-shadow:0 0 18px rgba(var(--user-accent-rgb),.10)!important}
+.app button{background:linear-gradient(135deg,var(--theme-600),var(--theme-700))!important;color:#fff!important;border:1px solid rgba(var(--user-accent-rgb),.32)!important}.app button:hover{background:linear-gradient(135deg,var(--theme-500),var(--theme-600))!important}.app input,.app select,.app textarea{background:#07070a!important;color:#f3eff5!important;border-color:rgba(var(--user-accent-rgb),.18)!important}.app .progress-fill,.app .xp-progress-fill,.app .quest-progress-fill,.app .goal-progress-fill,.app .weekly-progress-fill{background:linear-gradient(90deg,var(--theme-700),var(--theme-500),var(--theme-300))!important;box-shadow:0 0 14px rgba(var(--user-accent-rgb),.24)!important}
+/* Legacy dashboard fills */
+.app .stat-card,.app .dashboard-card,.app .xp-card,.app .weekly-goal-card{background:linear-gradient(145deg,#101015,#07070a)!important}
+
+html,body,#root{background:#030305!important}.app{background:#030305!important}

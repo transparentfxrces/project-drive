@@ -8,7 +8,8 @@ const DEFAULT_SETTINGS = {
   questNotifications: true,
   accountNotifications: true,
   animations: true,
-  compactMode: false,
+  spacing: "comfortable",
+  accentColor: "blue",
 };
 
 function SettingsPage() {
@@ -254,30 +255,50 @@ function SettingsPage() {
           </div>
 
           <div className="settings-row">
-            <div className="settings-row-info">
-              <strong>Compact Mode</strong>
-              <span>
-                Reduce spacing for a denser interface.
-              </span>
-            </div>
+  <div className="settings-row-info">
+    <strong>Spacing</strong>
+    <span>
+      Choose how much space the interface uses.
+    </span>
+  </div>
 
-            <label className="settings-toggle">
-              <input
-                type="checkbox"
-                checked={settings.compactMode}
-                onChange={(e) =>
-                  updateSetting(
-                    "compactMode",
-                    e.target.checked
-                  )
-                }
-              />
+  <div className="settings-control">
+    <select
+      className="settings-select"
+      value={settings.spacing}
+      onChange={(e) =>
+        updateSetting("spacing", e.target.value)
+      }
+    >
+      <option value="comfortable">Comfortable</option>
+      <option value="compact">Compact</option>
+    </select>
+  </div>
+</div>
 
-              <span className="settings-toggle-track">
-                <span className="settings-toggle-thumb" />
-              </span>
-            </label>
-          </div>
+<div className="settings-row">
+  <div className="settings-row-info">
+    <strong>Accent Color</strong>
+    <span>
+      Personalize Project Drive's interface accent.
+    </span>
+  </div>
+
+  <div className="settings-control">
+    <select
+      className="settings-select"
+      value={settings.accentColor}
+      onChange={(e) =>
+        updateSetting("accentColor", e.target.value)
+      }
+    >
+      <option value="blue">Drive Blue</option>
+      <option value="purple">Pulse Purple</option>
+      <option value="green">Field Green</option>
+      <option value="orange">Energy Orange</option>
+    </select>
+  </div>
+</div>
 
         </div>
 

@@ -17,6 +17,7 @@ import "./styles/Progress.css";
 import "./styles/Coaching.css";
 import "./styles/PRCelebration.css";
 import "./styles/Calendar.css";
+import "./styles/Theme.css";
 
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
@@ -207,6 +208,24 @@ function App() {
 
     return true;
   });
+
+  const [appSettings, setAppSettings] = useState(() => {
+  try {
+    const saved = localStorage.getItem("projectDriveSettings");
+
+    return saved
+      ? JSON.parse(saved)
+      : {
+          spacing: "comfortable",
+          accentColor: "blue",
+        };
+  } catch {
+    return {
+      spacing: "comfortable",
+      accentColor: "blue",
+    };
+  }
+});
 
   const [accountSection, setAccountSection] =
     useState("profile");
@@ -492,7 +511,8 @@ function App() {
   useEffect(() => {
   function handleSettingsChange() {
     try {
-      const saved = localStorage.getItem("projectDriveSettings");
+      const saved =
+        localStorage.getItem("projectDriveSettings");
 
       if (saved) {
         const settings = JSON.parse(saved);
@@ -500,9 +520,22 @@ function App() {
         setAnimationsEnabled(
           settings.animations ?? true
         );
+
+        setAppSettings({
+          spacing:
+            settings.spacing ?? "comfortable",
+
+          accentColor:
+            settings.accentColor ?? "blue",
+        });
       }
     } catch {
       setAnimationsEnabled(true);
+
+      setAppSettings({
+        spacing: "comfortable",
+        accentColor: "blue",
+      });
     }
   }
 
@@ -937,9 +970,14 @@ function App() {
 
   return (
   <div
-  className={`app ${
-    animationsEnabled ? "" : "animations-disabled"
-  }`}
+    className={[
+        "app",
+        animationsEnabled ? "" : "animations-disabled",
+        `app-accent-${appSettings.accentColor}`,
+        `app-spacing-${appSettings.spacing}`,
+    ]
+        .filter(Boolean)
+        .join(" ")}
 >
     {page !== "account" && (
       <>

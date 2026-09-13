@@ -37,7 +37,7 @@
     background:
         radial-gradient(
             circle,
-            rgba(70,180,255,.18),
+            rgba(var(--user-accent-rgb),.18),
             transparent 70%
         );
 }
@@ -77,28 +77,28 @@
 .football-days button{
     flex:1;
     min-width:120px;
-    background:#12284b;
-    border:1px solid rgba(70,150,255,.18);
+    background:var(--theme-400);
+    border:1px solid rgba(var(--user-accent-rgb),.18);
 }
 
 .football-days button:hover{
-    background:#1b4f91;
+    background:var(--theme-400);
 }
 
 .active-day{
     background:
         linear-gradient(
             135deg,
-            #1976d2,
-            #43b9ff
+            var(--theme-300),
+            var(--theme-200)
         ) !important;
 
     color:white;
 
-    border-color:rgba(120,220,255,.55);
+    border-color:rgba(var(--user-accent-rgb),.55);
 
     box-shadow:
-        0 0 18px rgba(60,180,255,.35);
+        0 0 18px rgba(var(--user-accent-rgb),.35);
 }
 
 .load-football-button{
@@ -115,8 +115,8 @@
     background:
         linear-gradient(
             90deg,
-            #1976d2,
-            #39b7ff
+            var(--theme-300),
+            var(--theme-200)
         );
 }
 

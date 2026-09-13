@@ -9,27 +9,27 @@
    COLORS
 ===========================*/
 
---bg-dark:#05070d;
---bg-primary:#081223;
---bg-secondary:#101b2d;
---bg-card:rgba(8,18,35,.82);
+--bg-dark:#030305;
+--bg-primary:#08090c;
+--bg-secondary:#0d0f14;
+--bg-card:rgba(12,12,16,.96);
 
 --text-white:#ffffff;
---text-primary:#dcecff;
---text-secondary:#9fcfff;
---text-muted:#6f9bc5;
+--text-primary:#e8e5eb;
+--text-secondary:#b9b3be;
+--text-muted:#77717d;
 
 /* ===========================
    ACCENT COLORS
 ===========================*/
 
---blue-100:#8ce8ff;
---blue-200:#7de7ff;
---blue-300:#5fcfff;
---blue-400:#46b7ff;
---blue-500:#2fa7ff;
---blue-600:#1d7cff;
---blue-700:#1976d2;
+--blue-100:var(--theme-200);
+--blue-200:var(--theme-200);
+--blue-300:var(--theme-200);
+--blue-400:var(--theme-200);
+--blue-500:var(--theme-200);
+--blue-600:var(--theme-200);
+--blue-700:var(--theme-300);
 
 --green:#63ff9b;
 --green-dark:#39d96c;
@@ -46,16 +46,16 @@
 --gradient-card:
 linear-gradient(
 160deg,
-rgba(10,20,36,.92),
-rgba(16,30,50,.88)
+rgba(var(--user-accent-rgb),.92),
+rgba(var(--user-accent-rgb),.88)
 );
 
 --gradient-blue:
 linear-gradient(
 90deg,
-#1976d2,
-#46b7ff,
-#8ce8ff
+var(--theme-300),
+var(--theme-200),
+var(--theme-200)
 );
 
 --gradient-green:
@@ -77,7 +77,7 @@ linear-gradient(
 ===========================*/
 
 --glass:
-rgba(8,18,35,.82);
+rgba(var(--user-accent-rgb),.82);
 
 --glass-light:
 rgba(255,255,255,.03);
@@ -87,10 +87,10 @@ rgba(255,255,255,.03);
 ===========================*/
 
 --border:
-1px solid rgba(70,150,255,.20);
+1px solid rgba(var(--user-accent-rgb),.20);
 
 --border-hover:
-1px solid rgba(70,170,255,.40);
+1px solid rgba(var(--user-accent-rgb),.40);
 
 --border-success:
 1px solid rgba(70,255,150,.40);
@@ -110,16 +110,16 @@ rgba(255,255,255,.03);
 ===========================*/
 
 --shadow-small:
-0 0 12px rgba(30,120,255,.15);
+0 0 12px rgba(var(--user-accent-rgb),.15);
 
 --shadow-card:
-0 0 20px rgba(30,120,255,.18);
+0 0 20px rgba(var(--user-accent-rgb),.18);
 
 --shadow-hover:
-0 0 28px rgba(60,170,255,.30);
+0 0 28px rgba(var(--user-accent-rgb),.30);
 
 --shadow-big:
-0 0 50px rgba(60,170,255,.28);
+0 0 50px rgba(var(--user-accent-rgb),.28);
 
 /* ===========================
    SPACING
@@ -156,4 +156,50 @@ rgba(255,255,255,.03);
 
 --blur:18px;
 
+}
+
+
+:root { --theme-bg-1:#030305; --theme-bg-2:#08090c; --theme-bg-3:#0d0f14; --theme-card:rgba(12,12,16,.96); --user-accent-rgb:32,152,232; }
+/* =========================================================
+   PROJECT DRIVE — INTEGRATED THEME TOKENS
+   All page CSS files use these tokens.
+========================================================= */
+.app {
+  --theme-100:#e9f8ff; --theme-200:#bfeeff; --theme-300:#7cddff;
+  --theme-400:#43c5ff; --theme-500:#2098e8; --theme-600:#176db8; --theme-700:#0d4376;
+  --user-accent-rgb:32,152,232;
+  --theme-bg-1:#030507; --theme-bg-2:#07090d; --theme-bg-3:#0b0e13;
+  --theme-card:rgba(10,12,17,.96);
+}
+.app.app-accent-blue {
+  --theme-100:#d8f7ff; --theme-200:#acecff; --theme-300:#72d9ff; --theme-400:#45c3fa;
+  --theme-500:#2199ee; --theme-600:#176fc0; --theme-700:#0d477e; --user-accent-rgb:33,153,238;
+}
+.app.app-accent-red {
+  --theme-100:#ffd9d9; --theme-200:#ffb0b0; --theme-300:#ff7b7b; --theme-400:#ff4d55;
+  --theme-500:#e92f3a; --theme-600:#c91e2a; --theme-700:#861019; --user-accent-rgb:233,47,58;
+}
+.app.app-accent-green {
+  --theme-100:#d7ffe3; --theme-200:#adffc4; --theme-300:#76ef98; --theme-400:#49dc75;
+  --theme-500:#29c85d; --theme-600:#179b45; --theme-700:#0b672e; --user-accent-rgb:41,200,93;
+}
+.app.app-accent-purple {
+  --theme-100:#eee3ff; --theme-200:#d7bcff; --theme-300:#bc8aff; --theme-400:#a05af7;
+  --theme-500:#8236d8; --theme-600:#6425ae; --theme-700:#40166e; --user-accent-rgb:130,54,216;
+}
+.app.app-accent-orange {
+  --theme-100:#ffe8cc; --theme-200:#ffd09b; --theme-300:#ffb65c; --theme-400:#ff9a2f;
+  --theme-500:#ec7b13; --theme-600:#bd5d0b; --theme-700:#773706; --user-accent-rgb:236,123,19;
+}
+.app {
+  --blue-100:var(--theme-100); --blue-200:var(--theme-200); --blue-300:var(--theme-300);
+  --blue-400:var(--theme-400); --blue-500:var(--theme-500); --blue-600:var(--theme-600); --blue-700:var(--theme-700);
+  --gradient-blue:linear-gradient(90deg,var(--theme-700),var(--theme-500),var(--theme-300));
+  --bg-dark:var(--theme-bg-1); --bg-primary:var(--theme-bg-2); --bg-secondary:var(--theme-bg-3);
+  --bg-card:var(--theme-card); --glass:var(--theme-card);
+  --border:1px solid rgba(var(--user-accent-rgb),.20);
+  --border-hover:1px solid rgba(var(--user-accent-rgb),.42);
+  --shadow-small:0 0 12px rgba(var(--user-accent-rgb),.12);
+  --shadow-card:0 0 22px rgba(var(--user-accent-rgb),.08);
+  --shadow-hover:0 0 28px rgba(var(--user-accent-rgb),.18);
 }

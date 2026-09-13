@@ -110,21 +110,21 @@
     0%{
 
         box-shadow:
-            0 0 0 rgba(37,99,235,0);
+            0 0 0 rgba(var(--user-accent-rgb),0);
 
     }
 
     50%{
 
         box-shadow:
-            0 0 28px rgba(37,99,235,.35);
+            0 0 28px rgba(var(--user-accent-rgb),.35);
 
     }
 
     100%{
 
         box-shadow:
-            0 0 0 rgba(37,99,235,0);
+            0 0 0 rgba(var(--user-accent-rgb),0);
 
     }
 
@@ -162,9 +162,9 @@
 
         linear-gradient(
             90deg,
-            #1976d2,
-            #4fc3f7,
-            #1976d2
+            var(--theme-300),
+            var(--theme-200),
+            var(--theme-300)
         );
 
     background-size:250px 100%;
@@ -440,20 +440,20 @@
   background:
     linear-gradient(
       135deg,
-      rgba(26, 39, 67, 0.96),
-      rgba(8, 13, 26, 0.98)
+      rgba(var(--user-accent-rgb),0.96),
+      rgba(var(--user-accent-rgb),0.98)
     );
 
   border: 1px solid
-    rgba(89, 190, 255, 0.65);
+    rgba(var(--user-accent-rgb),0.65);
 
   border-radius: 8px;
 
   box-shadow:
     0 0 18px
-      rgba(62, 166, 255, 0.25),
+      rgba(var(--user-accent-rgb),0.25),
     inset 0 0 18px
-      rgba(53, 137, 255, 0.08);
+      rgba(var(--user-accent-rgb),0.08);
 
   cursor: pointer;
 
@@ -462,14 +462,14 @@
 }
 
 .xp-notification-amount {
-  color: #75d9ff;
+  color: var(--theme-200);
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
 
 .xp-notification-reason {
-  color: rgba(235, 244, 255, 0.8);
+  color: rgba(var(--user-accent-rgb),0.8);
   font-size: 0.8rem;
 }
 
@@ -486,8 +486,8 @@
   background:
     radial-gradient(
       circle,
-      rgba(38, 106, 180, 0.2),
-      rgba(2, 6, 15, 0.88)
+      rgba(var(--user-accent-rgb),0.2),
+      rgba(var(--user-accent-rgb),0.88)
     );
 
   backdrop-filter: blur(4px);
@@ -511,22 +511,22 @@
   background:
     linear-gradient(
       145deg,
-      rgba(18, 33, 62, 0.98),
-      rgba(4, 9, 20, 0.99)
+      rgba(var(--user-accent-rgb),0.98),
+      rgba(var(--user-accent-rgb),0.99)
     );
 
   border: 1px solid
-    rgba(104, 202, 255, 0.85);
+    rgba(var(--user-accent-rgb),0.85);
 
   border-radius: 10px;
 
   box-shadow:
     0 0 20px
-      rgba(85, 187, 255, 0.35),
+      rgba(var(--user-accent-rgb),0.35),
     0 0 65px
-      rgba(29, 98, 190, 0.25),
+      rgba(var(--user-accent-rgb),0.25),
     inset 0 0 30px
-      rgba(73, 160, 255, 0.1);
+      rgba(var(--user-accent-rgb),0.1);
 
   cursor: pointer;
   overflow: hidden;
@@ -555,7 +555,7 @@
     linear-gradient(
       90deg,
       transparent,
-      #72d6ff,
+      var(--theme-200),
       transparent
     );
 }
@@ -571,14 +571,14 @@
 .level-up-eyebrow {
   margin-bottom: 12px;
 
-  color: rgba(157, 220, 255, 0.7);
+  color: rgba(var(--user-accent-rgb),0.7);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.28em;
 }
 
 .level-up-title {
-  color: #8de4ff;
+  color: var(--theme-200);
   font-size: clamp(
     2.4rem,
     9vw,
@@ -590,9 +590,9 @@
 
   text-shadow:
     0 0 12px
-      rgba(86, 206, 255, 0.8),
+      rgba(var(--user-accent-rgb),0.8),
     0 0 30px
-      rgba(54, 140, 255, 0.6);
+      rgba(var(--user-accent-rgb),0.6);
 }
 
 .level-up-level {
@@ -607,14 +607,14 @@
 .level-up-message {
   margin-top: 10px;
 
-  color: rgba(230, 241, 255, 0.75);
+  color: rgba(var(--user-accent-rgb),0.75);
   font-size: 0.9rem;
 }
 
 .level-up-dismiss {
   margin-top: 26px;
 
-  color: rgba(173, 211, 235, 0.45);
+  color: rgba(var(--user-accent-rgb),0.45);
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -703,4 +703,84 @@
 .app.animations-disabled .level-up-overlay,
 .app.animations-disabled .level-up-popup {
     animation: none !important;
+}
+
+/* =========================================
+   PROJECT DRIVE — USER APPEARANCE SETTINGS
+   ========================================= */
+
+/* SPACING */
+
+.app-spacing-comfortable {
+  --pd-section-gap: 20px;
+  --pd-card-padding: 20px;
+  --pd-row-gap: 16px;
+}
+
+.app-spacing-compact {
+  --pd-section-gap: 12px;
+  --pd-card-padding: 14px;
+  --pd-row-gap: 10px;
+}
+
+
+/* ACCENT COLORS */
+
+.app-accent-blue {
+  --pd-accent: var(--theme-200);
+  --pd-accent-rgb: 102, 199, 255;
+}
+
+.app-accent-purple {
+  --pd-accent: var(--theme-200);
+  --pd-accent-rgb: 167, 139, 250;
+}
+
+.app-accent-green {
+  --pd-accent: #5ee58a;
+  --pd-accent-rgb: 94, 229, 138;
+}
+
+.app-accent-orange {
+  --pd-accent: #ffad5c;
+  --pd-accent-rgb: 255, 173, 92;
+}
+
+
+/* GLOBAL ACCENT OVERRIDES */
+
+.app[class*="app-accent-"] .settings-eyebrow,
+.app[class*="app-accent-"] .settings-section-icon {
+  color: var(--pd-accent);
+}
+
+.app[class*="app-accent-"] .settings-select:focus,
+.app[class*="app-accent-"] .settings-input:focus {
+  border-color: var(--pd-accent);
+}
+
+.app[class*="app-accent-"] .settings-toggle input:checked + .settings-toggle-track {
+  border-color: var(--pd-accent);
+  background: rgba(var(--pd-accent-rgb), 0.25);
+}
+
+.app[class*="app-accent-"] .settings-toggle input:checked
++ .settings-toggle-track
+.settings-toggle-thumb {
+  background: var(--pd-accent);
+}
+
+
+/* GLOBAL SPACING HOOKS */
+
+.app-spacing-compact .settings-section {
+  padding: var(--pd-card-padding);
+}
+
+.app-spacing-compact .settings-row {
+  padding: var(--pd-row-gap) 0;
+}
+
+.app-spacing-comfortable .settings-section {
+  padding: var(--pd-card-padding);
 }

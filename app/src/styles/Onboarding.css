@@ -7,11 +7,11 @@
   background:
     radial-gradient(
       circle at 50% 0%,
-      rgba(44, 130, 255, 0.14),
+      rgba(var(--user-accent-rgb),0.14),
       transparent 38%
     ),
-    #050b14;
-  color: #e8f2ff;
+    var(--theme-500);
+  color: var(--theme-200);
   box-sizing: border-box;
 }
 
@@ -31,7 +31,7 @@
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 4px;
-  color: #78cfff;
+  color: var(--theme-200);
 }
 
 .onboarding-status {
@@ -39,14 +39,14 @@
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #60738d;
+  color: var(--bg-secondary);
 }
 
 .onboarding-step-count {
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 2px;
-  color: #d5e8ff;
+  color: var(--theme-200);
 }
 
 .onboarding-progress {
@@ -61,8 +61,8 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    #287cff,
-    #6bcfff
+    var(--theme-200),
+    var(--theme-200)
   );
   transition: width 0.35s ease;
 }
@@ -73,7 +73,7 @@
 }
 
 .onboarding-eyebrow {
-  color: #6fcaff;
+  color: var(--theme-200);
   font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 3px;
@@ -86,33 +86,33 @@
   line-height: 0.95;
   letter-spacing: -2px;
   font-weight: 950;
-  color: #f2f8ff;
+  color: var(--theme-200);
 }
 
 .onboarding-hero h1 span {
   display: block;
-  color: #55bfff;
+  color: var(--theme-200);
 }
 
 .onboarding-hero p {
   max-width: 600px;
   margin: 18px auto 0;
-  color: #8498b3;
+  color: var(--bg-secondary);
   line-height: 1.6;
 }
 
 .onboarding-card {
-  border: 1px solid rgba(101, 184, 255, 0.17);
+  border: 1px solid rgba(var(--user-accent-rgb),0.17);
   border-radius: 22px;
   background:
     linear-gradient(
       145deg,
-      rgba(13, 28, 48, 0.98),
-      rgba(6, 15, 27, 0.98)
+      rgba(var(--user-accent-rgb),0.98),
+      rgba(var(--user-accent-rgb),0.98)
     );
   padding: 30px;
   box-shadow:
-    0 0 45px rgba(24, 109, 255, 0.08);
+    0 0 45px rgba(var(--user-accent-rgb),0.08);
 }
 
 .onboarding-section-heading {
@@ -130,9 +130,9 @@
   height: 38px;
   flex: 0 0 38px;
   border-radius: 10px;
-  background: rgba(54, 143, 255, 0.12);
-  border: 1px solid rgba(84, 169, 255, 0.22);
-  color: #67c6ff;
+  background: rgba(var(--user-accent-rgb),0.12);
+  border: 1px solid rgba(var(--user-accent-rgb),0.22);
+  color: var(--theme-200);
   font-size: 0.75rem;
   font-weight: 900;
 }
@@ -141,12 +141,12 @@
   margin: 0;
   font-size: 1.15rem;
   letter-spacing: 2px;
-  color: #f0f7ff;
+  color: var(--theme-200);
 }
 
 .onboarding-section-heading p {
   margin: 5px 0 0;
-  color: #7489a4;
+  color: var(--bg-secondary);
   font-size: 0.9rem;
 }
 
@@ -160,7 +160,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  color: #a9bdd5;
+  color: var(--theme-700);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1px;
@@ -171,10 +171,10 @@
 .onboarding-grid select {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid rgba(121, 163, 203, 0.18);
+  border: 1px solid rgba(var(--user-accent-rgb),0.18);
   border-radius: 10px;
-  background: rgba(3, 10, 19, 0.8);
-  color: #edf6ff;
+  background: rgba(var(--user-accent-rgb),0.8);
+  color: var(--theme-200);
   padding: 13px 14px;
   font-size: 0.95rem;
   outline: none;
@@ -185,31 +185,31 @@
 
 .onboarding-grid input:focus,
 .onboarding-grid select:focus {
-  border-color: rgba(75, 172, 255, 0.65);
+  border-color: rgba(var(--user-accent-rgb),0.65);
   box-shadow:
-    0 0 0 3px rgba(44, 137, 255, 0.1);
+    0 0 0 3px rgba(var(--user-accent-rgb),0.1);
 }
 
 .onboarding-grid select option {
-  background: #091321;
+  background: var(--theme-500);
 }
 
 .onboarding-info-box {
   margin-top: 25px;
   padding: 17px;
-  border-left: 3px solid #3f9cff;
-  background: rgba(48, 131, 255, 0.06);
+  border-left: 3px solid var(--theme-200);
+  background: rgba(var(--user-accent-rgb),0.06);
 }
 
 .onboarding-info-box strong {
   font-size: 0.7rem;
   letter-spacing: 2px;
-  color: #65c5ff;
+  color: var(--theme-200);
 }
 
 .onboarding-info-box p {
   margin: 7px 0 0;
-  color: #8195ad;
+  color: var(--bg-secondary);
   font-size: 0.88rem;
   line-height: 1.55;
 }
@@ -227,9 +227,9 @@
   min-height: 58px;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(116, 160, 201, 0.15);
-  background: rgba(4, 12, 22, 0.7);
-  color: #b7c9dc;
+  border: 1px solid rgba(var(--user-accent-rgb),0.15);
+  background: rgba(var(--user-accent-rgb),0.7);
+  color: var(--theme-700);
   text-align: left;
   font-weight: 750;
   cursor: pointer;
@@ -241,13 +241,13 @@
 
 .goal-option:hover {
   transform: translateY(-1px);
-  border-color: rgba(76, 165, 255, 0.4);
+  border-color: rgba(var(--user-accent-rgb),0.4);
 }
 
 .goal-option.selected {
-  border-color: rgba(71, 168, 255, 0.7);
-  background: rgba(45, 135, 255, 0.12);
-  color: #ecf7ff;
+  border-color: rgba(var(--user-accent-rgb),0.7);
+  background: rgba(var(--user-accent-rgb),0.12);
+  color: var(--theme-200);
 }
 
 .goal-check {
@@ -258,13 +258,13 @@
   height: 27px;
   flex: 0 0 27px;
   border-radius: 8px;
-  border: 1px solid rgba(116, 160, 201, 0.2);
-  color: #7190ae;
+  border: 1px solid rgba(var(--user-accent-rgb),0.2);
+  color: var(--theme-700);
 }
 
 .goal-option.selected .goal-check {
-  border-color: #58bfff;
-  color: #58c7ff;
+  border-color: var(--theme-200);
+  color: var(--theme-200);
 }
 
 .onboarding-final-message {
@@ -290,7 +290,7 @@
 
 .onboarding-final-message p {
   margin: 5px 0 0;
-  color: #8c9db2;
+  color: var(--bg-secondary);
   font-size: 0.88rem;
 }
 
@@ -331,7 +331,7 @@
 .onboarding-back {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
-  color: #a9bdd4;
+  color: var(--theme-700);
 }
 
 .onboarding-primary {
@@ -339,12 +339,12 @@
   min-width: 180px;
   background: linear-gradient(
     135deg,
-    #438fff,
-    #2364dd
+    var(--theme-200),
+    var(--theme-400)
   );
   color: white;
   box-shadow:
-    0 8px 24px rgba(36, 104, 235, 0.2);
+    0 8px 24px rgba(var(--user-accent-rgb),0.2);
 }
 
 .onboarding-primary.finish {
@@ -353,7 +353,7 @@
     #f5c84b,
     #e5a92e
   );
-  color: #10151c;
+  color: var(--theme-700);
 }
 
 .onboarding-primary span {
@@ -370,7 +370,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 18px;
-  color: #43546b;
+  color: var(--bg-secondary);
   font-size: 0.6rem;
   font-weight: 800;
   letter-spacing: 1.5px;
