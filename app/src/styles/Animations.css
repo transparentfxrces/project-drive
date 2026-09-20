@@ -695,6 +695,10 @@
     transition: none !important;
 }
 
+.app.animations-disabled .hover-lift:hover {
+    transform: none !important;
+}
+
 .app.animations-disabled {
     scroll-behavior: auto !important;
 }
@@ -703,6 +707,12 @@
 .app.animations-disabled .level-up-overlay,
 .app.animations-disabled .level-up-popup {
     animation: none !important;
+}
+
+.app.animations-disabled *:hover,
+.app.animations-disabled *:hover::before,
+.app.animations-disabled *:hover::after {
+    transform: none !important;
 }
 
 /* =========================================
