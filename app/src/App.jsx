@@ -597,6 +597,9 @@ function App() {
 
           accentColor:
             settings.accentColor ?? "blue",
+
+          questNotifications:
+            settings.questNotifications ?? true,
         });
       }
     } catch {
@@ -605,6 +608,7 @@ function App() {
       setAppSettings({
         spacing: "comfortable",
         accentColor: "blue",
+        questNotifications: true,
       });
     }
   }
@@ -1481,15 +1485,13 @@ function App() {
         </div>
       )}
 
-      {lastXPEvent && (
-        <button
-          type="button"
-          className="xp-notification"
-          onClick={
-            dismissXPEvent
-          }
-          aria-label="Dismiss XP notification"
-        >
+      {appSettings.questNotifications && lastXPEvent && (
+  <button
+    type="button"
+    className="xp-notification"
+    onClick={dismissXPEvent}
+    aria-label="Dismiss XP notification"
+  >
           <span className="xp-notification-amount">
             +{lastXPEvent.amount}{" "}
             XP
