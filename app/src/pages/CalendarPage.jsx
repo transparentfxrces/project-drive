@@ -53,7 +53,21 @@ function formatDuration(seconds = 0) {
 function CalendarPage({
   workoutHistory = [],
   performanceHistory = [],
+  units = "imperial",
 }) {
+
+  function formatWeight(weight) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(
+      numericWeight * 0.45359237
+    ).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
   const today =
     new Date();
 
@@ -685,8 +699,8 @@ function CalendarPage({
       <small>VOLUME</small>
 
       <strong>
-        {totalVolume.toLocaleString()} LB
-      </strong>
+  {formatWeight(totalVolume)}
+</strong>
     </div>
 
   </div>
@@ -730,10 +744,10 @@ function CalendarPage({
             </span>
 
             <strong>
-              {weight > 0
-                ? `${weight} LB`
-                : "—"}
-            </strong>
+  {weight > 0
+    ? formatWeight(weight)
+    : "—"}
+</strong>
 
             <span className="calendar-set-x">
               ×

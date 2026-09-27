@@ -6,6 +6,16 @@ import {
   getTotalVolume,
 } from "../utils/workoutAnalytics";
 
+function formatWeight(weight, units) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
 function Dashboard({
   player,
   streak,
@@ -22,6 +32,7 @@ function Dashboard({
   dailyCountdown,
   weeklyCountdown,
   workoutHistory,
+  units = "imperial",
 
   recoveryScore = 0,
   readiness = "RECOVERY",
@@ -279,14 +290,12 @@ const strongestLift =
         STRONGEST LIFT
       </span>
 
-      <strong>
-        {strongestLift.exercise || "--"}
-      </strong>
-
+<strong>{formatWeight(strongestLift.weight, units)}</strong>
+      
       <small>
         {strongestLift.weight
-          ? `${strongestLift.weight} lbs`
-          : "No data yet"}
+  ? formatWeight(strongestLift.weight, units)
+  : "No data yet"}
       </small>
 
     </div>
@@ -726,8 +735,8 @@ const strongestLift =
                 {quest.progress}
 
                 {quest.targetWeight
-                  ? ` / ${quest.targetWeight} lbs`
-                  : ` / ${quest.target}`}
+  ? ` / ${formatWeight(quest.targetWeight, units)}`
+  : ` / ${quest.target}`}
 
               </span>
 
@@ -821,8 +830,8 @@ const strongestLift =
           <span>VOLUME</span>
 
           <strong>
-            {latestWorkoutStats.volume.toLocaleString()}
-          </strong>
+  {formatWeight(latestWorkoutStats.volume, units)}
+</strong>
 
           <small>lbs</small>
 
@@ -911,9 +920,9 @@ const strongestLift =
 
                   {bestSet ? (
                     <>
-                      {bestSet.weight || 0}
-                      {" × "}
-                      {bestSet.reps || 0}
+                      {formatWeight(bestSet.weight || 0, units)}
+{" × "}
+{bestSet.reps || 0}
                     </>
                   ) : (
                     "--"
@@ -956,11 +965,10 @@ const strongestLift =
 
           <div className="latest-heaviest-value">
 
-            {
-              latestWorkoutStats
-                .heaviestSet
-                .weight
-            }
+            {formatWeight(
+  latestWorkoutStats.heaviestSet.weight,
+  units
+)}
 
             <small>
               {" × "}
@@ -1020,8 +1028,8 @@ const strongestLift =
 
     <strong>
 
-      {strongestLift.weight} lbs
-
+{formatWeight(strongestLift.weight, units)}
+    
     </strong>
 
   </div>
@@ -1043,10 +1051,12 @@ const strongestLift =
     <span>Total Training Volume</span>
 
     <strong>
-
-      {totalVolume.toLocaleString()} lbs
-
-    </strong>
+  {units === "metric"
+  ? `${(totalVolume * 0.45359237).toLocaleString(undefined, {
+      maximumFractionDigits: 0,
+    })} kg`
+  : `${totalVolume.toLocaleString()} lbs`}
+</strong>
 
   </div>
 

@@ -67,7 +67,19 @@ function formatGraphDate(dateKey) {
 function ProgressPage({
   workoutHistory = [],
   metrics = {},
+  units = "imperial",
 }) {
+
+  function formatWeight(weight) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
   const workoutRecords = {};
 
   const historyByExerciseAndDay = {};
@@ -381,7 +393,8 @@ Object.keys(
   const selectedValue =
     latestEntry?.[graphType] ?? 0;
 
-  const selectedUnit = "lbs";
+  const selectedUnit =
+  units === "metric" ? "kg" : "lbs";
 
   return (
     <main className="progress-page">
@@ -435,12 +448,14 @@ Object.keys(
           </span>
 
           <strong>
-            {trackedWeightLifted.toLocaleString()}
-          </strong>
+  {formatWeight(trackedWeightLifted)}
+</strong>
 
-          <p>
-            Pounds moved
-          </p>
+<p>
+  {units === "metric"
+    ? "Kilograms moved"
+    : "Pounds moved"}
+</p>
         </article>
 
         <article className="progress-stat-card">
@@ -572,12 +587,19 @@ Object.keys(
                   </span>
 
                   <div className="progress-result-value">
-                    {selectedValue.toLocaleString()}
+  {units === "metric"
+    ? (
+        Number(selectedValue) *
+        0.45359237
+      ).toFixed(1)
+    : Number(
+        selectedValue
+      ).toLocaleString()}
 
-                    <span>
-                      {selectedUnit}
-                    </span>
-                  </div>
+  <span>
+    {selectedUnit}
+  </span>
+</div>
                 </div>
 
                 <div className="progress-result-details">
@@ -669,12 +691,17 @@ Object.keys(
                     axisLine={false}
                     width={65}
                     tickFormatter={(
-                      value
-                    ) =>
-                      Number(
-                        value
-                      ).toLocaleString()
-                    }
+  value
+) =>
+  units === "metric"
+    ? (
+        Number(value) *
+        0.45359237
+      ).toFixed(0)
+    : Number(
+        value
+      ).toLocaleString()
+}
                   />
 
                   <Tooltip
@@ -709,16 +736,20 @@ Object.keys(
                     ) =>
                       `Date: ${label}`
                     }
-                    formatter={(
-                      value
-                    ) => [
-                      `${Number(
-                        value
-                      ).toLocaleString()} lbs`,
-                      graphTitles[
-                        graphType
-                      ],
-                    ]}
+                    formatter={(resultValue) => [
+  conversion
+    ? formatMetricValue(
+        resultValue,
+        conversion
+      ).toFixed(
+        conversion === "weight" ||
+        conversion === "inches"
+          ? 1
+          : 2
+      )
+    : resultValue,
+  unit,
+]}
                   />
 
                   <Line
@@ -808,14 +839,8 @@ Object.keys(
                     </h3>
 
                     <strong>
-                      {Number(
-                        record
-                      ).toLocaleString()}
-
-                      <small>
-                        lbs
-                      </small>
-                    </strong>
+  {formatWeight(record)}
+</strong>
                   </article>
                 )
               )}

@@ -235,6 +235,16 @@ function bootstrapProjectDriveTheme() {
   );
 }
 
+function formatWeight(weight, units) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
 bootstrapProjectDriveTheme();
 
 function App() {
@@ -288,11 +298,13 @@ function App() {
       : {
           spacing: "comfortable",
           accentColor: "blue",
+          units: "imperial",
         };
   } catch {
     return {
       spacing: "comfortable",
       accentColor: "blue",
+      units: "imperial",
     };
   }
 });
@@ -591,16 +603,18 @@ function App() {
           settings.animations ?? true
         );
 
-        setAppSettings({
-          spacing:
-            settings.spacing ?? "comfortable",
+        
 
-          accentColor:
-            settings.accentColor ?? "blue",
-
-          questNotifications:
-            settings.questNotifications ?? true,
-        });
+        setAppSettings((previous) => ({
+  ...previous,
+  ...settings,
+  spacing: settings.spacing ?? "comfortable",
+  accentColor: settings.accentColor ?? "blue",
+  questNotifications:
+    settings.questNotifications ?? true,
+  units:
+    settings.units ?? "imperial",
+}));
       }
     } catch {
       setAnimationsEnabled(true);
@@ -609,6 +623,7 @@ function App() {
         spacing: "comfortable",
         accentColor: "blue",
         questNotifications: true,
+        units: "imperial",
       });
     }
   }
@@ -1142,6 +1157,7 @@ function App() {
             readiness
           }
           metrics={metrics}
+          units={appSettings.units}
         />
       )}
 
@@ -1221,6 +1237,8 @@ function App() {
           elapsedTime={
             elapsedTime
           }
+
+          units={appSettings.units}
         />
       )}
 
@@ -1229,6 +1247,7 @@ function App() {
           workout={
             workoutSummary
           }
+          units={appSettings.units}
           onContinue={() => {
             setWorkoutSummary(
               null
@@ -1258,6 +1277,7 @@ function App() {
           updateGoal={
             updateGoal
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1280,6 +1300,7 @@ function App() {
           saveMetricResult={
             saveMetricResult
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1291,6 +1312,7 @@ function App() {
           updateWorkout={
             updateWorkout
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1302,6 +1324,7 @@ function App() {
           performanceHistory={
             performanceHistory
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1330,6 +1353,7 @@ function App() {
           achievements={
             achievements
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1356,6 +1380,7 @@ function App() {
           xp={
             levelData.currentXP
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1413,6 +1438,7 @@ function App() {
           saveRecoveryCheckIn={
             saveRecoveryCheckIn
           }
+          units={appSettings.units}
         />
       )}
 
@@ -1432,6 +1458,7 @@ function App() {
   user={user}
   onSignOut={handleSignOut}
   onBack={() => setPage("dashboard")}
+  units={appSettings.units}
 />
 )}
 

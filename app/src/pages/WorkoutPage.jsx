@@ -1,3 +1,5 @@
+
+
 function WorkoutPage({
   currentWorkout,
   exercise,
@@ -19,6 +21,7 @@ function WorkoutPage({
   toggleFavorite,
   workoutStartTime,
   elapsedTime,
+  units = "imperial",
 
 
   footballProgram,
@@ -28,6 +31,17 @@ function WorkoutPage({
   setSelectedDay,
   loadFootballWorkout,
 }) {
+
+  function formatWeight(weight) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
   const filteredExercises =
     selectedCategory && exerciseLibrary[selectedCategory]
       ? exerciseLibrary[selectedCategory].filter((exerciseName) =>
@@ -386,7 +400,7 @@ const progress =
 
 {set.targetWeight !== "" && (
   <span className="target-weight">
-    🎯 {set.targetWeight} lbs
+    🎯 {formatWeight(set.targetWeight)}
   </span>
 )}
 

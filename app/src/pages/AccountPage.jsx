@@ -19,6 +19,7 @@ function AccountPage({
   user,
   onSignOut,
   onBack,
+  units,
 }) {
   const sections = [
     {
@@ -91,12 +92,13 @@ function AccountPage({
               level={level}
               nextLevelXP={nextLevelXP}
               achievements={achievements}
+              units={units}
             />
           )}
 
           {section === "settings" && <SettingsPage player={player} />}
 
-          {section === "security" && <SecurityPage user={user} />}
+          {section === "security" && <SecurityPage user={user} onSignOut={onSignOut} />}
         </main>
       </div>
     </section>

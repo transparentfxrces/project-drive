@@ -37,6 +37,7 @@ export default function CoachingPage({
   readiness = "RECOVERY",
   recoveryHistory = [],
   saveRecoveryCheckIn = () => {},
+  units = "imperial",
 }) {
   const [expandedPriority, setExpandedPriority] = useState(null);
   const [question, setQuestion] = useState("");
@@ -60,7 +61,10 @@ export default function CoachingPage({
     level,
   });
 
-  const trends = trendAnalysis(performanceHistory);
+  const trends = trendAnalysis(
+  performanceHistory,
+  units
+);
 
   const recoveryTrends =
   recoveryAnalysis(

@@ -47,7 +47,111 @@ function PerformancePage({
   workoutHistory = [],
   performanceHistory = {},
   saveMetricResult,
+  units = "imperial",
 }) {
+
+  function formatWeight(weight) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(
+      numericWeight * 0.45359237
+    ).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
+    function formatMetricValue(value, conversion) {
+  const numericValue = Number(value) || 0;
+
+  if (units !== "metric") {
+    return numericValue;
+  }
+
+  if (conversion === "weight") {
+    return numericValue * 0.45359237;
+  }
+
+  if (conversion === "inches") {
+    return numericValue * 2.54;
+  }
+
+  if (conversion === "feet") {
+    return numericValue * 0.3048;
+  }
+
+  return numericValue;
+}
+
+function getInputValue(value, conversion) {
+  if (
+    value === "" ||
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
+
+  const numericValue = Number(value);
+
+  if (!Number.isFinite(numericValue)) {
+    return value;
+  }
+
+  if (units !== "metric") {
+    return value;
+  }
+
+  const converted =
+    formatMetricValue(
+      numericValue,
+      conversion
+    );
+
+  return converted.toFixed(
+    conversion === "weight" ||
+    conversion === "inches"
+      ? 1
+      : conversion === "feet"
+        ? 2
+        : 1
+  );
+}
+
+function parseInputValue(
+  value,
+  conversion
+) {
+  if (value === "") {
+    return "";
+  }
+
+  const numericValue = Number(value);
+
+  if (!Number.isFinite(numericValue)) {
+    return value;
+  }
+
+  if (units !== "metric") {
+    return numericValue;
+  }
+
+  if (conversion === "weight") {
+    return numericValue / 0.45359237;
+  }
+
+  if (conversion === "inches") {
+    return numericValue / 2.54;
+  }
+
+  if (conversion === "feet") {
+    return numericValue / 0.3048;
+  }
+
+  return numericValue;
+}
+
   const [
     saveMessages,
     setSaveMessages,
@@ -198,7 +302,8 @@ function PerformancePage({
     dateKey,
     placeholder,
     unit,
-    lowerIsBetter = false
+    lowerIsBetter = false,
+    conversion = null
   ) {
     const progress = getProgress(
       metrics[valueKey],
@@ -259,18 +364,22 @@ function PerformancePage({
           <input
             type="number"
             step="any"
-            value={
-              metrics[valueKey]
-            }
+            value={getInputValue(
+  metrics[valueKey],
+  conversion
+)}
             placeholder={
               placeholder
             }
             onChange={(event) =>
-              updateMetric(
-                valueKey,
-                event.target.value
-              )
-            }
+  updateMetric(
+    valueKey,
+    parseInputValue(
+      event.target.value,
+      conversion
+    )
+  )
+}
           />
 
           <span className="metric-unit">
@@ -316,11 +425,15 @@ function PerformancePage({
             </span>
 
             <strong>
-              {
-                latestHistoryEntry.value
-              }{" "}
-              {unit}
-            </strong>
+  {unit === "kg"
+    ? (
+        Number(
+          latestHistoryEntry.value
+        ) * 0.45359237
+      ).toFixed(1)
+    : latestHistoryEntry.value}{" "}
+  {unit}
+</strong>
 
             <small>
               {
@@ -370,11 +483,16 @@ function PerformancePage({
                     `Date: ${labelValue}`
                   }
                   formatter={(
-                    resultValue
-                  ) => [
-                    `${resultValue} ${unit}`,
-                    label,
-                  ]}
+  resultValue
+) => [
+  unit === "kg"
+    ? `${(
+        Number(resultValue) *
+        0.45359237
+      ).toFixed(1)} kg`
+    : `${resultValue} lbs`,
+  label,
+]}
                 />
 
                 <Line
@@ -408,16 +526,20 @@ function PerformancePage({
             <input
               type="number"
               step="any"
-              value={
-                goals[valueKey]
-              }
+              value={getInputValue(
+  goals[valueKey],
+  conversion
+)}
               placeholder={`Goal (${unit})`}
               onChange={(event) =>
-                updateGoal(
-                  valueKey,
-                  event.target.value
-                )
-              }
+  updateGoal(
+    valueKey,
+    parseInputValue(
+      event.target.value,
+      conversion
+    )
+  )
+}
             />
 
             <span className="metric-unit">
@@ -503,9 +625,8 @@ function PerformancePage({
             </span>
 
             <strong>
-              {totalVolume.toLocaleString()}{" "}
-              lbs
-            </strong>
+  formatWeight(strongestLift.weight)
+</strong>
           </div>
 
           <div className="pr-row">
@@ -553,10 +674,10 @@ function PerformancePage({
             </span>
 
             <strong>
-              {strongestLift.weight
-                ? `${strongestLift.weight} lbs`
-                : "--"}
-            </strong>
+  {strongestLift.weight
+    ? formatWeight(strongestLift.weight)
+    : "--"}
+</strong>
           </div>
 
           <div className="pr-row">
@@ -615,7 +736,9 @@ function PerformancePage({
             "vertical",
             "verticalDate",
             "28",
-            "in"
+units === "metric" ? "cm" : "in",
+false,
+"inches"
           )}
 
           {renderMetric(
@@ -623,7 +746,9 @@ function PerformancePage({
             "broad",
             "broadDate",
             "8.5",
-            "ft"
+            units === "metric" ? "m" : "ft",
+            false,
+            "feet"
           )}
         </div>
 
@@ -635,7 +760,9 @@ function PerformancePage({
             "bench",
             "benchDate",
             "225",
-            "lbs"
+            units === "metric" ? "kg" : "lbs",
+            false,
+            "weight"
           )}
 
           {renderMetric(
@@ -643,7 +770,9 @@ function PerformancePage({
             "squat",
             "squatDate",
             "315",
-            "lbs"
+            units === "metric" ? "kg" : "lbs",
+            false,
+            "weight"
           )}
 
           {renderMetric(
@@ -651,7 +780,9 @@ function PerformancePage({
             "deadlift",
             "deadliftDate",
             "405",
-            "lbs"
+            units === "metric" ? "kg" : "lbs",
+            false,
+            "weight"
           )}
 
           {renderMetric(
@@ -659,7 +790,9 @@ function PerformancePage({
             "powerClean",
             "powerCleanDate",
             "205",
-            "lbs"
+            units === "metric" ? "kg" : "lbs",
+            false,
+            "weight"
           )}
         </div>
 
@@ -671,7 +804,7 @@ function PerformancePage({
             "weight",
             "weightDate",
             "205",
-            "lbs"
+            units === "metric" ? "kg" : "lbs"
           )}
 
           {renderMetric(

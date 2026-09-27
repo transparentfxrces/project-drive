@@ -3,9 +3,66 @@ import { useState } from "react";
 function HistoryPage({
   workoutHistory,
   updateWorkout,
+  units = "imperial",
 }) {
   const [editingWorkout, setEditingWorkout] =
     useState(null);
+
+      function formatWeight(weight) {
+    const numericWeight = Number(weight) || 0;
+
+    if (units === "metric") {
+      return `${(
+        numericWeight * 0.45359237
+      ).toFixed(1)} kg`;
+    }
+
+    return `${numericWeight} lbs`;
+  }
+
+  function getInputWeight(weight) {
+    if (
+      weight === "" ||
+      weight === null ||
+      weight === undefined
+    ) {
+      return "";
+    }
+
+    const numericWeight = Number(weight);
+
+    if (!Number.isFinite(numericWeight)) {
+      return weight;
+    }
+
+    if (units === "metric") {
+      return (
+        numericWeight * 0.45359237
+      ).toFixed(1);
+    }
+
+    return weight;
+  }
+
+  function parseInputWeight(value) {
+    if (value === "") {
+      return "";
+    }
+
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return (
+        numericValue / 0.45359237
+      );
+    }
+
+    return numericValue;
+  }
 
   function changeSet(
     workout,
@@ -150,14 +207,14 @@ function HistoryPage({
                         <>
 
                           <input
-                            value={set.weight}
+                            value={getInputWeight(set.weight)}
                             onChange={(e) =>
                               changeSet(
                                 workout,
                                 exercise.id,
                                 set.id,
                                 "weight",
-                                e.target.value
+                                parseInputWeight(e.target.value)
                               )
                             }
                           />
@@ -180,8 +237,8 @@ function HistoryPage({
                       ) : (
 
                         <p>
-                          {set.weight} lbs × {set.reps}
-                        </p>
+  {formatWeight(set.weight)} × {set.reps}
+</p>
 
                       )}
 
@@ -192,8 +249,8 @@ function HistoryPage({
                 ) : (
 
                   <p>
-                    {exercise.weight} lbs × {exercise.reps}
-                  </p>
+  {formatWeight(exercise.weight)} × {exercise.reps}
+</p>
 
                 )}
 

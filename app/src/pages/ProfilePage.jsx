@@ -6,15 +6,154 @@ function ProfilePage({
   updateSeasonGoal,
   streak,
   workoutsLogged,
+  units = "imperial",
 }) {
+  console.log("ProfilePage units:", units);
+  
   const [editingInfo, setEditingInfo] = useState(false);
   const [editingGoals, setEditingGoals] = useState(false);
 
   const [form, setForm] = useState(player);
 
   useEffect(() => {
-    setForm(player);
-  }, [player]);
+  setForm({
+    ...player,
+    height: parseHeightToInches(player.height),
+    weight: player.weight,
+  });
+}, [player]);
+
+  function parseHeightToInches(value) {
+  if (value === "" || value === null || value === undefined) {
+    return "";
+  }
+
+  const text = String(value).trim();
+
+  // Handles values like 5'5", 5' 5", or 5'5
+  if (text.includes("'")) {
+    const parts = text.split("'");
+
+    const feet = Number(parts[0].trim());
+    const inches = Number(
+      parts[1].replace('"', "").trim()
+    );
+
+    if (
+      Number.isFinite(feet) &&
+      Number.isFinite(inches)
+    ) {
+      return feet * 12 + inches;
+    }
+  }
+
+  const numericValue = Number(text);
+
+  if (!Number.isFinite(numericValue)) {
+    return value;
+  }
+
+  return numericValue;
+}
+
+function formatHeight(height) {
+  const numericHeight = parseHeightToInches(height);
+
+  if (!Number.isFinite(Number(numericHeight))) {
+    return height;
+  }
+
+  if (units === "metric") {
+    return `${(Number(numericHeight) * 2.54).toFixed(1)} cm`;
+  }
+
+  const feet = Math.floor(Number(numericHeight) / 12);
+  const inches = Number(numericHeight) % 12;
+
+  return `${feet}'${inches}"`;
+}
+
+function getInputHeight(height) {
+  const numericHeight = parseHeightToInches(height);
+
+  if (numericHeight === "") {
+    return "";
+  }
+
+  if (!Number.isFinite(Number(numericHeight))) {
+    return height;
+  }
+
+  if (units === "metric") {
+    return (Number(numericHeight) * 2.54).toFixed(1);
+  }
+
+  return numericHeight;
+}
+
+function parseInputHeight(value) {
+  if (value === "") return "";
+
+  const numericValue = Number(value);
+
+  if (!Number.isFinite(numericValue)) {
+    return value;
+  }
+
+  if (units === "metric") {
+    return numericValue / 2.54;
+  }
+
+  return numericValue;
+}
+
+function formatWeight(weight) {
+  const numericWeight = Number(weight);
+
+  if (!Number.isFinite(numericWeight)) {
+    return weight;
+  }
+
+  if (units === "metric") {
+    return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
+function getInputWeight(weight) {
+  if (weight === "" || weight === null || weight === undefined) {
+    return "";
+  }
+
+  const numericWeight = Number(weight);
+
+  if (!Number.isFinite(numericWeight)) {
+    return weight;
+  }
+
+  if (units === "metric") {
+    return (numericWeight * 0.45359237).toFixed(1);
+  }
+
+  return weight;
+}
+
+function parseInputWeight(value) {
+  if (value === "") return "";
+
+  const numericValue = Number(value);
+
+  if (!Number.isFinite(numericValue)) {
+    return value;
+  }
+
+  if (units === "metric") {
+    return numericValue / 0.45359237;
+  }
+
+  return numericValue;
+}
 
   function handleChange(field, value) {
     setForm((prev) => ({
@@ -101,20 +240,26 @@ function ProfilePage({
               />
 
               <input
-                className="profile-input"
-                value={form.height}
-                onChange={(e) =>
-                  handleChange("height", e.target.value)
-                }
-              />
+  className="profile-input"
+  value={getInputHeight(form.height)}
+  onChange={(e) =>
+    handleChange(
+      "height",
+      parseInputHeight(e.target.value)
+    )
+  }
+/>
 
               <input
-                className="profile-input"
-                value={form.weight}
-                onChange={(e) =>
-                  handleChange("weight", e.target.value)
-                }
-              />
+  className="profile-input"
+  value={getInputWeight(form.weight)}
+  onChange={(e) =>
+    handleChange(
+      "weight",
+      parseInputWeight(e.target.value)
+    )
+  }
+/>
 
               <input
                 className="profile-input"
@@ -160,8 +305,8 @@ function ProfilePage({
               <p><strong>Grade:</strong> {player.grade}</p>
               <p><strong>Position:</strong> {player.position}</p>
               <p><strong>Team:</strong> {player.team}</p>
-              <p><strong>Height:</strong> {player.height}</p>
-              <p><strong>Weight:</strong> {player.weight}</p>
+              <p><strong>Height:</strong>{""} {formatHeight(player.height)}</p>
+              <p><strong>Weight:</strong> {formatWeight(player.weight)}</p>
               <p><strong>Jersey:</strong> {player.jersey}</p>
               <p><strong>Graduation:</strong> {player.graduationYear}</p>
               <p><strong>Dominant Hand:</strong> {player.dominantHand}</p>

@@ -248,7 +248,175 @@ function RecruitProfilePage({
   workoutsLogged = 0,
   level = 1,
   xp = 0,
+  units = "imperial",
 }) {
+
+    function formatWeight(weight) {
+    const numericWeight = Number(weight) || 0;
+
+    if (units === "metric") {
+      return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+    }
+
+    return `${numericWeight} lbs`;
+  }
+
+  function getInputWeight(weight) {
+    if (weight === "" || weight === null || weight === undefined) {
+      return "";
+    }
+
+    const numericWeight = Number(weight);
+
+    if (!Number.isFinite(numericWeight)) {
+      return weight;
+    }
+
+    if (units === "metric") {
+      return (numericWeight * 0.45359237).toFixed(1);
+    }
+
+    return weight;
+  }
+
+  function parseInputWeight(value) {
+    if (value === "") return "";
+
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return numericValue / 0.45359237;
+    }
+
+    return numericValue;
+  }
+
+    function formatVertical(value) {
+    const numericValue = Number(value) || 0;
+
+    if (units === "metric") {
+      return `${(numericValue * 2.54).toFixed(1)} cm`;
+    }
+
+    return `${numericValue} in`;
+  }
+
+  function getInputVertical(value) {
+    if (value === "" || value === null || value === undefined) {
+      return "";
+    }
+
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return (numericValue * 2.54).toFixed(1);
+    }
+
+    return value;
+  }
+
+  function parseInputVertical(value) {
+    if (value === "") return "";
+
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return numericValue / 2.54;
+    }
+
+    return numericValue;
+  }
+
+    function parseHeightToInches(value) {
+    if (value === "" || value === null || value === undefined) {
+      return "";
+    }
+
+    const text = String(value).trim();
+
+    const feetInchesMatch = text.match(
+      /^(\d+)\s*['’]\s*(\d+(?:\.\d+)?)\s*["”]?$/
+    );
+
+    if (feetInchesMatch) {
+      const feet = Number(feetInchesMatch[1]);
+      const inches = Number(feetInchesMatch[2]);
+
+      return feet * 12 + inches;
+    }
+
+    const numericValue = Number(text);
+
+    if (!Number.isFinite(numericValue)) {
+      return value;
+    }
+
+    return numericValue;
+  }
+
+  function formatHeight(value) {
+    const numericValue = parseHeightToInches(value);
+
+    if (!Number.isFinite(Number(numericValue))) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return `${(Number(numericValue) * 2.54).toFixed(1)} cm`;
+    }
+
+    const feet = Math.floor(Number(numericValue) / 12);
+    const inches = Number(numericValue) % 12;
+
+    return `${feet}'${inches}"`;
+  }
+
+  function getInputHeight(value) {
+    const numericValue = parseHeightToInches(value);
+
+    if (numericValue === "") {
+      return "";
+    }
+
+    if (!Number.isFinite(Number(numericValue))) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return (Number(numericValue) * 2.54).toFixed(1);
+    }
+
+    return numericValue;
+  }
+
+  function parseInputHeight(value) {
+    if (value === "") return "";
+
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return value;
+    }
+
+    if (units === "metric") {
+      return numericValue / 2.54;
+    }
+
+    return numericValue;
+  }
+
   const initialProfile = () =>
     makeProfile(player, metrics, recruitProfile);
 
@@ -435,61 +603,85 @@ Thank you for your time.`);
   }
 
   const measurementFields = [
-  {
+    {
     label: "Height",
     value: profile.height,
     update: (value) =>
-      updateField("height", value),
-    placeholder: `5'10"`,
+      updateField(
+        "height",
+        parseInputHeight(value)
+      ),
+    placeholder:
+      units === "metric"
+        ? "177.8 cm"
+        : `5'10"`,
+    height: true,
   },
 
   {
-    label: "Weight",
-    value: profile.weight,
-    update: (value) =>
-      updateField("weight", value),
-    placeholder: "190 lbs",
-  },
+  label: "Weight",
+  value: profile.weight,
+  update: (value) =>
+    updateField("weight", parseInputWeight(value)),
+  placeholder:
+    units === "metric"
+      ? "86.2 kg"
+      : "190 lbs",
+  weight: true,
+},
 
   {
-    label: "Bench Press",
-    value: profile.metrics.bench,
-    synced: true,
-  },
+  label: "Bench Press",
+  value: profile.metrics.bench,
+  synced: true,
+  weight: true,
+},
+{
+  label: "Squat",
+  value: profile.metrics.squat,
+  synced: true,
+  weight: true,
+},
+{
+  label: "Power Clean",
+  value: profile.metrics.powerClean,
+  synced: true,
+  weight: true,
+},
+{
+  label: "Deadlift",
+  value: profile.metrics.deadlift,
+  synced: true,
+  weight: true,
+},
 
   {
-    label: "Squat",
-    value: profile.metrics.squat,
-    synced: true,
-  },
+  label:
+    units === "metric"
+      ? "40-Meter Dash"
+      : "40-Yard Dash",
+  value: profile.metrics.forty,
+  update: (value) =>
+    updateMetric("forty", value),
+  placeholder: "5.10 sec",
+  time: true,
+},
 
   {
-    label: "Power Clean",
-    value: profile.metrics.powerClean,
-    synced: true,
-  },
+  label: "Vertical",
+  value: profile.metrics.vertical,
+  update: (value) =>
+    updateMetric(
+      "vertical",
+      parseInputVertical(value)
+    ),
+  placeholder:
+    units === "metric"
+      ? "66.0 cm"
+      : "26 in",
+  vertical: true,
+},
 
-  {
-    label: "Deadlift",
-    value: profile.metrics.deadlift,
-    synced: true,
-  },
-
-  {
-    label: "40-Yard Dash",
-    value: profile.metrics.forty,
-    update: (value) =>
-      updateMetric("forty", value),
-    placeholder: "5.10 sec",
-  },
-
-  {
-    label: "Vertical",
-    value: profile.metrics.vertical,
-    update: (value) =>
-      updateMetric("vertical", value),
-    placeholder: "26 in",
-  },
 ];
 
   return (
@@ -678,18 +870,32 @@ Thank you for your time.`);
 
         {field.synced ? (
 
-          displayValue(field.value)
+  field.weight
+    ? formatWeight(field.value)
+    : displayValue(field.value)
 
-        ) : (
+) : (
 
           <EditableValue
             editing={editing}
-            value={field.value}
+            value={
+  field.weight
+    ? getInputWeight(field.value)
+    : field.height
+      ? editing
+        ? getInputHeight(field.value)
+        : formatHeight(field.value)
+      : field.value
+}
             placeholder={
               field.placeholder
             }
             ariaLabel={field.label}
-            onChange={field.update}
+            onChange={
+  field.weight
+    ? (value) => field.update(value)
+    : field.update
+}
           />
 
         )}

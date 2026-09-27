@@ -3,7 +3,19 @@ import "./WorkoutSummaryPage.css";
 export default function WorkoutSummaryPage({
   workout,
   onContinue,
+  units = "imperial",
 }) {
+
+  function formatWeight(weight) {
+  const numericWeight = Number(weight) || 0;
+
+  if (units === "metric") {
+    return `${(numericWeight * 0.45359237).toFixed(1)} kg`;
+  }
+
+  return `${numericWeight} lbs`;
+}
+
   if (!workout) return null;
 
   let totalSets = 0;
@@ -56,7 +68,7 @@ export default function WorkoutSummaryPage({
           Volume:
           <strong>
             {" "}
-            {totalVolume.toLocaleString()} lbs
+            {formatWeight(totalVolume)}
           </strong>
         </p>
 
@@ -83,8 +95,8 @@ export default function WorkoutSummaryPage({
           {exercise.sets.map((set) => (
 
             <p key={set.id}>
-              {set.weight} lbs × {set.reps}
-            </p>
+  {formatWeight(set.weight, units)} × {set.reps}
+</p>
 
           ))}
 

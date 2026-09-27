@@ -1,25 +1,25 @@
 const METRIC_CONFIG = {
   bench: {
     label: "Bench Press",
-    unit: "lbs",
+    unitType: "weight",
     lowerIsBetter: false,
   },
 
   squat: {
     label: "Squat",
-    unit: "lbs",
+    unitType: "weight",
     lowerIsBetter: false,
   },
 
   deadlift: {
     label: "Deadlift",
-    unit: "lbs",
+    unitType: "weight",
     lowerIsBetter: false,
   },
 
   powerClean: {
     label: "Power Clean",
-    unit: "lbs",
+    unitType: "weight",
     lowerIsBetter: false,
   },
 
@@ -43,13 +43,13 @@ const METRIC_CONFIG = {
 
   vertical: {
     label: "Vertical Jump",
-    unit: "in",
+    unitType: "inches",
     lowerIsBetter: false,
   },
 
   broad: {
     label: "Broad Jump",
-    unit: "ft",
+    unitType: "feet",
     lowerIsBetter: false,
   },
 };
@@ -72,6 +72,54 @@ function getTrendStatus(
   return improved
     ? "improving"
     : "declining";
+}
+
+function getDisplayMetric(value, unitType, units) {
+  const numericValue = Number(value) || 0;
+
+  if (unitType === "weight") {
+    return {
+      value:
+        units === "metric"
+          ? numericValue * 0.45359237
+          : numericValue,
+      unit:
+        units === "metric"
+          ? "kg"
+          : "lbs",
+    };
+  }
+
+  if (unitType === "inches") {
+    return {
+      value:
+        units === "metric"
+          ? numericValue * 2.54
+          : numericValue,
+      unit:
+        units === "metric"
+          ? "cm"
+          : "in",
+    };
+  }
+
+  if (unitType === "feet") {
+    return {
+      value:
+        units === "metric"
+          ? numericValue * 0.3048
+          : numericValue,
+      unit:
+        units === "metric"
+          ? "m"
+          : "ft",
+    };
+  }
+
+  return {
+    value: numericValue,
+    unit: "sec",
+  };
 }
 
 function getTrendMessage({
@@ -103,7 +151,8 @@ function getTrendMessage({
 
 function analyzeMetric(
   metricKey,
-  entries
+  entries,
+  units
 ) {
   const config =
     METRIC_CONFIG[metricKey];
@@ -142,18 +191,28 @@ function analyzeMetric(
     ];
 
   if (validEntries.length === 1) {
-    return {
-      metricKey,
+  const latestDisplay = getDisplayMetric(
+    latest.value,
+    config.unitType || null,
+    units
+  );
 
-      label: config.label,
+  return {
+    metricKey,
 
-      unit: config.unit,
+    label: config.label,
 
-      latestValue: latest.value,
+    unit: latestDisplay.unit,
 
-      previousValue: null,
+    latestValue: Number(
+      latestDisplay.value.toFixed(
+        latestDisplay.unit === "sec" ? 2 : 1
+      )
+    ),
 
-      difference: 0,
+    previousValue: null,
+
+    difference: 0,
 
       status: "insufficient",
 
@@ -176,6 +235,22 @@ function analyzeMetric(
     latest.value -
     previous.value;
 
+  const latestDisplay = getDisplayMetric(
+    latest.value,
+    config.unitType || null,
+    units
+  );
+
+  const previousDisplay = getDisplayMetric(
+    previous.value,
+    config.unitType || null,
+    units
+  );
+
+  const displayDifference =
+    latestDisplay.value -
+    previousDisplay.value;
+
   const status = getTrendStatus(
     difference,
     config.lowerIsBetter
@@ -188,30 +263,42 @@ function analyzeMetric(
   };
 
   return {
-    metricKey,
+  metricKey,
 
-    label: config.label,
+  label: config.label,
 
-    unit: config.unit,
+  unit: latestDisplay.unit,
 
-    latestValue: latest.value,
+  latestValue: Number(
+    latestDisplay.value.toFixed(
+      latestDisplay.unit === "sec" ? 2 : 1
+    )
+  ),
 
-    previousValue: previous.value,
+  previousValue: Number(
+    previousDisplay.value.toFixed(
+      previousDisplay.unit === "sec" ? 2 : 1
+    )
+  ),
 
-    difference,
+  difference: Number(
+    displayDifference.toFixed(
+      latestDisplay.unit === "sec" ? 2 : 1
+    )
+  ),
 
-    status,
+  status,
 
     icon: icons[status],
 
     message: getTrendMessage({
-      label: config.label,
-      difference,
-      unit: config.unit,
-      status,
-      lowerIsBetter:
-        config.lowerIsBetter,
-    }),
+  label: config.label,
+  difference: displayDifference,
+  unit: latestDisplay.unit,
+  status,
+  lowerIsBetter:
+    config.lowerIsBetter,
+}),
 
     entriesLogged:
       validEntries.length,
@@ -219,19 +306,21 @@ function analyzeMetric(
 }
 
 export default function trendAnalysis(
-  performanceHistory = {}
+  performanceHistory = {},
+  units = "imperial"
 ) {
   const trends = Object.entries(
     METRIC_CONFIG
   )
     .map(([metricKey]) =>
-      analyzeMetric(
-        metricKey,
-        performanceHistory[
-          metricKey
-        ]
-      )
-    )
+  analyzeMetric(
+    metricKey,
+    performanceHistory[
+      metricKey
+    ],
+    units
+  )
+)
     .filter(Boolean);
 
   const improving = trends.filter(
