@@ -43,6 +43,17 @@ export async function signOut() {
   }
 }
 
+export async function signOutEverywhere() {
+  const { error } =
+    await supabase.auth.signOut({
+      scope: "global",
+    });
+
+  if (error) {
+    throw error;
+  }
+}
+
 export async function sendPasswordReset(email, redirectTo) {
   const { data, error } =
     await supabase.auth.resetPasswordForEmail(email, {

@@ -1,10 +1,15 @@
 import { useState } from "react";
 import "../styles/Security.css";
-import { sendPasswordReset } from "../services/auth";
+import {
+  sendPasswordReset,
+  signOutEverywhere,
+} from "../services/auth";
 
 function SecurityPage({ user, onSignOut }) {
   const [resetStatus, setResetStatus] = useState("idle");
   const [resetError, setResetError] = useState("");
+  const [signOutAllStatus, setSignOutAllStatus] =
+  useState("idle");
 
   async function handlePasswordReset() {
     if (!user?.email) {
@@ -31,6 +36,26 @@ function SecurityPage({ user, onSignOut }) {
       );
     }
   }
+
+  async function handleSignOutEverywhere() {
+  setSignOutAllStatus("loading");
+
+  try {
+    await signOutEverywhere();
+    setSignOutAllStatus("success");
+
+    if (onSignOut) {
+      onSignOut();
+    }
+  } catch (error) {
+    console.error(
+      "Sign out everywhere failed:",
+      error
+    );
+
+    setSignOutAllStatus("error");
+  }
+}
 
   return (
     <section className="security-page">
@@ -142,6 +167,43 @@ function SecurityPage({ user, onSignOut }) {
             </button>
           </div>
         </div>
+
+        {/* SESSION MANAGEMENT */}
+<div className="security-section">
+  <div className="security-section-icon">◉</div>
+
+  <div className="security-section-header">
+    <h2>SESSION MANAGEMENT</h2>
+    <p>
+      Manage where your Project Drive account is signed in.
+    </p>
+  </div>
+
+  <div className="security-row">
+    <div className="security-row-info">
+      <strong>Sign out everywhere</strong>
+      <span>
+        End your Project Drive sessions across all devices.
+      </span>
+    </div>
+
+    <button
+      className="security-action"
+      onClick={handleSignOutEverywhere}
+      disabled={signOutAllStatus === "loading"}
+    >
+      {signOutAllStatus === "loading"
+        ? "SIGNING OUT..."
+        : "SIGN OUT EVERYWHERE"}
+    </button>
+  </div>
+
+  {signOutAllStatus === "error" && (
+    <div className="security-message security-error">
+      Unable to sign out of all sessions.
+    </div>
+  )}
+</div>
 
         {/* DANGER ZONE */}
         <div className="security-section security-danger">
