@@ -51,6 +51,21 @@ function SettingsPage() {
     setSaved(true);
 }
 
+  function resetSettings() {
+  setSettings(DEFAULT_SETTINGS);
+
+  localStorage.setItem(
+    "projectDriveSettings",
+    JSON.stringify(DEFAULT_SETTINGS)
+  );
+
+  window.dispatchEvent(
+    new Event("projectDriveSettingsChanged")
+  );
+
+  setSaved(true);
+}
+
   return (
     <section className="settings-page">
 
@@ -305,13 +320,20 @@ function SettingsPage() {
       </div>
 
       <div className="settings-save-row">
-        <button
-          className="settings-save"
-          onClick={saveSettings}
-        >
-          {saved ? "✓ SETTINGS SAVED" : "SAVE SETTINGS"}
-        </button>
-      </div>
+  <button
+    className="settings-save"
+    onClick={saveSettings}
+  >
+    {saved ? "✓ SETTINGS SAVED" : "SAVE SETTINGS"}
+  </button>
+
+  <button
+    className="settings-reset"
+    onClick={resetSettings}
+  >
+    RESET TO DEFAULTS
+  </button>
+</div>
 
     </section>
   );
